@@ -29,9 +29,9 @@ use tokio_util::sync::CancellationToken;
 
 use crate::apply::run::{ApplyDeps, ApplyHooks, ApplyRequest, run_apply};
 use crate::artifact::read::read_artifact;
-use crate::config::resolve_plan;
+use crate::config::{DEFAULT_BASE_URL, ResolvedPlan, resolve_plan};
 use crate::errors::Error;
-use crate::llm::client::LlmClient;
+use crate::llm::client::{LlmClient, OpenAiCompatClient, OpenAiCompatConfig, ProxyMode};
 use crate::log::WriterLog;
 use crate::report::markdown::render_markdown;
 use crate::util::fs::{atomic_write, ensure_parent_dir};
@@ -474,6 +474,55 @@ fn artifact_arg(artifact: &Option<PathBuf>) -> Result<&PathBuf, Error> {
     })
 }
 
+/// Builds the `plan` command's LLM client from resolved configuration,
+/// applying the API-key rule:
+///
+/// - under `--offline` no client is constructed (`Ok(None)`);
+/// - a missing key is a usage error (exit 1) only when no base URL was
+///   resolved (neither `--base-url` nor `OPENAI_BASE_URL`);
+/// - with a base URL and no key (local OpenAI-compatible servers), the
+///   client sends `Bearer unused`.
+///
+/// An empty key counts as missing. The client honors the user's proxy
+/// settings ([`ProxyMode::System`]): a command-line tool should behave like
+/// other network tools in the user's shell.
+pub fn build_llm_client(resolved: &ResolvedPlan) -> Result<Option<Arc<dyn LlmClient>>, Error> {
+    match llm_client_config(resolved)? {
+        None => Ok(None),
+        Some(config) => {
+            let client: Arc<dyn LlmClient> = Arc::new(OpenAiCompatClient::new(config)?);
+            Ok(Some(client))
+        }
+    }
+}
+
+/// The client configuration [`build_llm_client`] uses (`None` under
+/// `--offline`); split out so the API-key rule is testable without
+/// constructing a client.
+fn llm_client_config(resolved: &ResolvedPlan) -> Result<Option<OpenAiCompatConfig>, Error> {
+    if resolved.config.offline {
+        return Ok(None);
+    }
+    let api_key = resolved.api_key.clone().filter(|key| !key.is_empty());
+    let base_url = match (&resolved.config.base_url, &api_key) {
+        (Some(base_url), _) => base_url.clone(),
+        (None, Some(_)) => DEFAULT_BASE_URL.to_string(),
+        (None, None) => {
+            return Err(Error::Usage(
+                "no API key: set OPENAI_API_KEY or pass --api-key (a local endpoint given via \
+                 --base-url or OPENAI_BASE_URL needs none; --offline needs no endpoint)"
+                    .to_string(),
+            ));
+        }
+    };
+    Ok(Some(OpenAiCompatConfig {
+        base_url,
+        api_key,
+        proxy: ProxyMode::System,
+        ..OpenAiCompatConfig::default()
+    }))
+}
+
 /// Best-effort extraction of a panic message from `catch_unwind`'s payload.
 ///
 /// Takes the payload box by value and dereferences it explicitly: coercing
@@ -488,5 +537,105 @@ fn panic_message(payload: Box<dyn Any + Send>) -> String {
         message.clone()
     } else {
         "unknown panic payload".to_string()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Resolves `munge-comments plan <flags>` against `env`.
+    fn resolved(flags: &[&str], env: &[(&str, &str)]) -> ResolvedPlan {
+        let argv = ["munge-comments", "plan"].iter().chain(flags).copied();
+        let Command::Plan(args) = Cli::try_parse_from(argv).unwrap().command else {
+            panic!("expected the plan subcommand");
+        };
+        let env = env
+            .iter()
+            .map(|(k, v)| (k.to_string(), v.to_string()))
+            .collect();
+        resolve_plan(&args, &env).unwrap()
+    }
+
+    #[test]
+    fn offline_constructs_no_client_even_without_a_key() {
+        let plan = resolved(&["--offline"], &[]);
+        assert!(llm_client_config(&plan).unwrap().is_none());
+        assert!(build_llm_client(&plan).unwrap().is_none());
+    }
+
+    #[test]
+    fn missing_key_without_base_url_is_a_usage_error() {
+        let plan = resolved(&[], &[]);
+        let err = llm_client_config(&plan).unwrap_err();
+        assert!(matches!(err, Error::Usage(_)), "{err:?}");
+        assert_eq!(err.exit_code(), 1);
+        let err = build_llm_client(&plan).err().unwrap();
+        assert_eq!(err.exit_code(), 1);
+    }
+
+    #[test]
+    fn empty_key_counts_as_missing() {
+        let plan = resolved(&["--api-key", ""], &[]);
+        assert_eq!(llm_client_config(&plan).unwrap_err().exit_code(), 1);
+        let plan = resolved(&[], &[("OPENAI_API_KEY", "")]);
+        assert_eq!(llm_client_config(&plan).unwrap_err().exit_code(), 1);
+    }
+
+    #[test]
+    fn base_url_from_env_without_key_sends_no_key() {
+        let plan = resolved(&[], &[("OPENAI_BASE_URL", "http://localhost:8080/v1")]);
+        let config = llm_client_config(&plan).unwrap().unwrap();
+        assert_eq!(config.base_url, "http://localhost:8080/v1");
+        assert_eq!(config.api_key, None, "the transport sends `Bearer unused`");
+        assert_eq!(config.proxy, ProxyMode::System);
+    }
+
+    #[test]
+    fn base_url_from_flag_without_key_sends_no_key() {
+        let plan = resolved(&["--base-url", "http://127.0.0.1:11434/v1"], &[]);
+        let config = llm_client_config(&plan).unwrap().unwrap();
+        assert_eq!(config.base_url, "http://127.0.0.1:11434/v1");
+        assert_eq!(config.api_key, None);
+        assert!(build_llm_client(&plan).unwrap().is_some());
+    }
+
+    #[test]
+    fn key_without_base_url_targets_the_default_endpoint() {
+        let plan = resolved(&[], &[("OPENAI_API_KEY", "sk-test")]);
+        let config = llm_client_config(&plan).unwrap().unwrap();
+        assert_eq!(config.base_url, DEFAULT_BASE_URL);
+        assert_eq!(config.api_key.as_deref(), Some("sk-test"));
+        assert_eq!(config.proxy, ProxyMode::System);
+        assert_eq!(
+            config.request_timeout,
+            OpenAiCompatConfig::default().request_timeout
+        );
+        assert_eq!(config.retry, OpenAiCompatConfig::default().retry);
+        // Construction only: no request is made.
+        assert!(build_llm_client(&plan).unwrap().is_some());
+    }
+
+    #[test]
+    fn key_and_base_url_are_both_used() {
+        let plan = resolved(
+            &[
+                "--api-key",
+                "sk-flag",
+                "--base-url",
+                "https://llm.example/v1",
+            ],
+            &[("OPENAI_API_KEY", "sk-env")],
+        );
+        let config = llm_client_config(&plan).unwrap().unwrap();
+        assert_eq!(config.base_url, "https://llm.example/v1");
+        assert_eq!(config.api_key.as_deref(), Some("sk-flag"));
+    }
+
+    #[test]
+    fn invalid_base_url_is_a_usage_error() {
+        let plan = resolved(&["--base-url", "not a url"], &[]);
+        let err = build_llm_client(&plan).err().unwrap();
+        assert!(matches!(err, Error::Usage(_)), "{err:?}");
     }
 }

@@ -20,8 +20,9 @@ use munge_comments::artifact::write::{ArtifactHeader, ArtifactWriter};
 use munge_comments::cli::{Cli, Command, Io, ModeArg, PlanArgs, run};
 use munge_comments::comments::types::Classification;
 use munge_comments::config::{DEFAULT_MODEL, resolve_plan};
-use munge_comments::llm::client::LlmClient;
-use munge_comments::{FileRef, LanguageId, Mode, PlanConfig, compute_summary, inventory_file};
+use munge_comments::{
+    FakeLlm, FileRef, LanguageId, Mode, PlanConfig, Scenario, compute_summary, inventory_file,
+};
 
 use common::SharedBuf;
 
@@ -575,13 +576,13 @@ fn parsed_defaults_match_the_documented_surface() {
 
 #[tokio::test]
 async fn builders_attach_llm_client_and_cancel_token() {
-    struct NoClient;
-    impl LlmClient for NoClient {}
-
     let harness = TestIo::new(HashMap::new());
     let token = CancellationToken::new();
     token.cancel();
-    let io = harness.io.with_llm(Arc::new(NoClient)).with_cancel(token);
+    let io = harness
+        .io
+        .with_llm(Arc::new(FakeLlm::new(Scenario::default())))
+        .with_cancel(token);
     assert!(io.llm.is_some(), "with_llm attaches the client");
     assert!(
         io.cancel.is_cancelled(),

@@ -1,0 +1,199 @@
+---
+source: tests/prompts.rs
+expression: "render(&prompts[0])"
+---
+===== system =====
+You are an expert Go engineer. The explanatory comments of the Go source file below have been removed. Write the comments a careful maintainer would put back, citing for each one the code it annotates.
+
+## Where to comment
+- Comment only where a comment earns its place; leave self-explanatory code uncommented. An empty `comments` list is a valid answer.
+- Comments still in the source were kept. Do not repeat them or add a comment beside one.
+
+## Citing the code
+Each comment names its place with `anchor` and `position`:
+- `position`: `leading` puts the comment on its own line(s) directly above the anchor; `trailing` puts it at the end of the anchor's first line.
+- `anchor.nodeKind`: the tree-sitter node type of the annotated code. The vocabulary is the declaration kinds `function_declaration`, `method_declaration`, `type_declaration`, `type_spec`, `type_alias`, `const_declaration`, `const_spec`, `var_declaration`, `var_spec`, `field_declaration`, `method_elem`, plus `end_of_file` (see below). For code that is not a declaration, use the actual statement kind (e.g. `if_statement`, `expression_statement`) or a best guess.
+- `anchor.name`: the declared name for a declaration; null otherwise.
+- `anchor.snippet`: the first line(s), at most 3, of the annotated code, copied character for character from the source, without comments.
+- For a comment at the end of the file, after all code, cite `end_of_file` with an empty snippet and a null name.
+
+## How to write comments
+- Explain why, not what: intent, constraints, trade-offs, invariants, non-obvious consequences.
+- Never restate what names, types or the code itself already express.
+- Match the file's prevailing comment style (statistics below), idiomatically for Go.
+- Write the comment text only: no comment delimiters or prefixes (`//`, `#`, `/*`, `*/`, a leading `*`) on any line. Separate lines with \n.
+- Never write or modify a directive (lint or type-checker suppressions, build tags, pragmas): directives are code, not prose.
+
+## Difficulty rubric
+Rate every comment you write:
+
+| Rating | Meaning |
+|---|---|
+| EASY | Fully reconstructable from immediately visible code; names/types are self-describing |
+| MEDIUM | Required reading surrounding code in the file or inferring non-obvious intent |
+| DIFFICULT | Requires knowledge absent from the codebase (history, external contracts, subtle invariants); the regenerated comment is guesswork |
+
+Rate honestly: when your comment is a guess, it is DIFFICULT. `rationale` says why you chose the rating. `missingContext` names the knowledge you lacked, specifically (e.g. why a limit has this value, which external system imposes a format); use null when nothing was missing.
+
+## JSON response
+Reply with one JSON object and nothing else: no prose, no code fences. Give one `comments` entry per comment you would write. The object must match this JSON Schema:
+```json
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "description": "The code the comment annotates.",
+      "properties": {
+        "name": {
+          "description": "The declared name for a declaration; otherwise null.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nodeKind": {
+          "description": "Tree-sitter node type of the annotated code, or `end_of_file`.",
+          "type": "string"
+        },
+        "snippet": {
+          "description": "Up to 3 lines of the annotated code, copied exactly, without comments.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "nodeKind",
+        "snippet"
+      ],
+      "type": "object"
+    },
+    "CitedPosition": {
+      "anyOf": [
+        {
+          "const": "leading",
+          "description": "On its own line(s) above the anchor.",
+          "type": "string"
+        },
+        {
+          "const": "trailing",
+          "description": "On the anchor's line, after the code.",
+          "type": "string"
+        }
+      ],
+      "description": "Where the comment goes relative to the anchor."
+    },
+    "Difficulty": {
+      "anyOf": [
+        {
+          "const": "EASY",
+          "description": "Reconstructable from the immediately visible code.",
+          "type": "string"
+        },
+        {
+          "const": "MEDIUM",
+          "description": "Needed surrounding code or inferring non-obvious intent.",
+          "type": "string"
+        },
+        {
+          "const": "DIFFICULT",
+          "description": "Needs knowledge absent from the code; guesswork.",
+          "type": "string"
+        }
+      ],
+      "description": "How hard the comment was to write from the code alone (see the rubric)."
+    },
+    "RemoveModeComment": {
+      "additionalProperties": false,
+      "description": "One comment, anchored by citing the code it annotates.",
+      "properties": {
+        "anchor": {
+          "$ref": "#/$defs/Anchor"
+        },
+        "comment": {
+          "description": "The comment text, without delimiters.",
+          "type": "string"
+        },
+        "difficulty": {
+          "$ref": "#/$defs/Difficulty"
+        },
+        "missingContext": {
+          "description": "What knowledge you lacked to write it confidently; null if none.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "position": {
+          "$ref": "#/$defs/CitedPosition"
+        },
+        "rationale": {
+          "description": "Why that difficulty.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "anchor",
+        "comment",
+        "difficulty",
+        "missingContext",
+        "position",
+        "rationale"
+      ],
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The comments you would write, each citing the code it annotates.",
+  "properties": {
+    "comments": {
+      "description": "One entry per comment you would write.",
+      "items": {
+        "$ref": "#/$defs/RemoveModeComment"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "comments"
+  ],
+  "title": "RemoveModeRegenerationResponse",
+  "type": "object"
+}
+```
+===== user =====
+Language id: go
+Path: internal/cache/cache.go
+
+## Functional comments (keep verbatim)
+These comments in the source are directives or otherwise load-bearing: tools or policy depend on their exact text. They stay exactly as written. Do not reword, move or repeat them, do not comment on them, and never put directive syntax in your own comments.
+```go
+//go:generate stringer -type=State
+//nolint:gocritic
+```
+
+## Comment style in this file
+The file's 4 explanatory comments (hidden from you): 4 line, 0 block, 0 doc; average length 48 characters, delimiters included. Prevailing kind: line comments. Write comments of similar length, density and voice.
+
+## Source (explanatory comments removed)
+```go
+package cache
+
+import "sync"
+
+//go:generate stringer -type=State
+
+type State int
+
+type Cache struct {
+	mu      sync.Mutex
+	entries map[string]State
+}
+
+func (c *Cache) Get(key string) State {
+	c.mu.Lock()
+	defer c.mu.Unlock() //nolint:gocritic
+	return c.entries[key]
+}
+```
+
+Reply with the JSON object described above.

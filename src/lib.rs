@@ -47,6 +47,8 @@ pub use comments::inventory::{FileRef, Inventory, InventoryComment, inventory_fi
 pub use config::{Mode, PlanConfig};
 pub use errors::{Error, LlmErrorReason};
 pub use lang::{extensions::language_for, ids::LanguageId};
+pub use llm::client::{LlmClient, OpenAiCompatClient, OpenAiCompatConfig, ProxyMode, RetryPolicy};
+pub use llm::fake::{FakeLlm, Scenario};
 pub use log::{CapturingLog, Log, NullLog, WriterLog};
 pub use report::markdown::render_markdown;
 pub use report::stats::{compute_summary, convergence_pct};

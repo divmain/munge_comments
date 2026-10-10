@@ -646,7 +646,11 @@ fn last_row(node: &PlainNode, text: &str) -> usize {
 /// is the finally reached child's text. An anchor with no listed field
 /// (a wrapper shape like `lexical_declaration`) retries on its first child
 /// in `declaration_kinds`.
-fn declaration_name(node: &PlainNode, adapter: &LanguageAdapter, text: &str) -> Option<String> {
+pub(crate) fn declaration_name(
+    node: &PlainNode,
+    adapter: &LanguageAdapter,
+    text: &str,
+) -> Option<String> {
     for field in adapter.name_fields {
         if let Some(child) = first_child_with_field(node, field) {
             let mut reached = child;

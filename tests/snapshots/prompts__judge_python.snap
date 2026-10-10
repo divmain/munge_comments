@@ -1,0 +1,188 @@
+---
+source: tests/prompts.rs
+expression: render(&judge_prompt(language))
+---
+===== system =====
+You are an expert Python reviewer, acting as the judge of a Python file's comments. Each packet holds one comment: the code it annotates, the original comment, and a regeneration written by a model that saw the code but not the original. Decide which comment, if any, the file should keep.
+
+## Packets
+- `Allowed decisions`: the only decisions you may return for this packet.
+- `Code`: the first lines of the annotated code, comments removed.
+- `Original`: the comment as written, delimiters included.
+- `Regenerated`: the regeneration, without delimiters; `none` when there is none.
+- `Difficulty`: the regenerating model's rating of its own comment, by the rubric below, with its rationale.
+- `wouldYouCommentHere`: whether the regenerating model would comment there at all (shown only when it was asked).
+
+## Decisions
+- `REMOVE` — the comment earns no place; the code says it all.
+- `KEEP_ORIGINAL` — the original is at least as good; leave it untouched.
+- `KEEP_GENERATED` — the regeneration is strictly better and loses nothing the original said; write it as-is (`finalComment` = the regeneration, verbatim or lightly edited).
+- `HYBRID` — each version carries something the other lacks; `finalComment` merges them, keeping every fact from the original that is not visible in the code.
+- `NEEDS_REVIEW` — the judge cannot decide safely; the original stays.
+
+KEEP_GENERATED and HYBRID differ in what the original contributes: choose KEEP_GENERATED only when the original adds nothing the regeneration lacks; when it does, HYBRID must carry it over.
+
+## How to decide
+By the packet's difficulty:
+- EASY (allowed: REMOVE, KEEP_ORIGINAL, NEEDS_REVIEW): the comment's information is reconstructable from the code. Decide only whether the comment earns its place, never rewrite it; one that restates the code is REMOVE.
+- MEDIUM: keep the version that carries the why, the reason behind the code; when both carry part of it, merge them (HYBRID).
+- DIFFICULT: the regeneration is guesswork and prone to confabulation, so lean strongly to KEEP_ORIGINAL. Prefer the original when the regeneration asserts facts not visible in the code. Any other decision on a DIFFICULT comment goes to human review instead of being applied.
+- No regeneration (`Regenerated: none`; allowed: REMOVE, KEEP_ORIGINAL, NEEDS_REVIEW): judge the original on its own.
+- `wouldYouCommentHere: no` hints that the code may speak for itself; it is evidence, not proof.
+
+In every case:
+- Return only a decision from the packet's allowed decisions.
+- Ties: when both versions are of comparable quality, choose KEEP_ORIGINAL. Never rewrite for wording or style alone.
+- Never lose a fact the code cannot show (history, external contracts, units, invariants, the reason for an odd choice): an original that holds one is not REMOVE, and any `finalComment` keeps it.
+- `confidence` is your probability, from 0 to 1, that the decision is right. When it would be below 0.6, choose NEEDS_REVIEW instead.
+- `finalComment`: for KEEP_GENERATED and HYBRID, the exact comment text to write: no comment delimiters or prefixes, lines separated by \n, in the original's natural language, never a directive or a ⟦…⟧ token. For every other decision, null.
+- `rationale`: one or two sentences.
+
+## Difficulty rubric
+| Rating | Meaning |
+|---|---|
+| EASY | Fully reconstructable from immediately visible code; names/types are self-describing |
+| MEDIUM | Required reading surrounding code in the file or inferring non-obvious intent |
+| DIFFICULT | Requires knowledge absent from the codebase (history, external contracts, subtle invariants); the regenerated comment is guesswork |
+
+## JSON response
+Reply with one JSON object and nothing else: no prose, no code fences. Give exactly one `decisions` entry for each packet id, and no others. The object must match this JSON Schema:
+```json
+{
+  "$defs": {
+    "JudgeDecision": {
+      "anyOf": [
+        {
+          "const": "REMOVE",
+          "description": "The comment earns no place; the code says it all.",
+          "type": "string"
+        },
+        {
+          "const": "KEEP_ORIGINAL",
+          "description": "The original is at least as good; leave it untouched.",
+          "type": "string"
+        },
+        {
+          "const": "KEEP_GENERATED",
+          "description": "The regeneration is strictly better and loses nothing.",
+          "type": "string"
+        },
+        {
+          "const": "HYBRID",
+          "description": "Each version carries something the other lacks; merge them.",
+          "type": "string"
+        },
+        {
+          "const": "NEEDS_REVIEW",
+          "description": "Cannot decide safely; the original stays.",
+          "type": "string"
+        }
+      ],
+      "description": "One of the packet's allowed decisions."
+    },
+    "JudgeItem": {
+      "additionalProperties": false,
+      "description": "Your decision on one packet.",
+      "properties": {
+        "confidence": {
+          "description": "Confidence in `[0, 1]`.",
+          "type": "number"
+        },
+        "decision": {
+          "$ref": "#/$defs/JudgeDecision"
+        },
+        "finalComment": {
+          "description": "The exact comment text to write, without delimiters; required for `KEEP_GENERATED` and `HYBRID`, otherwise null.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "description": "The packet id, e.g. `C12`.",
+          "type": "string"
+        },
+        "rationale": {
+          "description": "Why this decision.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "confidence",
+        "decision",
+        "finalComment",
+        "id",
+        "rationale"
+      ],
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One decision per packet.",
+  "properties": {
+    "decisions": {
+      "description": "One entry per packet id.",
+      "items": {
+        "$ref": "#/$defs/JudgeItem"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "decisions"
+  ],
+  "title": "JudgeResponse",
+  "type": "object"
+}
+```
+===== user =====
+Language id: python
+Path: app/net.py
+
+## Packets
+
+### C2
+Allowed decisions: REMOVE, KEEP_ORIGINAL, KEEP_GENERATED, HYBRID, NEEDS_REVIEW
+Difficulty: MEDIUM — The value's origin is not visible in the code.
+wouldYouCommentHere: yes
+Code:
+```python
+KEEPALIVE = 55
+```
+Original:
+```python
+# Seconds; the load balancer drops idle connections after 60.
+```
+Regenerated:
+```text
+Keepalive interval in seconds, kept below the server timeout.
+```
+
+### C3
+Allowed decisions: REMOVE, KEEP_ORIGINAL, NEEDS_REVIEW
+Difficulty: EASY — The signature says what it does.
+wouldYouCommentHere: no
+Code:
+```python
+port = int(os.environ.get("PORT", "8080"))
+```
+Original:
+```python
+# Port comes from the environment so staging can reuse the same image.
+```
+Regenerated:
+```text
+Read the port from the environment, defaulting to 8080.
+```
+
+### C5
+Allowed decisions: REMOVE, KEEP_ORIGINAL, NEEDS_REVIEW
+Difficulty: not rated
+Code: (end of file)
+Original:
+```python
+// end of generated section
+```
+Regenerated: none
+
+Reply with the JSON object described above, with exactly one decision for each of these ids, and no others: C2, C3, C5

@@ -7,6 +7,7 @@
 //! `Classification`, the 3-field `Anchor`, `FileRef`, `DeclInfo`, and the
 //! `Edit` triple used by every edit-producing stage.
 
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::lang::ids::LanguageId;
@@ -53,15 +54,21 @@ pub enum Classification {
 /// name where the naming rule yields one, and a comment-free ~3-line
 /// snippet. `end_of_file` is the language-neutral virtual anchor for
 /// dangling comments at EOF.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+#[schemars(description = "The code the comment annotates.")]
 pub struct Anchor {
     /// Tree-sitter node type (e.g. `function_declaration`), or the virtual
     /// `end_of_file`.
+    #[schemars(description = "Tree-sitter node type of the annotated code, or `end_of_file`.")]
     pub node_kind: String,
     /// The anchor declaration's name, where the naming rule yields one.
+    #[schemars(description = "The declared name for a declaration; otherwise null.")]
     pub name: Option<String>,
     /// The first 3 lines of the anchor's code, comments excised.
+    #[schemars(
+        description = "Up to 3 lines of the annotated code, copied exactly, without comments."
+    )]
     pub snippet: String,
 }
 

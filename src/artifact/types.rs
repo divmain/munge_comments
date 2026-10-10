@@ -11,6 +11,7 @@
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::ops::Deref;
 
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::comments::types::{Anchor, Classification, CommentKind, Position};
@@ -24,15 +25,35 @@ use crate::util::paths::{is_relative_posix, normalize_posix};
 pub const ARTIFACT_VERSION: u32 = 1;
 
 /// How hard a comment's information is to recover from the code alone.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, JsonSchema,
+)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[schemars(description = "How hard the comment was to write from the code alone (see the rubric).")]
 pub enum Difficulty {
     /// Fully recoverable from the code.
+    #[schemars(description = "Reconstructable from the immediately visible code.")]
     Easy,
     /// Partly recoverable.
+    #[schemars(description = "Needed surrounding code or inferring non-obvious intent.")]
     Medium,
     /// Carries information the code does not.
+    #[schemars(description = "Needs knowledge absent from the code; guesswork.")]
     Difficult,
+}
+
+impl Difficulty {
+    /// Every difficulty, in declaration order.
+    pub const ALL: [Difficulty; 3] = [Difficulty::Easy, Difficulty::Medium, Difficulty::Difficult];
+
+    /// The wire (serde) name, e.g. `"MEDIUM"`.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Difficulty::Easy => "EASY",
+            Difficulty::Medium => "MEDIUM",
+            Difficulty::Difficult => "DIFFICULT",
+        }
+    }
 }
 
 /// The authoritative per-record decision.
@@ -103,18 +124,24 @@ impl Decision {
 }
 
 /// The subset of [`Decision`] the judge may return on the wire.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[schemars(description = "One of the packet's allowed decisions.")]
 pub enum JudgeDecision {
     /// See [`Decision::Remove`].
+    #[schemars(description = "The comment earns no place; the code says it all.")]
     Remove,
     /// See [`Decision::KeepOriginal`].
+    #[schemars(description = "The original is at least as good; leave it untouched.")]
     KeepOriginal,
     /// See [`Decision::KeepGenerated`].
+    #[schemars(description = "The regeneration is strictly better and loses nothing.")]
     KeepGenerated,
     /// See [`Decision::Hybrid`].
+    #[schemars(description = "Each version carries something the other lacks; merge them.")]
     Hybrid,
     /// See [`Decision::NeedsReview`].
+    #[schemars(description = "Cannot decide safely; the original stays.")]
     NeedsReview,
 }
 
@@ -642,6 +669,13 @@ mod tests {
             assert_eq!(decision.as_str(), wire(decision));
         }
         assert_eq!(wire(Decision::KeepGenerated), "KEEP_GENERATED");
+    }
+
+    #[test]
+    fn difficulty_as_str_is_the_wire_name() {
+        for difficulty in Difficulty::ALL {
+            assert_eq!(difficulty.as_str(), wire(difficulty));
+        }
     }
 
     #[test]

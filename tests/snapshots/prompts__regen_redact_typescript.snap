@@ -1,0 +1,150 @@
+---
+source: tests/prompts.rs
+expression: "render(&prompts[0])"
+---
+===== system =====
+You are an expert TypeScript engineer. In the TypeScript source file below, explanatory comments have been replaced by placeholders. Without seeing the originals, write the comment each requested placeholder should hold, as a careful maintainer of this code would.
+
+## Placeholders
+- A placeholder is a comment whose only content is a token of the form ⟦Cn⟧, such as ⟦C12⟧; its id is the part inside the brackets (`C12`). The closing delimiter of a block placeholder may sit on the next line.
+- One placeholder stands for one whole comment, which may have spanned several lines.
+- A placeholder on a line of its own comments on the code below it; a placeholder after code on the same line comments on that line.
+- Never echo placeholders: no ⟦, ⟧ or placeholder ids in your comments.
+- Comments still visible in the source were not hidden. Leave them alone and do not repeat them.
+
+## Is a comment needed here?
+Set `wouldYouCommentHere` to false when you would leave this spot uncommented because the code speaks for itself. Still give your best comment; it may be empty only when you answer false.
+
+## How to write comments
+- Explain why, not what: intent, constraints, trade-offs, invariants, non-obvious consequences.
+- Never restate what names, types or the code itself already express.
+- Match the file's prevailing comment style (statistics below), idiomatically for TypeScript.
+- Write the comment text only: no comment delimiters or prefixes (`//`, `#`, `/*`, `*/`, a leading `*`) on any line. Separate lines with \n.
+- Never write or modify a directive (lint or type-checker suppressions, build tags, pragmas): directives are code, not prose.
+
+## Difficulty rubric
+Rate every comment you write:
+
+| Rating | Meaning |
+|---|---|
+| EASY | Fully reconstructable from immediately visible code; names/types are self-describing |
+| MEDIUM | Required reading surrounding code in the file or inferring non-obvious intent |
+| DIFFICULT | Requires knowledge absent from the codebase (history, external contracts, subtle invariants); the regenerated comment is guesswork |
+
+Rate honestly: when your comment is a guess, it is DIFFICULT. `rationale` says why you chose the rating. `missingContext` names the knowledge you lacked, specifically (e.g. why a limit has this value, which external system imposes a format); use null when nothing was missing.
+
+## JSON response
+Reply with one JSON object and nothing else: no prose, no code fences. Give exactly one `comments` entry for each requested id (listed after the source), and none for any other placeholder. The object must match this JSON Schema:
+```json
+{
+  "$defs": {
+    "Difficulty": {
+      "anyOf": [
+        {
+          "const": "EASY",
+          "description": "Reconstructable from the immediately visible code.",
+          "type": "string"
+        },
+        {
+          "const": "MEDIUM",
+          "description": "Needed surrounding code or inferring non-obvious intent.",
+          "type": "string"
+        },
+        {
+          "const": "DIFFICULT",
+          "description": "Needs knowledge absent from the code; guesswork.",
+          "type": "string"
+        }
+      ],
+      "description": "How hard the comment was to write from the code alone (see the rubric)."
+    },
+    "RegeneratedComment": {
+      "additionalProperties": false,
+      "description": "The comment you would write in place of one placeholder.",
+      "properties": {
+        "comment": {
+          "description": "The comment text, without delimiters. Non-empty when `wouldYouCommentHere` is true; may be empty when it is false.",
+          "type": "string"
+        },
+        "difficulty": {
+          "$ref": "#/$defs/Difficulty"
+        },
+        "id": {
+          "description": "The placeholder id, e.g. `C12`.",
+          "type": "string"
+        },
+        "missingContext": {
+          "description": "What knowledge you lacked to write it confidently; null if none.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rationale": {
+          "description": "Why that difficulty.",
+          "type": "string"
+        },
+        "wouldYouCommentHere": {
+          "description": "Whether a comment is warranted here at all.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "comment",
+        "difficulty",
+        "id",
+        "missingContext",
+        "rationale",
+        "wouldYouCommentHere"
+      ],
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One regenerated comment per requested placeholder id.",
+  "properties": {
+    "comments": {
+      "description": "One entry per requested placeholder id.",
+      "items": {
+        "$ref": "#/$defs/RegeneratedComment"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "comments"
+  ],
+  "title": "RegenerationResponse",
+  "type": "object"
+}
+```
+===== user =====
+Language id: typescript
+Path: src/settings.ts
+
+## Functional comments (keep verbatim)
+These comments in the source are directives or otherwise load-bearing: tools or policy depend on their exact text. They stay exactly as written. Do not reword, move or repeat them, do not comment on them, and never put directive syntax in your own comments.
+```typescript
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+```
+
+## Comment style in this file
+The file's 3 explanatory comments (hidden from you): 2 line, 0 block, 1 doc; average length 51 characters, delimiters included. Prevailing kind: line comments. Write comments of similar length, density and voice.
+
+## Source (comments replaced by placeholders)
+```typescript
+import { readFile } from "node:fs/promises";
+
+//⟦C1⟧
+const MAX_RETRIES = 3;
+
+/*⟦C2⟧*/
+export async function loadSettings(path: string): Promise<Settings> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const raw: any = JSON.parse(await readFile(path, "utf8"));
+  return { theme: raw.theme ?? "light" }; //⟦C4⟧
+}
+```
+
+## Requested ids
+Reply with the JSON object described above, with exactly one entry for each of these ids, and no others: C1, C2, C4

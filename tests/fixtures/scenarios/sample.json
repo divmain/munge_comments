@@ -1,0 +1,59 @@
+{
+  "byKey": {
+    "Increment the counter.": {
+      "regen": {
+        "comment": "Increments the counter.",
+        "difficulty": "EASY",
+        "rationale": "The code says it."
+      },
+      "judge": {
+        "decision": "REMOVE",
+        "confidence": 0.95,
+        "rationale": "Restates the code."
+      }
+    },
+    "src/billing.ts::Increment the counter.": {
+      "regen": {
+        "comment": "Bump the invoice sequence; gaps are illegal in some jurisdictions.",
+        "difficulty": "MEDIUM"
+      },
+      "judge": {
+        "decision": "KEEP_GENERATED",
+        "finalComment": "Bump the invoice sequence; gaps are illegal in some jurisdictions.",
+        "confidence": 0.85
+      }
+    },
+    "Retries are capped because the upstream rate-limits bursts.": {
+      "regen": {
+        "comment": "",
+        "difficulty": "DIFFICULT",
+        "wouldYouCommentHere": false,
+        "missingContext": "The upstream's rate-limit policy."
+      }
+    },
+    "parseHeader": {
+      "judge": {
+        "decision": "HYBRID",
+        "finalComment": "Parses the header; the magic bytes are checked first.",
+        "confidence": 0.7
+      }
+    }
+  },
+  "extraRegenerations": [
+    {
+      "path": "src/worker.py",
+      "anchor": {
+        "nodeKind": "function_definition",
+        "name": "drain",
+        "snippet": "def drain(queue):"
+      },
+      "position": "leading",
+      "comment": "Drains the queue until the sentinel arrives.",
+      "difficulty": "MEDIUM"
+    }
+  ],
+  "failures": [
+    { "path": "src/flaky.go", "call": "regenerate", "error": "truncated", "times": 2 },
+    { "path": "src/locked.go", "error": "auth" }
+  ]
+}
