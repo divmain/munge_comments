@@ -1,0 +1,34 @@
+---
+source: tests/report.rs
+expression: outcome
+---
+## Apply outcome
+
+Files: applied 1 · unchanged 1 · dry-run 1 · not-selected 1 · skipped-plan-status 1 · skipped-firewall 1 · skipped-verify 1 · failed-invariant 1 · failed-io 1
+
+### Files
+
+- `src/lib.rs`: `applied`
+  - skipped edit N1: `allow-add-off`
+  - skipped edit C5: `final-comment-invalid`
+- `web/empty.ts`: `unchanged`
+- `web/dry.ts`: `dry-run`
+- `web/other.ts`: `not-selected`
+- `deep/nested.go`: `skipped-plan-status` — planned as skipped (too-deep)
+- `web/fw.tsx`: `skipped-firewall` — edit C2 intersects functional comment `// @ts-ignore`
+- `web/asi.ts`: `skipped-verify` — tree-shape mismatch at node 12
+- `src/locked.py`: `failed-io` — permission denied
+
+### Failed invariant (bug reports)
+
+Internal invariant violations: nothing was written for these files, and re-running fails the same way. Please report them as bugs.
+
+- `src/overlap.rs`: `failed-invariant` — overlapping edits C1 [0, 9) and C2 [4, 12)
+
+### Partial apply
+
+Some files could not be read or written. Re-run them with:
+
+```
+munge-comments apply munge-comments-plan.json --only src/locked.py
+```

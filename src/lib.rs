@@ -21,6 +21,8 @@
     )
 )]
 
+pub mod apply;
+pub mod artifact;
 pub mod comments;
 pub mod config;
 pub mod discover;
@@ -28,12 +30,23 @@ pub mod errors;
 pub mod lang;
 pub mod llm;
 pub mod log;
+pub mod report;
+pub mod util;
 
 #[cfg(feature = "cli")]
 pub mod cli;
 
+pub use apply::run::{ApplyDeps, ApplyHooks, ApplyOutcome, ApplyRequest, run_apply};
+pub use apply::types::ApplyResult;
+pub use apply::verify::{FunctionalComment, functional_sequence, verify_semantic_equality};
+pub use artifact::read::read_artifact;
+pub use artifact::types::{
+    CommentRecord, Decision, Difficulty, FilePlan, PlanArtifact, Summary, ValidatedArtifact,
+};
 pub use comments::inventory::{FileRef, Inventory, InventoryComment, inventory_file};
 pub use config::{Mode, PlanConfig};
 pub use errors::{Error, LlmErrorReason};
 pub use lang::{extensions::language_for, ids::LanguageId};
 pub use log::{CapturingLog, Log, NullLog, WriterLog};
+pub use report::markdown::render_markdown;
+pub use report::stats::{compute_summary, convergence_pct};

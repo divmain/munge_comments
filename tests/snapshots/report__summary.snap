@@ -1,0 +1,34 @@
+---
+source: tests/report.rs
+expression: summary
+---
+{
+  "filesConsidered": 6,
+  "filesFailed": 2,
+  "filesSkipped": 2,
+  "languages": {
+    "typescript": 1,
+    "python": 2,
+    "go": 1,
+    "rust": 2
+  },
+  "commentsTotal": 6,
+  "proseTotal": 4,
+  "removed": 2,
+  "rewritten": 1,
+  "kept": 1,
+  "needsReview": 1,
+  "protected": 1,
+  "overrides": 1,
+  "new": 1,
+  "newHeld": 1,
+  "warnings": 2,
+  "reductionPct": 0.25,
+  "charReductionPct": 0.15748031496062992,
+  "difficultyHistogram": {
+    "EASY": 1,
+    "MEDIUM": 1,
+    "DIFFICULT": 1,
+    "unrated": 1
+  }
+}

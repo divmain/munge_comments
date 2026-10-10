@@ -1,0 +1,11 @@
+---
+source: tests/verifier.rs
+expression: residues
+input_file: tests/fixtures/golden/rust/raw-string.rs
+---
+[
+  "r#\"",
+  "\"#",
+  "r##\"",
+  "\"##"
+]

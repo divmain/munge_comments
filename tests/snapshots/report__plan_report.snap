@@ -1,0 +1,135 @@
+---
+source: tests/report.rs
+expression: markdown
+---
+# munge-comments report — 2026-10-09T14:03:11Z
+
+Mode: `redact` · model: `gpt-4.1` · allowAdd: off · offline: off
+
+## Summary
+
+Files: 6 considered · 2 failed · 2 skipped
+
+| comments | prose comments | removed | rewritten | kept | needs review | protected | overrides | new | new held | reduction | char reduction |
+|---------:|---------------:|--------:|----------:|-----:|-------------:|----------:|----------:|----:|---------:|----------:|---------------:|
+| 6 | 4 | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 25.0% | 15.7% |
+
+Difficulty: EASY 1 · MEDIUM 1 · DIFFICULT 1 · unrated 1
+Languages: typescript 1 · python 2 · go 1 · rust 2
+Warnings: 2
+
+## `deep/nested.go` (go)
+
+Status: skipped (too-deep) — syntax tree deeper than 2000 levels
+
+## `legacy/latin.py` (python)
+
+Status: skipped (declared-encoding) — coding cookie declares latin-1
+
+## `src/lib.rs` (rust)
+
+Status: complete
+Effective mode: `remove` (fallback from `redact`)
+Warnings: 2 (see Warnings)
+
+### C1 — line 1 — unrated — KEEP_PROTECTED (protected, conf 1.00)
+
+- line · leading · functional · column 1
+- flags: `license`
+- before → after: `"// SPDX-License-Identifier: MIT"` → (unchanged)
+
+### C2 — line 5 — unrated — REMOVE (human, conf 1.00)
+
+- doc · leading · doc-protected · column 1
+- before → after: `"/// Adds two numbers."` → (removed)
+
+### C3 — line 7 — EASY — REMOVE (judge, conf 0.95)
+
+- line · leading · prose · column 5
+- before → after: `"// add them together"` → (removed)
+- rationale: restates `a + b`
+
+### C4 — line 11 — unrated — KEEP_ORIGINAL (heuristic, conf 1.00)
+
+- line · leading · prose · column 1
+- flags: `flagged-for-review`, `todo`
+- before → after: `"// TODO: overflow handling"` → (unchanged)
+
+### C5 — line 13 — MEDIUM — KEEP_GENERATED (judge, conf 0.82)
+
+- line · trailing · prose · column 11
+- before → after: `"// multiply"` → `"// Product."`
+- regenerated: `"// Product."`
+- rationale: the regenerated text names the result
+
+### C6 — line 16 — DIFFICULT — NEEDS_REVIEW (judge, conf 0.60)
+
+- line · leading · prose · column 1
+- before → after: `"// Uses wrapping arithmetic because the protocol mandates modulo 2^32."` → (unchanged)
+- regenerated: `"// Subtracts b from a."`
+- rationale: judge and rails disagree
+- difficulty rationale: the protocol is not in the code
+- missing context: the protocol mandates modulo 2^32 arithmetic
+
+### N2 — line 17 — unrated — NEEDS_REVIEW (engine, conf 1.00)
+
+- line · leading · prose · column 1
+- flags: `verify-rail`
+- before → after: (none) → (held for review)
+- proposed: `"// Wraps on overflow."`
+- rationale: demoted from NEW by the verify rail
+
+### N1 — line 21 — unrated — NEW (engine, conf 1.00)
+
+- line · leading · prose · column 1
+- before → after: (none) → `"// Negates a."` (report-only: allowAdd off)
+
+## `src/locked.py` (python)
+
+Status: failed (io) — permission denied
+
+## `src/main.rs` (rust)
+
+Status: failed (llm) — llm error (timeout)
+
+## `web/empty.ts` (typescript)
+
+Status: complete
+
+No comments.
+
+## Needs human review
+
+- `src/lib.rs` C6 (line 16): `"// Uses wrapping arithmetic because the protocol mandates modulo 2^32."` → proposed `"// Subtracts b from a."` — judge and rails disagree
+- `src/lib.rs` N2 (line 17): held NEW proposal `"// Wraps on overflow."` — demoted from NEW by the verify rail
+
+## Flagged
+
+- `src/lib.rs` C4 (line 11): `flagged-for-review`, `todo` — KEEP_ORIGINAL — `"// TODO: overflow handling"`
+
+## Protected policy items
+
+- `src/lib.rs` C2 (line 5): **override** → REMOVE (human) — **semantic: re-run `cargo test --doc` and `cargo build`**
+
+## New comment proposals
+
+allowAdd is off: every proposal is report-only.
+
+- `src/lib.rs` N2 (line 17) [held for review]: `"// Wraps on overflow."`
+- `src/lib.rs` N1 (line 21) [NEW, report-only]: `"// Negates a."`
+
+## Files not processed
+
+- `deep/nested.go` (go): skipped — `too-deep` — syntax tree deeper than 2000 levels
+- `legacy/latin.py` (python): skipped — `declared-encoding` — coding cookie declares latin-1
+- `src/locked.py` (python): failed — `io` — permission denied
+- `src/main.rs` (rust): failed — `llm` — llm error (timeout)
+
+## Mode fallbacks
+
+- `src/lib.rs` (rust): effective mode `remove` (config: `redact`)
+
+## Warnings
+
+- `src/lib.rs`: `placeholder-collision` — placeholder `__MC_1__` occurs in the file; fell back to remove mode
+- `src/lib.rs`: `verify-demoted` — N2 demoted to NEEDS_REVIEW (was NEW)

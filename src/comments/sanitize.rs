@@ -1,14 +1,20 @@
-//! Comment-text sanitization primitives: the single implementations of
-//! [`comment_body`], [`match_key`] and [`normalize_comment_text`].
+//! Comment-text sanitization: the single implementations of
+//! [`comment_body`], [`match_key`], [`normalize_comment_text`],
+//! [`is_content_empty`] and [`validate_final_comment`].
 //!
 //! Every consumer that needs delimiter-free comment text — directive
 //! matching, heuristic similarity, the content-empty rule, `FakeLlm`
 //! scenario keys, the ground-truth manifest, edit surgery — imports these;
-//! no consumer strips delimiters its own way. `validate_final_comment`
-//! (written-text validation) needs slot rendering and lands with the
-//! sanitizer-validation ticket.
+//! no consumer strips delimiters its own way. [`validate_final_comment`]
+//! is the single written-text validator, shared by the LLM layer, the
+//! heuristics, `FakeLlm` and apply.
 
-use crate::lang::adapter::{LanguageAdapter, compiled};
+use unicode_segmentation::UnicodeSegmentation;
+
+use super::classify::matches_functional_pattern;
+use super::redact::has_placeholder_collision;
+use crate::apply::render::{Slot, render_comment};
+use crate::lang::adapter::{LanguageAdapter, SlotKind, compiled};
 
 /// The characters other than `\n` that terminate a line somewhere a comment
 /// may end up: a lone CR (every tier-1 compiler's line terminator), and the
@@ -84,7 +90,7 @@ fn shape<'a>(raw: &'a str, adapter: &LanguageAdapter) -> Shape<'a> {
 /// compilation cannot fail for the pinned openers (a unit test compiles
 /// every adapter). Should it ever fail, the bare line prefix is used, which
 /// differs only for the doc/bang opener variants.
-fn opener_len(line: &str, adapter: &LanguageAdapter) -> Option<usize> {
+pub(crate) fn opener_len(line: &str, adapter: &LanguageAdapter) -> Option<usize> {
     match compiled(adapter) {
         Ok(patterns) => patterns
             .line_opener
@@ -190,6 +196,115 @@ pub fn match_key(raw: &str, adapter: &LanguageAdapter) -> String {
         .split_whitespace()
         .collect::<Vec<_>>()
         .join(" ")
+}
+
+/// The content-empty rule (decision-matrix row 3, and the sanitizer's
+/// first content check): the body of `raw` holds zero word tokens —
+/// `unicode_words()` segments, UAX #29 word boundaries. `//`, `/* */`,
+/// `# -----` are content-empty.
+pub fn is_content_empty(raw: &str, adapter: &LanguageAdapter) -> bool {
+    comment_body(raw, adapter).unicode_words().next().is_none()
+}
+
+/// Why [`validate_final_comment`] refused text that would be written.
+#[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
+pub enum InvalidFinalComment {
+    /// A character no slot may hold, in any language: a C0 control other
+    /// than tab and line feed, U+007F, U+FEFF, or a bidi control.
+    #[error("contains the forbidden character U+{:04X}", u32::from(*.0))]
+    ForbiddenCharacter(char),
+    /// Redaction placeholder text (`⟦C<digits>⟧`) leaked into the text.
+    #[error("contains redaction placeholder text")]
+    PlaceholderLeak,
+    /// Zero word tokens: it would render as a bare opener.
+    #[error("has no word content")]
+    ContentEmpty,
+    /// The language has no comment of the slot's kind.
+    #[error("the language has no {0:?} comments")]
+    UnsupportedSlot(SlotKind),
+    /// The block closer, which cannot be escaped, bound for a block/doc
+    /// slot.
+    #[error("contains the block-comment closer {0:?}")]
+    BlockClose(&'static str),
+    /// An adapter `slot_rejects` pattern matched.
+    #[error("{0}")]
+    SlotReject(&'static str),
+    /// The rendered text would itself classify as functional.
+    #[error("would itself be a functional comment")]
+    Functional,
+    /// The adapter's patterns failed to compile (never for the pinned
+    /// tables); validation fails closed.
+    #[error("the language's patterns are unavailable")]
+    PatternsUnavailable,
+}
+
+/// Whether no comment slot may hold `c` (see
+/// [`InvalidFinalComment::ForbiddenCharacter`]): NUL is a compile error in
+/// Go and CPython, a non-leading BOM is rejected by both, rustc denies
+/// bidi controls in comments, and the verifier sees none of it.
+fn is_forbidden(c: char) -> bool {
+    (c < '\u{20}' && c != '\t' && c != '\n')
+        || c == '\u{7F}'
+        || c == '\u{FEFF}'
+        || ('\u{202A}'..='\u{202E}').contains(&c)
+        || ('\u{2066}'..='\u{2069}').contains(&c)
+}
+
+/// Validates text that would be *written* into a slot of `slot_kind` (a
+/// judge `finalComment` for `KEEP_GENERATED`/`HYBRID`, a NEW record's
+/// text), after [`normalize_comment_text`]. Never edits the text; rejects,
+/// in order:
+///
+/// 1. forbidden characters (see [`InvalidFinalComment::ForbiddenCharacter`]);
+/// 2. placeholder leakage (`⟦C<digits>⟧`);
+/// 3. content-empty text ([`is_content_empty`]);
+/// 4. a block/doc slot in a language without block comments, or the
+///    block closer in a block/doc slot;
+/// 5. any adapter `slot_rejects` pattern for `slot_kind`;
+/// 6. text that would itself classify as functional:
+///    [`matches_functional_pattern`] on the text rendered into the
+///    language's default slot of `slot_kind` (`//`/`#`, `/*`, `/**`) —
+///    both multi-line and collapsed to one line, as an inline or trailing
+///    slot renders it — so the result never depends on a particular
+///    slot's captured opener or layout. Doc `functional_tags` are checked
+///    in every slot kind.
+pub fn validate_final_comment(
+    text: &str,
+    slot_kind: SlotKind,
+    adapter: &LanguageAdapter,
+) -> Result<(), InvalidFinalComment> {
+    if let Some(c) = text.chars().find(|&c| is_forbidden(c)) {
+        return Err(InvalidFinalComment::ForbiddenCharacter(c));
+    }
+    if has_placeholder_collision(text) {
+        return Err(InvalidFinalComment::PlaceholderLeak);
+    }
+    if is_content_empty(text, adapter) {
+        return Err(InvalidFinalComment::ContentEmpty);
+    }
+    let slot = Slot::canonical(slot_kind, adapter)
+        .ok_or(InvalidFinalComment::UnsupportedSlot(slot_kind))?;
+    if slot_kind != SlotKind::Line && text.contains(slot.block_close) {
+        return Err(InvalidFinalComment::BlockClose(slot.block_close));
+    }
+    let patterns = compiled(adapter).map_err(|_| InvalidFinalComment::PatternsUnavailable)?;
+    if let Some(reject) = patterns
+        .slot_rejects
+        .iter()
+        .find(|reject| reject.kind == slot_kind && reject.regex.is_match(text))
+    {
+        return Err(InvalidFinalComment::SlotReject(reject.reason));
+    }
+    let collapsed = Slot {
+        trailing: true,
+        ..slot.clone()
+    };
+    if matches_functional_pattern(&render_comment(text, &slot), adapter)
+        || matches_functional_pattern(&render_comment(text, &collapsed), adapter)
+    {
+        return Err(InvalidFinalComment::Functional);
+    }
+    Ok(())
 }
 
 /// Benign normalization of (model-returned or hand-edited) comment text;
@@ -503,6 +618,325 @@ mod tests {
                 assert_eq!(once, text, "{}: {text:?}", id.as_str());
             }
         }
+    }
+
+    const SLOTS: [SlotKind; 3] = [SlotKind::Line, SlotKind::Block, SlotKind::Doc];
+
+    fn adapter(id: LanguageId) -> &'static LanguageAdapter {
+        adapter_for(id)
+    }
+
+    /// Normalizes, then validates — the order every caller uses.
+    fn check(text: &str, slot: SlotKind, id: LanguageId) -> Result<(), InvalidFinalComment> {
+        validate_final_comment(
+            &normalize_comment_text(text, adapter(id)),
+            slot,
+            adapter(id),
+        )
+    }
+
+    /// The slot kinds `id` has.
+    fn slots_of(id: LanguageId) -> &'static [SlotKind] {
+        if adapter(id).block_delimiters.is_some() {
+            &SLOTS
+        } else {
+            &SLOTS[..1]
+        }
+    }
+
+    #[test]
+    fn content_empty_text_is_rejected() {
+        for id in LanguageId::ALL {
+            for &slot in slots_of(id) {
+                for text in ["", "   ", " \n\t\n", "-----", "*"] {
+                    assert_eq!(
+                        check(text, slot, id),
+                        Err(InvalidFinalComment::ContentEmpty),
+                        "{} {slot:?} {text:?}",
+                        id.as_str()
+                    );
+                }
+                assert_eq!(check("a", slot, id), Ok(()), "{} {slot:?}", id.as_str());
+                assert_eq!(check("42", slot, id), Ok(()), "{} {slot:?}", id.as_str());
+            }
+        }
+        assert!(is_content_empty("//", js()));
+        assert!(is_content_empty("/* */", js()));
+        assert!(is_content_empty("# -----", py()));
+        assert!(!is_content_empty("# x", py()));
+        assert!(!is_content_empty("// 数", js()));
+    }
+
+    #[test]
+    fn forbidden_characters_are_rejected_in_every_slot() {
+        for id in LanguageId::ALL {
+            for &slot in slots_of(id) {
+                for c in [
+                    '\0', '\u{1}', '\u{B}', '\u{C}', '\r', '\u{1B}', '\u{7F}', '\u{FEFF}',
+                    '\u{202A}', '\u{202E}', '\u{2066}', '\u{2069}',
+                ] {
+                    let text = format!("note {c} here");
+                    assert_eq!(
+                        validate_final_comment(&text, slot, adapter(id)),
+                        Err(InvalidFinalComment::ForbiddenCharacter(c)),
+                        "{} {slot:?} U+{:04X}",
+                        id.as_str(),
+                        u32::from(c)
+                    );
+                }
+                // Tab, line feed and ordinary non-ASCII text are fine.
+                assert_eq!(
+                    validate_final_comment("a\tb\nc é → 数", slot, adapter(id)),
+                    Ok(()),
+                    "{} {slot:?}",
+                    id.as_str()
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn placeholder_leakage_is_rejected() {
+        for id in LanguageId::ALL {
+            for &slot in slots_of(id) {
+                assert_eq!(
+                    check("see ⟦C12⟧ above", slot, id),
+                    Err(InvalidFinalComment::PlaceholderLeak),
+                );
+                assert_eq!(check("brackets ⟦like this⟧ and ⟦C⟧", slot, id), Ok(()));
+            }
+        }
+    }
+
+    #[test]
+    fn the_block_closer_is_rejected_in_block_and_doc_slots_only() {
+        for id in LanguageId::ALL {
+            if adapter(id).block_delimiters.is_none() {
+                continue;
+            }
+            for slot in [SlotKind::Block, SlotKind::Doc] {
+                assert_eq!(
+                    check("matches src/**/*.ts files", slot, id),
+                    Err(InvalidFinalComment::BlockClose("*/")),
+                    "{} {slot:?}",
+                    id.as_str()
+                );
+                assert_eq!(
+                    check("ends early */ x", slot, id),
+                    Err(InvalidFinalComment::BlockClose("*/"))
+                );
+            }
+            assert_eq!(
+                check("matches src/**/*.ts files", SlotKind::Line, id),
+                Ok(()),
+                "{}",
+                id.as_str()
+            );
+        }
+    }
+
+    #[test]
+    fn a_language_without_block_comments_has_no_block_slots() {
+        for slot in [SlotKind::Block, SlotKind::Doc] {
+            assert_eq!(
+                check("prose", slot, LanguageId::Python),
+                Err(InvalidFinalComment::UnsupportedSlot(slot)),
+            );
+        }
+        assert_eq!(check("prose", SlotKind::Line, LanguageId::Python), Ok(()));
+    }
+
+    #[test]
+    fn c_line_slots_reject_line_splices() {
+        for id in [LanguageId::C, LanguageId::Cpp] {
+            for text in [
+                "continues \\",
+                "continues \\  ",
+                "continues \\\t",
+                "first \\\nsecond",
+                "trigraph ??/",
+                "trigraph ??/ ",
+            ] {
+                assert!(
+                    matches!(
+                        check(text, SlotKind::Line, id),
+                        Err(InvalidFinalComment::SlotReject(_))
+                    ),
+                    "{} {text:?}",
+                    id.as_str()
+                );
+            }
+            // A backslash elsewhere, or in a block slot, splices nothing.
+            assert_eq!(check("a \\ b", SlotKind::Line, id), Ok(()));
+            assert_eq!(check("C:\\dir\\file.txt", SlotKind::Line, id), Ok(()));
+            assert_eq!(check("continues \\", SlotKind::Block, id), Ok(()));
+        }
+        // Other languages have no line-splice rule.
+        assert_eq!(
+            check("continues \\", SlotKind::Line, LanguageId::Go),
+            Ok(())
+        );
+    }
+
+    #[test]
+    fn nested_block_openers_are_rejected_in_c_and_rust_block_slots() {
+        for id in [LanguageId::C, LanguageId::Cpp, LanguageId::Rust] {
+            for slot in [SlotKind::Block, SlotKind::Doc] {
+                assert!(
+                    matches!(
+                        check("see /* this", slot, id),
+                        Err(InvalidFinalComment::SlotReject(_))
+                    ),
+                    "{} {slot:?}",
+                    id.as_str()
+                );
+            }
+            assert_eq!(check("see /* this", SlotKind::Line, id), Ok(()));
+        }
+        // Block-open text is harmless in JS/TS/Java/Go block slots.
+        for id in [
+            LanguageId::Javascript,
+            LanguageId::Typescript,
+            LanguageId::Tsx,
+            LanguageId::Java,
+            LanguageId::Go,
+        ] {
+            for slot in [SlotKind::Block, SlotKind::Doc] {
+                assert_eq!(
+                    check("see /* this", slot, id),
+                    Ok(()),
+                    "{} {slot:?}",
+                    id.as_str()
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn java_unicode_escapes_are_rejected_in_every_slot() {
+        for slot in SLOTS {
+            for text in [
+                "ends here \\u000a code();",
+                "closes \\u002a/",
+                "many \\uuuu000A",
+            ] {
+                assert!(
+                    matches!(
+                        check(text, slot, LanguageId::Java),
+                        Err(InvalidFinalComment::SlotReject(_))
+                    ),
+                    "{slot:?} {text:?}"
+                );
+            }
+            assert_eq!(
+                check("a \\n escape and \\u00", slot, LanguageId::Java),
+                Ok(())
+            );
+            // Only javac decodes them.
+            assert_eq!(
+                check("ends here \\u000a", slot, LanguageId::Javascript),
+                Ok(())
+            );
+        }
+    }
+
+    #[test]
+    fn text_that_would_be_functional_is_rejected() {
+        use LanguageId::*;
+        let functional = [
+            (Typescript, SlotKind::Line, "// @ts-ignore the types lie"),
+            (Typescript, SlotKind::Line, "@ts-expect-error"),
+            (Javascript, SlotKind::Doc, "The name.\n@type {string}"),
+            (Javascript, SlotKind::Block, "@__PURE__"),
+            (
+                Javascript,
+                SlotKind::Line,
+                "eslint-disable-next-line no-console",
+            ),
+            (Typescript, SlotKind::Line, "Hidden.\n@internal"),
+            (Python, SlotKind::Line, "type: ignore"),
+            (Python, SlotKind::Line, "noqa: E501"),
+            (Go, SlotKind::Line, "//go:noinline"),
+            (Go, SlotKind::Line, "Deprecated: use g."),
+            (Cpp, SlotKind::Line, "NOLINT"),
+            (Rust, SlotKind::Line, "SAFETY: the pointer is valid"),
+        ];
+        for (id, slot, text) in functional {
+            assert_eq!(
+                check(text, slot, id),
+                Err(InvalidFinalComment::Functional),
+                "{} {slot:?} {text:?}",
+                id.as_str()
+            );
+        }
+        // Doc functional tags are rejected in every slot kind.
+        for slot in SLOTS {
+            assert_eq!(
+                check("Old API.\n@deprecated use g()", slot, Java),
+                Err(InvalidFinalComment::Functional),
+                "{slot:?}"
+            );
+        }
+        // Acceptance counterparts: the same subjects as plain prose.
+        let prose = [
+            (Typescript, SlotKind::Line, "the types are wrong here"),
+            (Javascript, SlotKind::Doc, "The display name, a string."),
+            (Javascript, SlotKind::Block, "pure function"),
+            (Python, SlotKind::Line, "the type is ignored by callers"),
+            (Go, SlotKind::Line, "go:noinline is not needed here"),
+            (Go, SlotKind::Line, "This is deprecated upstream."),
+            (Rust, SlotKind::Line, "the pointer is valid"),
+            (Java, SlotKind::Doc, "Old API; prefer g()."),
+        ];
+        for (id, slot, text) in prose {
+            assert_eq!(
+                check(text, slot, id),
+                Ok(()),
+                "{} {slot:?} {text:?}",
+                id.as_str()
+            );
+        }
+    }
+
+    #[test]
+    fn the_functional_check_also_sees_the_collapsed_one_line_rendering() {
+        // Multi-line, Go's whole-comment generated marker cannot match; an
+        // inline or trailing slot would collapse it into one that does.
+        assert_eq!(
+            check(
+                "Code generated by stringer\nDO NOT EDIT.",
+                SlotKind::Line,
+                LanguageId::Go
+            ),
+            Err(InvalidFinalComment::Functional),
+        );
+        assert_eq!(
+            check(
+                "Code generated by stringer.\nEdit freely.",
+                SlotKind::Line,
+                LanguageId::Go
+            ),
+            Ok(()),
+        );
+    }
+
+    #[test]
+    fn a_hand_edited_line_separator_never_terminates_a_line_slot() {
+        let js = js();
+        let rendered = render_comment(
+            &normalize_comment_text("first\u{2028}x = 1;\u{2029}third", js),
+            &Slot::canonical(SlotKind::Line, js).expect("line slot"),
+        );
+        assert_eq!(rendered, "// first\n// x = 1;\n// third");
+        assert!(!rendered.contains(['\u{2028}', '\u{2029}', '\r']));
+        assert_eq!(
+            check(
+                "first\u{2028}x = 1;",
+                SlotKind::Line,
+                LanguageId::Javascript
+            ),
+            Ok(())
+        );
     }
 
     #[test]

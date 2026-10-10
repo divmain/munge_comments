@@ -27,9 +27,14 @@ use clap::{ArgAction, Args, ColorChoice, Parser, Subcommand, ValueEnum};
 use futures::FutureExt;
 use tokio_util::sync::CancellationToken;
 
+use crate::apply::run::{ApplyDeps, ApplyHooks, ApplyRequest, run_apply};
+use crate::artifact::read::read_artifact;
 use crate::config::resolve_plan;
 use crate::errors::Error;
 use crate::llm::client::LlmClient;
+use crate::log::WriterLog;
+use crate::report::markdown::render_markdown;
+use crate::util::fs::{atomic_write, ensure_parent_dir};
 
 /// Injected process state: the streams commands write to, the directory
 /// relative paths resolve against, the environment consulted for
@@ -360,10 +365,10 @@ fn report_parse_error(err: &clap::error::Error, io: &mut Io) -> u8 {
 
 /// Dispatches a parsed command.
 ///
-/// The Phase-1 handlers are wired stubs: they validate their inputs for real
-/// (config resolution, artifact existence), then report `not implemented` on
-/// the injected stderr and return 0. Later phases replace the bodies with
-/// the real pipelines.
+/// `apply` and `report` are fully wired. The `plan` handler is still a
+/// wired stub: it validates its inputs for real (config resolution), then
+/// reports `not implemented` on the injected stderr and returns 0. A later
+/// phase replaces its body with the real pipeline.
 async fn dispatch(command: Command, io: &mut Io) -> Result<u8, Error> {
     match command {
         Command::Plan(args) => {
@@ -374,16 +379,8 @@ async fn dispatch(command: Command, io: &mut Io) -> Result<u8, Error> {
             let _ = writeln!(io.stderr, "plan: not implemented");
             Ok(0)
         }
-        Command::Apply(args) => {
-            let _artifact = resolve_artifact(&args.artifact, io)?;
-            let _ = writeln!(io.stderr, "apply: not implemented");
-            Ok(0)
-        }
-        Command::Report(args) => {
-            let _artifact = resolve_artifact(&args.artifact, io)?;
-            let _ = writeln!(io.stderr, "report: not implemented");
-            Ok(0)
-        }
+        Command::Apply(args) => run_apply_command(args, io),
+        Command::Report(args) => run_report(&args, io),
         #[cfg(debug_assertions)]
         Command::Panic => canary_panic(),
     }
@@ -399,15 +396,64 @@ fn canary_panic() -> ! {
     panic!("__panic canary invoked");
 }
 
+/// `apply`: a thin wrapper over [`run_apply`]. The `[ARTIFACT]` argument
+/// is passed through as given — `run_apply` joins it (and the `--only` and
+/// `--report` paths) onto the injected cwd, and its recovery hint repeats
+/// it verbatim. The report goes to `--report` (default
+/// `munge-comments-apply-report.md` under the cwd) unless `--dry-run`,
+/// whose diffs go to the injected stdout; progress and warnings go to the
+/// injected stderr. The run's per-file exit code becomes the process exit
+/// code; run-level aborts surface as errors.
+fn run_apply_command(args: ApplyArgs, io: &mut Io) -> Result<u8, Error> {
+    let artifact = artifact_arg(&args.artifact)?.clone();
+    let report_path = (!args.dry_run).then_some(args.report);
+    let log = WriterLog::new(&mut io.stderr);
+    let outcome = run_apply(
+        ApplyRequest {
+            artifact,
+            only: args.only,
+            dry_run: args.dry_run,
+            report_path,
+        },
+        ApplyDeps {
+            log: &log,
+            stdout: &mut io.stdout,
+            cwd: &io.cwd,
+            hooks: ApplyHooks::default(),
+        },
+    )?;
+    Ok(outcome.exit_code)
+}
+
+/// `report`: reads and validates the artifact, renders it (from the
+/// artifact alone; the source tree need not exist) and atomically writes
+/// the markdown to `--out`, joined onto the injected cwd, creating its
+/// parent directory first. The status line goes to stderr.
+///
+/// A missing or invalid artifact is exit 2; an `--out` that cannot be
+/// created or written is exit 6.
+fn run_report(args: &ReportArgs, io: &mut Io) -> Result<u8, Error> {
+    let artifact_path = resolve_artifact(&args.artifact, io)?;
+    let artifact = read_artifact(&artifact_path)?;
+    let markdown = render_markdown(&artifact, None)?;
+    let out = io.cwd.join(&args.out);
+    let Some(file_name) = out.file_name() else {
+        return Err(Error::Usage(format!(
+            "--out must name a file, got {}",
+            args.out.display()
+        )));
+    };
+    let out = ensure_parent_dir(&out)?.join(file_name);
+    atomic_write(&out, markdown.as_bytes())?;
+    let _ = writeln!(io.stderr, "report: wrote {}", out.display());
+    Ok(0)
+}
+
 /// Joins the `[ARTIFACT]` positional onto the injected cwd before any
 /// existence check (the process cwd is never consulted), and errors with
 /// [`Error::Artifact`] when the argument is missing or names no file.
 fn resolve_artifact(artifact: &Option<PathBuf>, io: &Io) -> Result<PathBuf, Error> {
-    let Some(artifact) = artifact else {
-        return Err(Error::Artifact(
-            "missing [ARTIFACT] argument: expected a munge-comments plan artifact".to_string(),
-        ));
-    };
+    let artifact = artifact_arg(artifact)?;
     let joined = io.cwd.join(artifact);
     if joined.is_file() {
         Ok(joined)
@@ -417,6 +463,15 @@ fn resolve_artifact(artifact: &Option<PathBuf>, io: &Io) -> Result<PathBuf, Erro
             artifact.display()
         )))
     }
+}
+
+/// The `[ARTIFACT]` positional; its absence is [`Error::Artifact`].
+fn artifact_arg(artifact: &Option<PathBuf>) -> Result<&PathBuf, Error> {
+    artifact.as_ref().ok_or_else(|| {
+        Error::Artifact(
+            "missing [ARTIFACT] argument: expected a munge-comments plan artifact".to_string(),
+        )
+    })
 }
 
 /// Best-effort extraction of a panic message from `catch_unwind`'s payload.

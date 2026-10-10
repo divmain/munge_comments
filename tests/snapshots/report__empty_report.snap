@@ -1,0 +1,61 @@
+---
+source: tests/report.rs
+expression: markdown
+---
+# munge-comments report — 2026-10-09T14:03:11Z
+
+Mode: `redact` · model: `gpt-4.1` · allowAdd: off · offline: off
+
+## Summary
+
+Files: 0 considered · 0 failed · 0 skipped
+
+| comments | prose comments | removed | rewritten | kept | needs review | protected | overrides | new | new held | reduction | char reduction |
+|---------:|---------------:|--------:|----------:|-----:|-------------:|----------:|----------:|----:|---------:|----------:|---------------:|
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0.0% | 0.0% |
+
+Difficulty: EASY 0 · MEDIUM 0 · DIFFICULT 0 · unrated 0
+Languages: none
+Warnings: 0
+
+## Needs human review
+
+None.
+
+## Flagged
+
+None.
+
+## Protected policy items
+
+None.
+
+## New comment proposals
+
+allowAdd is off: every proposal is report-only.
+
+None.
+
+## Files not processed
+
+None.
+
+## Mode fallbacks
+
+None.
+
+## Warnings
+
+None.
+
+## Apply outcome
+
+Files: none
+
+### Files
+
+None.
+
+### Failed invariant (bug reports)
+
+None.

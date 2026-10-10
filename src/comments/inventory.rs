@@ -28,7 +28,7 @@ pub use super::types::FileRef;
 const DIRECTIVE_ADJACENT: &str = "directive-adjacent";
 /// The tag that makes a prose comment non-editable (sole content of a JSX
 /// `{/* … */}` container).
-const JSX_EXPRESSION: &str = "jsx-expression";
+pub(crate) const JSX_EXPRESSION: &str = "jsx-expression";
 
 /// One inventoried comment record: a classified comment (or a logical
 /// group of adjacent line comments) with its stable id.
