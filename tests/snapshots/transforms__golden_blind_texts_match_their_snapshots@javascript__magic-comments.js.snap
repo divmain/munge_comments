@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/magic-comments.js
+---
+"//⟦C1⟧\nconst routes = [\n  () => import(/* webpackChunkName: \"home\" */ \"./home.js\"),\n  () => import(/* webpackChunkName: \"about\", webpackPrefetch: true */ \"./about.js\"),\n  () => import(/* webpackIgnore: true */ \"./external.js\"),\n  () => import(/* @vite-ignore */ \"./dynamic.js\"),\n];\n\nexport const make = /*#__PURE__*/ createFactory();\nexport const other = /* @__PURE__ */ createFactory();\n\n/*#__NO_SIDE_EFFECTS__*/\nfunction createFactory() {\n  return {};\n}\n\nexport default routes;\n"

@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/shebang.py
+---
+"#!/usr/bin/env python3\n#⟦C1⟧\nprint(\"hi\")\n"

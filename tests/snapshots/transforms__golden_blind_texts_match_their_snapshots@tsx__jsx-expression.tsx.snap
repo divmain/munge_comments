@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/tsx/jsx-expression.tsx
+---
+"export function List({ items }: { items: string[] }) {\n  return (\n    <ul>\n      {/* The sole content of a container. */}\n      {\n        // A line comment alone in a container.\n      }\n      {items.map((item) => (\n        <li key={item}>{item /*⟦C3⟧*/}</li>\n      ))}\n    </ul>\n  );\n}\n"

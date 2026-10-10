@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/copyright-header.py
+---
+"# Copyright 2026 Example Corp.\n# All rights reserved.\n#\n# Use of this source code is governed by a BSD-style license.\n\n\"\"\"Module docstring after the header.\"\"\"\n\n#⟦C5⟧\nVALUE = 1\n"

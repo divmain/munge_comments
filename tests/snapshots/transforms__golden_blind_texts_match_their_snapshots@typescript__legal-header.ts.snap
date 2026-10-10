@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/legal-header.ts
+---
+"/*!\n * widget-kit v1.2.3\n * Copyright (c) 2026 Example Corp.\n */\n\n// Copyright 2026 Example Corp.\n// SPDX-License-Identifier: Apache-2.0\n// No keyword on this continuation line.\n\nimport { readFileSync } from \"fs\";\n\n//⟦C5⟧\nexport const banner = readFileSync(\"BANNER\", \"utf8\");\n\n/*! Preserved legal comment in the middle of the file. */\nexport const version = \"1.2.3\";\n"

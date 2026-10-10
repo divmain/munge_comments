@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/cpp/doxygen.cpp
+---
+"//⟦C1⟧\nint documented();\n\n/*⟦C2⟧*/\nint alsoDocumented();\n\n//⟦C3⟧\nint qtStyle();\n"

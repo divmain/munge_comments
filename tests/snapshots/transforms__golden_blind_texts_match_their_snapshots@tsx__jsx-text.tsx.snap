@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/tsx/jsx-text.tsx
+---
+"//⟦C1⟧\nexport function Banner() {\n  return (\n    <div>\n      <p>// not a comment</p>\n      // also not a comment, own line\n      <span>/* still text */</span>\n    </div>\n  );\n}\n"

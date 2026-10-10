@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/rust/doc-comments.rs
+---
+"//! Crate-level inner doc comment: doc-protected.\n//! A second inner doc line.\n\n/// Outer doc comment on a function: doc-protected.\npub fn documented() {}\n\n//⟦C4⟧\npub fn plain() {}\n\n/** Outer block doc comment: doc-protected. */\npub fn block_documented() {}\n\npub mod inner {\n    /*! Inner block doc comment: doc-protected. */\n\n    //⟦C7⟧\n    pub fn f() {}\n}\n"

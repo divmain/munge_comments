@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/c/fallthrough.c
+---
+"/*⟦C1⟧*/\nint classify(int code) {\n    int score = 0;\n    switch (code) {\n    case 0:\n        score += 1;\n        /* FALLTHROUGH */\n    case 1:\n        score += 2;\n        // fall through\n    case 2:\n        score += 3;\n        /*⟦C4⟧*/\n        // FALLTHRU\n    case 3:\n        score += 4;\n        break;\n    default:\n        //⟦C6⟧\n        break;\n    }\n    return score;\n}\n"

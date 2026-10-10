@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/c/define-comments.c
+---
+"#define LINE_COMMENTED 1 // swallowed into the macro body, not inventoried\n#define BLOCK_COMMENTED 2 /*⟦C1⟧*/\n\n/*⟦C2⟧*/\nint sum(void) {\n    return LINE_COMMENTED + BLOCK_COMMENTED;\n}\n"

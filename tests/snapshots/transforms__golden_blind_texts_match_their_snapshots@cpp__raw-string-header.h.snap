@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/cpp/raw-string-header.h
+---
+"#pragma once\n\n//⟦C1⟧\ninline const char *pattern() {\n    return R\"(/* not a comment */ // nor this)\"; //⟦C2⟧\n}\n\n/*⟦C3⟧*/\ninline const char *delimited() {\n    return R\"xyz(text with )\" inside /* still text */)xyz\";\n}\n"

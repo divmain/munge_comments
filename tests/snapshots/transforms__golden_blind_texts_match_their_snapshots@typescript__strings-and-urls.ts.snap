@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/strings-and-urls.ts
+---
+"//⟦C1⟧\nconst base = \"http://example.com//api\"; //⟦C2⟧\nconst single = 'not // a comment';\nconst blockish = \"/* not a comment */\";\nconst escaped = \"quote \\\" // still a string\";\n\n/*⟦C3⟧*/\nexport function url(path: string): string {\n  return base + \"//\" + path; //⟦C4⟧\n}\n"

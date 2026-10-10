@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/encoding-cookie-line2.py
+---
+"#!/usr/bin/env python3\n# coding=utf-8\n#⟦C2⟧\nVALUE = \"café\"\n"

@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/module-format.mts
+---
+"//⟦C1⟧\nimport { readFile } from \"node:fs/promises\";\n\n/*⟦C2⟧*/\nexport async function load(path: string): Promise<string> {\n  return readFile(path, \"utf8\"); //⟦C3⟧\n}\n"

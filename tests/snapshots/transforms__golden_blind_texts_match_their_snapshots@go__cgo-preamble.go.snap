@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/go/cgo-preamble.go
+---
+"package cgo\n\n// #include <stdlib.h>\n// #include <stdio.h>\n//\n// static int add(int a, int b) { return a + b; }\nimport \"C\"\n\n//⟦C5⟧\nfunc Add(a, b int) int {\n\treturn int(C.add(C.int(a), C.int(b)))\n}\n"

@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/inline-block.ts
+---
+"declare const a: number;\ndeclare const b: number;\nexport const sum = a /*⟦C1⟧*/ + b;\n\nexport function f(x: number): number {\n  return /*⟦C2⟧*/ x;\n}\n\nlet/*⟦C3⟧*/y = 1;\nexport { y };\n"

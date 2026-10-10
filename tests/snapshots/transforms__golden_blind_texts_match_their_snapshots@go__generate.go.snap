@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/go/generate.go
+---
+"package gen\n\n//go:generate stringer -type=Color\n\n//⟦C2⟧\ntype Color int\n\n//go:noinline\nfunc pick() Color { return 0 }\n\nvar _ = pick\n"

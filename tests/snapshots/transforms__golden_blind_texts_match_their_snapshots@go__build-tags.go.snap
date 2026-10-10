@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/go/build-tags.go
+---
+"//go:build linux && amd64\n// +build linux,amd64\n\n//⟦C3⟧\npackage tags\n\n//⟦C4⟧\nconst Answer = 42\n"

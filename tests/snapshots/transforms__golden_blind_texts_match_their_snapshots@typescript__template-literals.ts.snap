@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/template-literals.ts
+---
+"const name = \"world\";\n\n//⟦C1⟧\nconst plain = `// not a comment ${name} /* nor this */`;\n\nconst nested = `outer ${`inner // text ${name /*⟦C2⟧*/}`} tail`;\n\nconst multiline = `\n  // still template text\n  ${/*⟦C3⟧*/ name}\n`;\n"

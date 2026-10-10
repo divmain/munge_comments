@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/line-groups.ts
+---
+"//⟦C1⟧\nexport function grouped(): number {\n  //⟦C2⟧\n  const x = 1;\n  //⟦C3⟧\n    //⟦C4⟧\n  return x;\n}\n\n//⟦C5⟧\n// eslint-disable-next-line no-console\n// After the directive (adjacent, protected).\nconsole.log(\"interrupted\");\n\n//⟦C8⟧\n\n//⟦C9⟧\nconst y = 2; //⟦C10⟧\n//⟦C11⟧\nexport const z = y;\n"

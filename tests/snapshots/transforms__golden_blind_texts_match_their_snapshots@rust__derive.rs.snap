@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/rust/derive.rs
+---
+"//⟦C1⟧\n#[derive(Debug, Clone, PartialEq)]\npub struct Point {\n    //⟦C2⟧\n    pub x: i32,\n    pub y: i32, //⟦C3⟧\n}\n"

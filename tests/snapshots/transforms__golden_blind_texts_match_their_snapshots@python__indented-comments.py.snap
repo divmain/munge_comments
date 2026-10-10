@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/indented-comments.py
+---
+"def outer():\n    #⟦C1⟧\n    value = 1\n    if value:\n        #⟦C2⟧\n        value += 1\n            #⟦C3⟧\n    #⟦C4⟧\n    return value\n"

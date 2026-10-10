@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/go/example_test.go
+---
+"package greet_test\n\nimport \"fmt\"\n\n//⟦C1⟧\nfunc ExampleHello() {\n\t//⟦C2⟧\n\tfmt.Println(\"hello\")\n\t// Output: hello\n}\n\n//⟦C4⟧\nfunc ExampleUnordered() {\n\tfmt.Println(\"b\")\n\tfmt.Println(\"a\")\n\t// Unordered output:\n\t// a\n\t// b\n}\n\n//⟦C8⟧\nfunc Examplefoo() {\n\t//⟦C9⟧\n}\n"

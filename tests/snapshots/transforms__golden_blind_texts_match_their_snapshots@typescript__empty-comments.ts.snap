@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/empty-comments.ts
+---
+"//⟦C1⟧\nconst a = 1;\n/*⟦C2⟧*/\nconst b = 2;\n/*⟦C3⟧*/\nconst c = 3;\n/*⟦C4⟧*/\nconst d = 4;\nconst e = 5; //⟦C5⟧\n//⟦C6⟧\n"

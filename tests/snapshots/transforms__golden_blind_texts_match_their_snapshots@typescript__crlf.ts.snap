@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/crlf.ts
+---
+"//⟦C1⟧\r\nexport const a = 1; //⟦C2⟧\r\n/*⟦C3⟧*/\r\nexport const b = 2;\r\n/*⟦C4⟧*/\r\n"

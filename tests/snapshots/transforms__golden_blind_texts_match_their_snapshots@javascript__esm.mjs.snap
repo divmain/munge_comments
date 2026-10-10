@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/esm.mjs
+---
+"/** ESM export: doc-protected. */\nexport function alpha() {}\n\n/*⟦C2⟧*/\nfunction beta() {}\nexports.beta = beta;\n\n/*⟦C3⟧*/\nfunction internal() {}\n"

@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/rust/shebang-license.rs
+---
+"#!/usr/bin/env rust-script\n// Copyright 2026 Example Corp.\n// SPDX-License-Identifier: MIT OR Apache-2.0\n\n// Entry point.\nfn main() {}\n"

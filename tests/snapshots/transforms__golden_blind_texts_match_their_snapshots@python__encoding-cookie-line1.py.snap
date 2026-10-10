@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/encoding-cookie-line1.py
+---
+"# -*- coding: utf-8 -*-\n\"\"\"A module whose encoding cookie is on line 1.\"\"\"\n\n#⟦C2⟧\nVALUE = 1\n"

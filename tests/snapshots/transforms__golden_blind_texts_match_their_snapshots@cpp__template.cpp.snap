@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/cpp/template.cpp
+---
+"#include <vector>\n\n//⟦C1⟧\ntemplate <typename Container>\ntypename Container::value_type sum(const Container &items) {\n    typename Container::value_type total{}; //⟦C2⟧\n    for (const auto &item : items) {\n        total += item;\n    }\n    return total;\n}\n\n/*⟦C3⟧*/\nint useSum() {\n    std::vector<int> values{1, 2, 3};\n    return sum(values);\n}\n"

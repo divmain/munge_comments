@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/regex-literals.ts
+---
+"//⟦C1⟧\nconst slashes = /\\/\\//g;\nconst block = /\\/\\*.*\\*\\//;\nconst klass = /[/]+/; //⟦C2⟧\n\nexport function strip(input: string): string {\n  return input.replace(slashes, \"/\").replace(block, \"\"); /*⟦C3⟧*/\n}\n"

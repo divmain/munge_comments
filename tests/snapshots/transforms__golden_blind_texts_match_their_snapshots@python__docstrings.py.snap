@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/docstrings.py
+---
+"\"\"\"Module docstring: a string expression, never a comment.\"\"\"\n\n\nclass Greeter:\n    \"\"\"Class docstring with a # hash that is not a comment.\"\"\"\n\n    def greet(self, name):\n        \"\"\"Method docstring.\"\"\"\n        #⟦C1⟧\n        return f\"hello {name}  # not a comment either\"\n"

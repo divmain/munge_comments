@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/encoding-cookie-after-blank.py
+---
+"\n# coding: utf-8\n#⟦C2⟧\nVALUE = 1\n"

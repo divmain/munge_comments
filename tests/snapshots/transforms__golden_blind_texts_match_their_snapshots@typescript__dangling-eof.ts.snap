@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/dangling-eof.ts
+---
+"export const a = 1;\n\n//⟦C1⟧\n/*⟦C2⟧*/\n"

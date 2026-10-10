@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/rust/raw-string.rs
+---
+"//⟦C1⟧\npub const PATTERN: &str = r#\"// not a comment\"#;\npub const BLOCK: &str = r##\"/* not a comment \"# either */\"##; //⟦C2⟧\npub const PLAIN: &str = \"// nor this\"; /*⟦C3⟧*/\n"

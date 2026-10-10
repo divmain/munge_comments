@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/directives.ts
+---
+"/// <reference types=\"node\" />\n/// <amd-module name=\"directives\" />\n/** @jest-environment node */\n/** @jsx h */\n/* eslint-disable no-console */\n/* global window, document */\n/* eslint eqeqeq: \"off\" */\n// @ts-nocheck\n// @flow\n\nimport { helper } from \"./helper\";\n\n// @ts-ignore\nconst a: number = \"not a number\";\n// @ts-expect-error\nconst b: string = 1;\n// eslint-disable-next-line no-unused-vars\nconst unused = 1;\n// tslint:disable-next-line:no-any\nconst loose: any = a;\n// biome-ignore lint/style/useConst: reassigned below\nlet mutable = b;\n// deno-lint-ignore no-explicit-any\nconst anything: any = mutable;\n// prettier-ignore\nconst matrix = [1, 0,\n                0, 1];\n// $FlowFixMe\nconst flowy = matrix;\n\n/* istanbul ignore next */\nfunction uncovered(): number {\n  return 0;\n}\n\nconst lazy = import(/* webpackChunkName: \"chunk\" */ \"./chunk\");\nconst pure = /*#__PURE__*/ helper();\n\n/** @license MIT */\n/** @preserve */\nconst legal = 1;\n\n// #region Helpers\n/** @internal */\nexport function hidden(): void {}\n// #endregion\n\nconst secret = \"hunter2\"; // NOSONAR\n/* eslint-enable */\n// vim: set ts=2 sw=2:\n"

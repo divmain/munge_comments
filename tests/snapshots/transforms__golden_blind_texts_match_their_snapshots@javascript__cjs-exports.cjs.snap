@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/cjs-exports.cjs
+---
+"/** Exported via module.exports.alpha: doc-protected. */\nfunction alpha() {}\nmodule.exports.alpha = alpha;\n\n/** Exported via exports.beta: doc-protected. */\nfunction beta() {}\nexports.beta = beta;\n\n/** Exported as module.exports itself: doc-protected. */\nfunction gamma() {}\n\n/** Exported via shorthand in an object literal: doc-protected. */\nfunction delta() {}\n\n/** Exported via a key-value pair: doc-protected. */\nfunction epsilon() {}\n\n/*⟦C6⟧*/\nfunction internal() {}\n\n/** JSDoc on the export assignment itself: doc-protected. */\nmodule.exports.zeta = function zeta() {};\n\n/** JSDoc on an exports.name assignment: doc-protected. */\nexports.eta = () => internal();\n\nmodule.exports = gamma;\nmodule.exports = { delta, epsilon: epsilon };\n"

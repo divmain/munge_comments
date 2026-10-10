@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/rust/safety.rs
+---
+"/// Reads the first byte.\npub fn first(bytes: &[u8]) -> u8 {\n    assert!(!bytes.is_empty());\n    // SAFETY: the slice is non-empty, checked just above.\n    unsafe { *bytes.get_unchecked(0) }\n}\n\n//⟦C3⟧\npub fn second(bytes: &[u8]) -> Option<u8> {\n    bytes.get(1).copied()\n}\n"

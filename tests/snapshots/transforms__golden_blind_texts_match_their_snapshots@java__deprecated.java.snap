@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/java/deprecated.java
+---
+"package com.example.docs;\n\npublic class Deprecated {\n    /**\n     * Use {@link #replacement()} instead.\n     *\n     * @deprecated javac reads this tag.\n     */\n    @java.lang.Deprecated\n    public void old() {}\n\n    /** Not deprecated: doc-protected. */\n    public void replacement() {}\n}\n"

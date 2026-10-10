@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/noqa.py
+---
+"import os  # noqa: F401\nimport sys  # noqa\n\n#⟦C3⟧\nURL = \"https://example.com/a/very/long/path/that/exceeds/the/configured/line/length/limit\"  # noqa: E501\nPATH = sys.path  # nosec B105\n"

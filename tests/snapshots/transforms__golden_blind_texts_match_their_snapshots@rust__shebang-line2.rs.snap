@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/rust/shebang-line2.rs
+---
+"#!/usr/bin/env rust-script\n//⟦C1⟧\nfn main() {\n    println!(\"hi\");\n}\n"

@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/jsdoc-policy.js
+---
+"/*⟦C1⟧*/\nfunction internal(x) {\n  return x + 1;\n}\n\n/** Exported: doc-protected. */\nexport function exported(x) {\n  return internal(x);\n}\n\n/**\n * Load-bearing under checkJs: functional.\n * @param {number} x\n * @returns {number}\n */\nfunction typed(x) {\n  return x * 2;\n}\n\n/** @typedef {{ id: number }} Item */\n\n/** @deprecated Use exported() instead. */\nexport function legacy(x) {\n  return typed(x);\n}\n\n/*⟦C6⟧*/\nexport const plain = 1;\n"

@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/directive-adjacent.ts
+---
+"export const port = 8080;\n\n// @ts-expect-error\n/** The legacy alias is still accepted here. */\nconst legacy: string = port;\n\n// eslint-disable-next-line no-var\n// This explanation sits between the directive and its target.\nvar hoisted = legacy;\n\n/* c8 ignore next 2 */\nconst skipped = hoisted.length;\n// Line 2 of the c8 window: protected.\nconst counted = skipped + 1;\n//⟦C7⟧\nexport const total = counted;\n"

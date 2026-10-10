@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/nested-blocks.ts
+---
+"/*⟦C1⟧*/\nconst a = 1;\n/*⟦C2⟧*/ /*⟦C3⟧*/\nconst b = 2;\n/*⟦C4⟧*/\nconst c = 3;\nconst d = /*⟦C5⟧*/ 4;\n"

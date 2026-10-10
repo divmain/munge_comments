@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/tsx/generic-arrow.tsx
+---
+"//⟦C1⟧\nexport const identity = <T,>(x: T): T => x;\n\nconst pair = <A, B>(a: A, b: B): [A, B] => [a, b]; //⟦C2⟧\n\n/*⟦C3⟧*/\nexport const both = () => pair(identity(1), identity(\"two\"));\n"

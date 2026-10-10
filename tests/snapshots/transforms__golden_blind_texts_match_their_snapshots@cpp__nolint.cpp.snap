@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/cpp/nolint.cpp
+---
+"#include <cstdlib>\n\nint risky(const char *text) {\n    // NOLINTNEXTLINE(cert-err34-c)\n    // Prose between the directive and its target is protected.\n    return std::atoi(text);\n}\n\nint other(const char *text) {\n    return std::atoi(text); // NOLINT(cert-err34-c)\n}\n"

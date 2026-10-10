@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/unicode.ts
+---
+"//⟦C1⟧\nconst größe = \"日本語\"; //⟦C2⟧\nconst emoji = \"🎉🚀\"; /*⟦C3⟧*/\nconst café = { naïve: \"ü\" }; //⟦C4⟧\n/*⟦C5⟧*/\nexport const all = [größe, emoji, café];\n"

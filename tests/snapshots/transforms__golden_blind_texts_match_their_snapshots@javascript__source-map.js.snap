@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/source-map.js
+---
+"//⟦C1⟧\nexport const answer = 42;\n//# sourceMappingURL=data:application/json;base64,e30=\n"

@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/java/formatter.java
+---
+"package com.example.format;\n\npublic class Formatter {\n    // @formatter:off\n    private static final int[][] MATRIX = {\n        {1, 0},\n        {0, 1},\n    };\n    // @formatter:on\n\n    //⟦C3⟧\n    public int trace() {\n        return MATRIX[0][0] + MATRIX[1][1];\n    }\n}\n"

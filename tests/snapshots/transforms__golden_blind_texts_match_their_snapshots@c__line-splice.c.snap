@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/c/line-splice.c
+---
+"// A line comment ending in a backslash and a space splices for GCC: \\ \n//⟦C2⟧\nint x = 1;\n\n//⟦C3⟧\nint y = 2;\n"

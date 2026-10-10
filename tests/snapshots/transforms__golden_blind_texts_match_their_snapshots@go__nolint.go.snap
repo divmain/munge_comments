@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/go/nolint.go
+---
+"package lint\n\nimport \"os\"\n\n//nolint:errcheck // the explanation after the directive is part of it\nfunc closeQuietly(f *os.File) {\n\tf.Close()\n}\n\nfunc cleanup(f *os.File) {\n\t//nolint:gosec\n\t// This prose sits between the directive and its target.\n\tos.Remove(f.Name()) //nolint:errcheck\n}\n"

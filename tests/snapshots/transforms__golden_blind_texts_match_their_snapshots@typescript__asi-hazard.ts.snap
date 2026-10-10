@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/asi-hazard.ts
+---
+"export function lineComment(x: number): number | undefined {\n  return //⟦C1⟧\n    x;\n}\n\nexport function blockComment(x: number): number | undefined {\n  return /*⟦C2⟧\n*/ x;\n}\n"

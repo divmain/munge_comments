@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/shebang.js
+---
+"#!/usr/bin/env node\n// Copyright 2026 Example Corp.\n// Licensed under the MIT license; see LICENSE.\n// keyword-free continuation of the header\n\n'use strict';\n\n//⟦C4⟧\nconsole.log(\"hello\");\n"

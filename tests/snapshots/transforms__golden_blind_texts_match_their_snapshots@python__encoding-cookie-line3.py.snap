@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/encoding-cookie-line3.py
+---
+"\n\n#⟦C1⟧\nVALUE = 1\n"

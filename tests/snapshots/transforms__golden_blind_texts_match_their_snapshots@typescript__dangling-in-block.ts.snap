@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/typescript/dangling-in-block.ts
+---
+"export function empty(): void {\n  //⟦C1⟧\n}\n\nexport function last(): number {\n  const x = 1;\n  return x;\n  //⟦C2⟧\n}\n\nexport const list = [\n  1,\n  2,\n  //⟦C3⟧\n];\n\nexport const call = Math.max(\n  1,\n  /*⟦C4⟧*/\n);\n"

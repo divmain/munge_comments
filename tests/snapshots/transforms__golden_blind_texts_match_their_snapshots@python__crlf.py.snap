@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/crlf.py
+---
+"#⟦C1⟧\r\nVALUE = 1  #⟦C2⟧\r\n\r\n\r\ndef f():\r\n    #⟦C3⟧\r\n    return VALUE\r\n"

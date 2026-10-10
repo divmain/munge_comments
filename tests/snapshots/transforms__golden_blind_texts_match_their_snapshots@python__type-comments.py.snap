@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/type-comments.py
+---
+"from typing import List\n\n#⟦C1⟧\nvalues = []  # type: List[int]\n\n\ndef add(a, b):\n    # type: (int, int) -> int\n    return a + b\n\n\nimport json  # type: ignore\n"

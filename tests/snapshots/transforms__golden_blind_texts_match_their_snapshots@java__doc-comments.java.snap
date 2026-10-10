@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/java/doc-comments.java
+---
+"package com.example.docs;\n\n/**\n * A Javadoc comment on a class: doc-protected.\n */\npublic class DocComments {\n    /// A Markdown doc comment (JEP 467): doc-protected.\n    /// Its lines form one comment each.\n    public int value;\n\n    //// javac reads four slashes as a Markdown doc line too.\n    private int hidden;\n\n    /*⟦C5⟧*/\n    //⟦C6⟧\n    public int get() {\n        return value + hidden;\n    }\n}\n"

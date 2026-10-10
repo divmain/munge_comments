@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/go/cgo-grouped-import.go
+---
+"package cgo\n\nimport (\n\t\"fmt\"\n\n\t/*\n\t#include <math.h>\n\t*/\n\t\"C\"\n\t//⟦C2⟧\n\t\"os\"\n)\n\n//⟦C3⟧\nfunc Sqrt(x float64) {\n\tfmt.Fprintln(os.Stdout, float64(C.sqrt(C.double(x))))\n}\n"

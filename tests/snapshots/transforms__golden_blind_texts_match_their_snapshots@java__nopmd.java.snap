@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/java/nopmd.java
+---
+"package com.example.lint;\n\npublic class Nopmd {\n    private int unused = 0; //NOPMD - kept for serialization\n    private int other = 1; // NOPMD\n\n    // CHECKSTYLE:OFF\n    public int Bad_Name() {\n        return unused + other;\n    }\n    // CHECKSTYLE:ON\n\n    //noinspection unused\n    private void ignored() {}\n}\n"

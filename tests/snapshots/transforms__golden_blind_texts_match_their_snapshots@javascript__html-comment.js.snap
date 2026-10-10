@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/html-comment.js
+---
+"<!-- An HTML-like comment (Annex B): not enumerated in v1.\nvar x = 1;\n--> An HTML-like closing comment at the start of a line.\nvar y = x <!-- y;\n"

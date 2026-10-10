@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/c/nested-block.c
+---
+"/*⟦C1⟧*/\nint a = 1;\n\nint b = /*⟦C2⟧*/ 2;\n\n/*⟦C3⟧*/\nint c = 3;\n"
