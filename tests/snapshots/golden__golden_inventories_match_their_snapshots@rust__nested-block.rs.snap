@@ -1,0 +1,84 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/rust/nested-block.rs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 0,
+      "end": 71,
+      "line": 1,
+      "column": 1,
+      "text": "/* Rust block comments nest: /* inner */ still inside the outer one. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "nested",
+        "snippet": "pub fn nested() {}\npub fn value() -> i32 {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 72,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 120,
+      "end": 159,
+      "line": 5,
+      "column": 5,
+      "text": "/* one /* two /* three */ two */ one */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "integer_literal",
+        "name": null,
+        "snippet": "    42\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 115,
+      "nextCodeStart": 164,
+      "enclosingTopLevel": {
+        "nodeKind": "function_item",
+        "name": "value",
+        "start": 92,
+        "end": 168
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 120,
+          "end": 159
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 2,
+    "doc": 0,
+    "avgLength": 55.0,
+    "languageHasLineComments": true
+  }
+}

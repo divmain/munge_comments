@@ -1,0 +1,119 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/crlf.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 56,
+      "line": 1,
+      "column": 1,
+      "text": "# A CRLF Python file.\r\n# Its comments end before the CR.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "VALUE = 1"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 58,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 21
+        },
+        {
+          "start": 23,
+          "end": 56
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 69,
+      "end": 79,
+      "line": 3,
+      "column": 12,
+      "text": "# trailing",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "VALUE = 1"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 67,
+      "nextCodeStart": 85,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 69,
+          "end": 79
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 99,
+      "end": 116,
+      "line": 7,
+      "column": 5,
+      "text": "# Indented, CRLF.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return VALUE"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 93,
+      "nextCodeStart": 122,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "f",
+        "start": 85,
+        "end": 134
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 99,
+          "end": 116
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 27.666666666666668,
+    "languageHasLineComments": true
+  }
+}

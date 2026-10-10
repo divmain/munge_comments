@@ -1,0 +1,164 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/go/nolint.go
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 27,
+      "end": 97,
+      "line": 5,
+      "column": 1,
+      "text": "//nolint:errcheck // the explanation after the directive is part of it",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "closeQuietly",
+        "snippet": "func closeQuietly(f *os.File) {\n\tf.Close()\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 25,
+      "nextCodeStart": 98,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:nolint"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 27,
+          "end": 97
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 172,
+      "end": 186,
+      "line": 11,
+      "column": 2,
+      "text": "//nolint:gosec",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\tos.Remove(f.Name())\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 170,
+      "nextCodeStart": 246,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "cleanup",
+        "start": 144,
+        "end": 285
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:nolint"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 172,
+          "end": 186
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 188,
+      "end": 244,
+      "line": 12,
+      "column": 2,
+      "text": "// This prose sits between the directive and its target.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\tos.Remove(f.Name())\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 170,
+      "nextCodeStart": 246,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "cleanup",
+        "start": 144,
+        "end": 285
+      },
+      "classification": "functional",
+      "tags": [
+        "directive-adjacent"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 188,
+          "end": 244
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 266,
+      "end": 283,
+      "line": 13,
+      "column": 22,
+      "text": "//nolint:errcheck",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\tos.Remove(f.Name())\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 265,
+      "nextCodeStart": 284,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "cleanup",
+        "start": 144,
+        "end": 285
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:nolint"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 266,
+          "end": 283
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

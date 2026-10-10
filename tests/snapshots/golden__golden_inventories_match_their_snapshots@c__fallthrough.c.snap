@@ -1,0 +1,234 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/c/fallthrough.c
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 0,
+      "end": 40,
+      "line": 1,
+      "column": 1,
+      "text": "/* Classifies a character class code. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_definition",
+        "name": "classify",
+        "snippet": "int classify(int code) {\n    int score = 0;\n    switch (code) {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 41,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 40
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 145,
+      "end": 162,
+      "line": 7,
+      "column": 9,
+      "text": "/* FALLTHROUGH */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "case_statement",
+        "name": null,
+        "snippet": "    case 1:\n        score += 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 136,
+      "nextCodeStart": 167,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "classify",
+        "start": 41,
+        "end": 466
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:fallthrough"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 145,
+          "end": 162
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 203,
+      "end": 218,
+      "line": 10,
+      "column": 9,
+      "text": "// fall through",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "case_statement",
+        "name": null,
+        "snippet": "    case 2:\n        score += 3;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 194,
+      "nextCodeStart": 223,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "classify",
+        "start": 41,
+        "end": 466
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:fallthrough"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 203,
+          "end": 218
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "block",
+      "start": 259,
+      "end": 307,
+      "line": 13,
+      "column": 9,
+      "text": "/* Deliberately continues into the next case. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "case_statement",
+        "name": null,
+        "snippet": "    case 3:\n        score += 4;\n        break;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 250,
+      "nextCodeStart": 332,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "classify",
+        "start": 41,
+        "end": 466
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 259,
+          "end": 307
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 316,
+      "end": 327,
+      "line": 14,
+      "column": 9,
+      "text": "// FALLTHRU",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "case_statement",
+        "name": null,
+        "snippet": "    case 3:\n        score += 4;\n        break;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 250,
+      "nextCodeStart": 332,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "classify",
+        "start": 41,
+        "end": 466
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:fallthrough"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 316,
+          "end": 327
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "line",
+      "start": 396,
+      "end": 425,
+      "line": 19,
+      "column": 9,
+      "text": "// An ordinary prose comment.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "break_statement",
+        "name": null,
+        "snippet": "        break;\n    }\n    return score;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 387,
+      "nextCodeStart": 434,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "classify",
+        "start": 41,
+        "end": 466
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 396,
+          "end": 425
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 2,
+    "doc": 0,
+    "avgLength": 39.0,
+    "languageHasLineComments": true
+  }
+}

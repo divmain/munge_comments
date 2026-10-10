@@ -1,0 +1,172 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/unicode.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 63,
+      "line": 1,
+      "column": 1,
+      "text": "// Größe: identifiers and strings with multi-byte characters.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "größe",
+        "snippet": "const größe = \"日本語\";\nconst emoji = \"🎉🚀\";\nconst café = { naïve: \"ü\" };"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 64,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 63
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 93,
+      "end": 110,
+      "line": 2,
+      "column": 22,
+      "text": "// after CJK text",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "größe",
+        "snippet": "const größe = \"日本語\";\nconst emoji = \"🎉🚀\";\nconst café = { naïve: \"ü\" };"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 92,
+      "nextCodeStart": 111,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 93,
+          "end": 110
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 137,
+      "end": 154,
+      "line": 3,
+      "column": 21,
+      "text": "/* after emoji */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "emoji",
+        "snippet": "const emoji = \"🎉🚀\";\nconst café = { naïve: \"ü\" };"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 136,
+      "nextCodeStart": 155,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 137,
+          "end": 154
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 187,
+      "end": 222,
+      "line": 4,
+      "column": 30,
+      "text": "// 🎉 an emoji inside the comment",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "café",
+        "snippet": "const café = { naïve: \"ü\" };\nexport const all = [größe, emoji, café];"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 186,
+      "nextCodeStart": 265,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 187,
+          "end": 222
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "block",
+      "start": 223,
+      "end": 264,
+      "line": 5,
+      "column": 1,
+      "text": "/* Ελληνικά in a block comment */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "all",
+        "snippet": "export const all = [größe, emoji, café];"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 186,
+      "nextCodeStart": 265,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 223,
+          "end": 264
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 2,
+    "doc": 0,
+    "avgLength": 32.0,
+    "languageHasLineComments": true
+  }
+}

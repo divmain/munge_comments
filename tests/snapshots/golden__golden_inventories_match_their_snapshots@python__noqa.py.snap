@@ -1,0 +1,180 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/noqa.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 11,
+      "end": 23,
+      "line": 1,
+      "column": 12,
+      "text": "# noqa: F401",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": "os",
+        "snippet": "import os\nimport sys"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 9,
+      "nextCodeStart": 24,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:noqa"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 11,
+          "end": 23
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 36,
+      "end": 42,
+      "line": 2,
+      "column": 13,
+      "text": "# noqa",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": "sys",
+        "snippet": "import sys"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 34,
+      "nextCodeStart": 106,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:noqa"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 36,
+          "end": 42
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 44,
+      "end": 105,
+      "line": 4,
+      "column": 1,
+      "text": "# A long line follows; the trailing noqa silences the linter.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "URL = \"https://example.com/a/very/long/path/that/exceeds/the/configured/line/length/limit\"\nPATH = sys.path"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 34,
+      "nextCodeStart": 106,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 44,
+          "end": 105
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 198,
+      "end": 210,
+      "line": 5,
+      "column": 93,
+      "text": "# noqa: E501",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "URL = \"https://example.com/a/very/long/path/that/exceeds/the/configured/line/length/limit\"\nPATH = sys.path"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 196,
+      "nextCodeStart": 211,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:noqa"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 198,
+          "end": 210
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 228,
+      "end": 240,
+      "line": 6,
+      "column": 18,
+      "text": "# nosec B105",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "PATH = sys.path"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 226,
+      "nextCodeStart": 241,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:nosec"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 228,
+          "end": 240
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 61.0,
+    "languageHasLineComments": true
+  }
+}

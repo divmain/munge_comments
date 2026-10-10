@@ -1,0 +1,50 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/lone-cr.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 9,
+      "line": 1,
+      "column": 1,
+      "text": "# a\rx = 1",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "end_of_file",
+        "name": null,
+        "snippet": ""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 10,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "lone-cr"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 9
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,244 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/rust/doc-comments.rs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "doc",
+      "start": 0,
+      "end": 49,
+      "line": 1,
+      "column": 1,
+      "text": "//! Crate-level inner doc comment: doc-protected.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "documented",
+        "snippet": "pub fn documented() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 132,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 49
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "doc",
+      "start": 50,
+      "end": 78,
+      "line": 2,
+      "column": 1,
+      "text": "//! A second inner doc line.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "documented",
+        "snippet": "pub fn documented() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 132,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 50,
+          "end": 78
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "doc",
+      "start": 80,
+      "end": 131,
+      "line": 4,
+      "column": 1,
+      "text": "/// Outer doc comment on a function: doc-protected.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "documented",
+        "snippet": "pub fn documented() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 132,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 80,
+          "end": 131
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 156,
+      "end": 201,
+      "line": 7,
+      "column": 1,
+      "text": "//// Four slashes: not a doc comment in Rust.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "plain",
+        "snippet": "pub fn plain() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 154,
+      "nextCodeStart": 202,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 156,
+          "end": 201
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "doc",
+      "start": 221,
+      "end": 267,
+      "line": 10,
+      "column": 1,
+      "text": "/** Outer block doc comment: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "block_documented",
+        "snippet": "pub fn block_documented() {}\npub mod inner {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 219,
+      "nextCodeStart": 268,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 221,
+          "end": 267
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "doc",
+      "start": 318,
+      "end": 364,
+      "line": 14,
+      "column": 5,
+      "text": "/*! Inner block doc comment: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "f",
+        "snippet": "    pub fn f() {}\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 313,
+      "nextCodeStart": 405,
+      "enclosingTopLevel": {
+        "nodeKind": "mod_item",
+        "name": "inner",
+        "start": 298,
+        "end": 420
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 318,
+          "end": 364
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C7",
+      "kind": "line",
+      "start": 370,
+      "end": 400,
+      "line": 16,
+      "column": 5,
+      "text": "// An ordinary comment: prose.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "f",
+        "snippet": "    pub fn f() {}\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 313,
+      "nextCodeStart": 405,
+      "enclosingTopLevel": {
+        "nodeKind": "mod_item",
+        "name": "inner",
+        "start": 298,
+        "end": 420
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 370,
+          "end": 400
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 37.5,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,214 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/legal-header.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 0,
+      "end": 64,
+      "line": 1,
+      "column": 1,
+      "text": "/*!\n * widget-kit v1.2.3\n * Copyright (c) 2026 Example Corp.\n */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { readFileSync } from \"fs\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 179,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:legal-comment",
+        "license"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 64
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 66,
+      "end": 97,
+      "line": 6,
+      "column": 1,
+      "text": "// Copyright 2026 Example Corp.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { readFileSync } from \"fs\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 179,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 66,
+          "end": 97
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 98,
+      "end": 136,
+      "line": 7,
+      "column": 1,
+      "text": "// SPDX-License-Identifier: Apache-2.0",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { readFileSync } from \"fs\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 179,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 98,
+          "end": 136
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 137,
+      "end": 177,
+      "line": 8,
+      "column": 1,
+      "text": "// No keyword on this continuation line.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { readFileSync } from \"fs\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 179,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 137,
+          "end": 177
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 215,
+      "end": 275,
+      "line": 12,
+      "column": 1,
+      "text": "// Mentions copyright, but code precedes it: ordinary prose.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "banner",
+        "snippet": "export const banner = readFileSync(\"BANNER\", \"utf8\");"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 213,
+      "nextCodeStart": 276,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 215,
+          "end": 275
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C6",
+      "kind": "block",
+      "start": 331,
+      "end": 388,
+      "line": 15,
+      "column": 1,
+      "text": "/*! Preserved legal comment in the middle of the file. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "version",
+        "snippet": "export const version = \"1.2.3\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 329,
+      "nextCodeStart": 389,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:legal-comment"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 331,
+          "end": 388
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 60.0,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,89 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/asi-hazard.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 70,
+      "end": 74,
+      "line": 2,
+      "column": 10,
+      "text": "// c",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return\n    x;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 69,
+      "nextCodeStart": 79,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "lineComment",
+        "start": 0,
+        "end": 83
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 70,
+          "end": 74
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 156,
+      "end": 163,
+      "line": 7,
+      "column": 10,
+      "text": "/*\n  */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return\n x;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 155,
+      "nextCodeStart": 164,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "blockComment",
+        "start": 85,
+        "end": 168
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 156,
+          "end": 163
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 5.5,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,120 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/template-literals.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 23,
+      "end": 73,
+      "line": 3,
+      "column": 1,
+      "text": "// A template with a comment-looking literal part.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "plain",
+        "snippet": "const plain = `// not a comment ${name} /* nor this */`;\nconst nested = `outer ${`inner // text ${name }`} tail`;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 21,
+      "nextCodeStart": 74,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 23,
+          "end": 73
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 178,
+      "end": 198,
+      "line": 6,
+      "column": 47,
+      "text": "/* a real comment */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "const nested = `outer ${`inner // text ${name }`} tail`;\nconst multiline = `"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 177,
+      "nextCodeStart": 198,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "nested",
+        "start": 132,
+        "end": 208
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 178,
+          "end": 198
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 259,
+      "end": 296,
+      "line": 10,
+      "column": 5,
+      "text": "/* a comment inside a substitution */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "string_fragment",
+        "name": null,
+        "snippet": "const multiline = `\n  // still template text\n  ${ name}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 259,
+      "nextCodeStart": 297,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "multiline",
+        "start": 210,
+        "end": 305
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 259,
+          "end": 296
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 2,
+    "doc": 0,
+    "avgLength": 35.666666666666664,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,84 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/c/define-comments.c
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 101,
+      "end": 144,
+      "line": 2,
+      "column": 27,
+      "text": "/* a trailing block comment: inventoried */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "#define BLOCK_COMMENTED 2"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 101,
+      "nextCodeStart": 170,
+      "enclosingTopLevel": {
+        "nodeKind": "preproc_def",
+        "name": "BLOCK_COMMENTED",
+        "start": 75,
+        "end": 145
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 101,
+          "end": 144
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 146,
+      "end": 169,
+      "line": 4,
+      "column": 1,
+      "text": "/* Uses both macros. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_definition",
+        "name": "sum",
+        "snippet": "int sum(void) {\n    return LINE_COMMENTED + BLOCK_COMMENTED;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 101,
+      "nextCodeStart": 170,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 146,
+          "end": 169
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 2,
+    "doc": 0,
+    "avgLength": 33.0,
+    "languageHasLineComments": true
+  }
+}

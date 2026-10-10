@@ -1,0 +1,115 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/cpp/template.cpp
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 19,
+      "end": 52,
+      "line": 3,
+      "column": 1,
+      "text": "// Sums any container of numbers.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "template_declaration",
+        "name": "sum",
+        "snippet": "template <typename Container>\ntypename Container::value_type sum(const Container &items) {\n    typename Container::value_type total{};"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 17,
+      "nextCodeStart": 53,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 19,
+          "end": 52
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 188,
+      "end": 207,
+      "line": 6,
+      "column": 45,
+      "text": "// zero-initialized",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "total",
+        "snippet": "    typename Container::value_type total{};\n    for (const auto &item : items) {\n        total += item;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 187,
+      "nextCodeStart": 212,
+      "enclosingTopLevel": {
+        "nodeKind": "template_declaration",
+        "name": "sum",
+        "start": 53,
+        "end": 293
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 188,
+          "end": 207
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 295,
+      "end": 347,
+      "line": 13,
+      "column": 1,
+      "text": "/* Explicit use, so the template is instantiated. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_definition",
+        "name": "useSum",
+        "snippet": "int useSum() {\n    std::vector<int> values{1, 2, 3};\n    return sum(values);"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 293,
+      "nextCodeStart": 348,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 295,
+          "end": 347
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 34.666666666666664,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,334 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/go/example_test.go
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 34,
+      "end": 69,
+      "line": 5,
+      "column": 1,
+      "text": "// ExampleHello shows the greeting.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleHello",
+        "snippet": "func ExampleHello() {\n\tfmt.Println(\"hello\")"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 32,
+      "nextCodeStart": 70,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 34,
+          "end": 69
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 93,
+      "end": 115,
+      "line": 7,
+      "column": 2,
+      "text": "// Print the greeting.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\tfmt.Println(\"hello\")\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 91,
+      "nextCodeStart": 117,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleHello",
+        "start": 70,
+        "end": 157
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 93,
+          "end": 115
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 139,
+      "end": 155,
+      "line": 9,
+      "column": 2,
+      "text": "// Output: hello",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleHello",
+        "snippet": "func ExampleHello() {\n\tfmt.Println(\"hello\")"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 137,
+      "nextCodeStart": 156,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleHello",
+        "start": 70,
+        "end": 157
+      },
+      "classification": "functional",
+      "tags": [
+        "example-output"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 139,
+          "end": 155
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 159,
+      "end": 202,
+      "line": 12,
+      "column": 1,
+      "text": "// ExampleUnordered shows unordered output.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleUnordered",
+        "snippet": "func ExampleUnordered() {\n\tfmt.Println(\"b\")\n\tfmt.Println(\"a\")"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 157,
+      "nextCodeStart": 203,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 159,
+          "end": 202
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 266,
+      "end": 286,
+      "line": 16,
+      "column": 2,
+      "text": "// Unordered output:",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleUnordered",
+        "snippet": "func ExampleUnordered() {\n\tfmt.Println(\"b\")\n\tfmt.Println(\"a\")"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 264,
+      "nextCodeStart": 299,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleUnordered",
+        "start": 203,
+        "end": 300
+      },
+      "classification": "functional",
+      "tags": [
+        "example-output"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 266,
+          "end": 286
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "line",
+      "start": 288,
+      "end": 292,
+      "line": 17,
+      "column": 2,
+      "text": "// a",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleUnordered",
+        "snippet": "func ExampleUnordered() {\n\tfmt.Println(\"b\")\n\tfmt.Println(\"a\")"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 264,
+      "nextCodeStart": 299,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleUnordered",
+        "start": 203,
+        "end": 300
+      },
+      "classification": "functional",
+      "tags": [
+        "example-output"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 288,
+          "end": 292
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C7",
+      "kind": "line",
+      "start": 294,
+      "end": 298,
+      "line": 18,
+      "column": 2,
+      "text": "// b",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleUnordered",
+        "snippet": "func ExampleUnordered() {\n\tfmt.Println(\"b\")\n\tfmt.Println(\"a\")"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 264,
+      "nextCodeStart": 299,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "ExampleUnordered",
+        "start": 203,
+        "end": 300
+      },
+      "classification": "functional",
+      "tags": [
+        "example-output"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 294,
+          "end": 298
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C8",
+      "kind": "line",
+      "start": 302,
+      "end": 363,
+      "line": 21,
+      "column": 1,
+      "text": "// Examplefoo is not an example (lowercase after the prefix).",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "Examplefoo",
+        "snippet": "func Examplefoo() {\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 300,
+      "nextCodeStart": 364,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 302,
+          "end": 363
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C9",
+      "kind": "line",
+      "start": 385,
+      "end": 407,
+      "line": 23,
+      "column": 2,
+      "text": "// Output: not checked",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "Examplefoo",
+        "snippet": "func Examplefoo() {\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 383,
+      "nextCodeStart": 408,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "Examplefoo",
+        "start": 364,
+        "end": 409
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 385,
+          "end": 407
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 5,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 36.6,
+    "languageHasLineComments": true
+  }
+}

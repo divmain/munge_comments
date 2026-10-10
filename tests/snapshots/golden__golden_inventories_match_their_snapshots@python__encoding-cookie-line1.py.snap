@@ -1,0 +1,82 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/encoding-cookie-line1.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 23,
+      "line": 1,
+      "column": 1,
+      "text": "# -*- coding: utf-8 -*-",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\"\"\"A module whose encoding cookie is on line 1.\"\"\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 24,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "encoding-cookie",
+        "modeline"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 23
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 76,
+      "end": 98,
+      "line": 4,
+      "column": 1,
+      "text": "# An ordinary comment.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "VALUE = 1"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 74,
+      "nextCodeStart": 99,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 76,
+          "end": 98
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 22.0,
+    "languageHasLineComments": true
+  }
+}

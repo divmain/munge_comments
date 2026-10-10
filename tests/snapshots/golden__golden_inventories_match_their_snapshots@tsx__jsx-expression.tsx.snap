@@ -1,0 +1,129 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/tsx/jsx-expression.tsx
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 82,
+      "end": 120,
+      "line": 4,
+      "column": 8,
+      "text": "/* The sole content of a container. */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "jsx_expression",
+        "name": null,
+        "snippet": "      {}\n      {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": true,
+      "prevCodeEnd": 82,
+      "nextCodeStart": 120,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "List",
+        "start": 0,
+        "end": 303
+      },
+      "classification": "prose",
+      "tags": [
+        "jsx-expression"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 82,
+          "end": 120
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 138,
+      "end": 177,
+      "line": 6,
+      "column": 9,
+      "text": "// A line comment alone in a container.",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "jsx_expression",
+        "name": null,
+        "snippet": "      {\n      }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": true,
+      "prevCodeEnd": 129,
+      "nextCodeStart": 184,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "List",
+        "start": 0,
+        "end": 303
+      },
+      "classification": "prose",
+      "tags": [
+        "jsx-expression"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 138,
+          "end": 177
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 244,
+      "end": 270,
+      "line": 9,
+      "column": 30,
+      "text": "/* beside an expression */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "jsx_opening_element",
+        "name": "li",
+        "snippet": "        <li key={item}>{item }</li>\n      ))}\n    </ul>"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 243,
+      "nextCodeStart": 270,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "List",
+        "start": 0,
+        "end": 303
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 244,
+          "end": 270
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 26.0,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,115 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/c/nested-block.c
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 0,
+      "end": 63,
+      "line": 1,
+      "column": 1,
+      "text": "/* C block comments do not nest: /* this opener is just text */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "a",
+        "snippet": "int a = 1;\nint b =  2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 64,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 63
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 84,
+      "end": 92,
+      "line": 4,
+      "column": 9,
+      "text": "/* /* */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "primitive_type",
+        "name": null,
+        "snippet": "int b =  2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 83,
+      "nextCodeStart": 93,
+      "enclosingTopLevel": {
+        "nodeKind": "declaration",
+        "name": "b",
+        "start": 76,
+        "end": 95
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 84,
+          "end": 92
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 97,
+      "end": 149,
+      "line": 6,
+      "column": 1,
+      "text": "/*\n * A multi-line block with a stray /* inside.\n */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "c",
+        "snippet": "int c = 3;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 95,
+      "nextCodeStart": 150,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 97,
+          "end": 149
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 3,
+    "doc": 0,
+    "avgLength": 41.0,
+    "languageHasLineComments": true
+  }
+}

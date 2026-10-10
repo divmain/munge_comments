@@ -1,0 +1,117 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/rust/safety.rs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "doc",
+      "start": 0,
+      "end": 25,
+      "line": 1,
+      "column": 1,
+      "text": "/// Reads the first byte.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "first",
+        "snippet": "pub fn first(bytes: &[u8]) -> u8 {\n    assert!(!bytes.is_empty());"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 26,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 25
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 97,
+      "end": 151,
+      "line": 4,
+      "column": 5,
+      "text": "// SAFETY: the slice is non-empty, checked just above.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "    unsafe { *bytes.get_unchecked(0) }\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 92,
+      "nextCodeStart": 156,
+      "enclosingTopLevel": {
+        "nodeKind": "function_item",
+        "name": "first",
+        "start": 26,
+        "end": 192
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:safety"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 97,
+          "end": 151
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 194,
+      "end": 240,
+      "line": 8,
+      "column": 1,
+      "text": "// A plain comment mentioning safety is prose.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "second",
+        "snippet": "pub fn second(bytes: &[u8]) -> Option<u8> {\n    bytes.get(1).copied()\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 192,
+      "nextCodeStart": 241,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 194,
+          "end": 240
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 46.0,
+    "languageHasLineComments": true
+  }
+}

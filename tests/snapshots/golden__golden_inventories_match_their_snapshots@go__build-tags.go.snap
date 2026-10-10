@@ -1,0 +1,145 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/go/build-tags.go
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 25,
+      "line": 1,
+      "column": 1,
+      "text": "//go:build linux && amd64",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "package_clause",
+        "name": null,
+        "snippet": "package tags"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 95,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:go-build"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 25
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 26,
+      "end": 47,
+      "line": 2,
+      "column": 1,
+      "text": "// +build linux,amd64",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "package_clause",
+        "name": null,
+        "snippet": "package tags"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 95,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:build"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 26,
+          "end": 47
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 49,
+      "end": 94,
+      "line": 4,
+      "column": 1,
+      "text": "// Package tags is only built on linux/amd64.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "package_clause",
+        "name": null,
+        "snippet": "package tags"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 95,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 49,
+          "end": 94
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 109,
+      "end": 133,
+      "line": 7,
+      "column": 1,
+      "text": "// Answer is the answer.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "const_declaration",
+        "name": "Answer",
+        "snippet": "const Answer = 42"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 107,
+      "nextCodeStart": 134,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 109,
+          "end": 133
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 34.5,
+    "languageHasLineComments": true
+  }
+}

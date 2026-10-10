@@ -1,0 +1,165 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/indented-comments.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 17,
+      "end": 66,
+      "line": 2,
+      "column": 5,
+      "text": "# Indented comment-only line, first in the block.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "    value = 1\n    if value:"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 12,
+      "nextCodeStart": 71,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "outer",
+        "start": 0,
+        "end": 311
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 17,
+          "end": 66
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 103,
+      "end": 171,
+      "line": 5,
+      "column": 9,
+      "text": "# Deeper indentation.\n        # A two-line group at the same indent.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        value += 1"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 94,
+      "nextCodeStart": 180,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "outer",
+        "start": 0,
+        "end": 311
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 103,
+          "end": 124
+        },
+        {
+          "start": 133,
+          "end": 171
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 203,
+      "end": 252,
+      "line": 8,
+      "column": 13,
+      "text": "# Over-indented comment lines are still comments.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return value"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 190,
+      "nextCodeStart": 299,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "outer",
+        "start": 0,
+        "end": 311
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 203,
+          "end": 252
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 257,
+      "end": 294,
+      "line": 9,
+      "column": 5,
+      "text": "# Dedented back to the function body.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return value"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 190,
+      "nextCodeStart": 299,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "outer",
+        "start": 0,
+        "end": 311
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 257,
+          "end": 294
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 4,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 50.75,
+    "languageHasLineComments": true
+  }
+}

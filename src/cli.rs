@@ -138,7 +138,7 @@ fn parse_similarity_threshold(value: &str) -> Result<f64, String> {
 ///
 /// The version string is `munge-comments <CARGO_PKG_VERSION>`, so it cannot
 /// drift from `Cargo.toml`.
-#[derive(Parser)]
+#[derive(Parser, Debug)]
 #[command(
     name = "munge-comments",
     bin_name = "munge-comments",
@@ -152,7 +152,7 @@ pub struct Cli {
 }
 
 /// The three subcommands (plus the hidden debug canary).
-#[derive(Subcommand)]
+#[derive(Subcommand, Debug)]
 pub enum Command {
     /// Plan comment changes: discover files, hide prose comments, have the
     /// model regenerate them, and judge each one. Writes a JSON artifact.

@@ -1,0 +1,81 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/encoding-cookie-line2.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 23,
+      "end": 37,
+      "line": 2,
+      "column": 1,
+      "text": "# coding=utf-8",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "VALUE = \"café\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 95,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "encoding-cookie"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 23,
+          "end": 37
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 38,
+      "end": 94,
+      "line": 3,
+      "column": 1,
+      "text": "# Line 3 says coding: latin-1, but only lines 1-2 count.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "VALUE = \"café\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 95,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 38,
+          "end": 94
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": true,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 56.0,
+    "languageHasLineComments": true
+  }
+}

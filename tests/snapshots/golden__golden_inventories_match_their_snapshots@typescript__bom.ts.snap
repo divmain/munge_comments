@@ -1,0 +1,79 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/bom.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 3,
+      "end": 45,
+      "line": 1,
+      "column": 1,
+      "text": "// The file starts with a byte-order mark.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "a",
+        "snippet": "export const a = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 46,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 3,
+          "end": 45
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 66,
+      "end": 90,
+      "line": 2,
+      "column": 21,
+      "text": "/* after the BOM line */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "export_statement",
+        "name": "a",
+        "snippet": "export const a = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 65,
+      "nextCodeStart": 91,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 66,
+          "end": 90
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 33.0,
+    "languageHasLineComments": true
+  }
+}

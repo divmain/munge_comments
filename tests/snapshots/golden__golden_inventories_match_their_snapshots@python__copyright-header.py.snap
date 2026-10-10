@@ -1,0 +1,180 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/copyright-header.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 30,
+      "line": 1,
+      "column": 1,
+      "text": "# Copyright 2026 Example Corp.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\"\"\"Module docstring after the header.\"\"\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 119,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 30
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 31,
+      "end": 53,
+      "line": 2,
+      "column": 1,
+      "text": "# All rights reserved.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\"\"\"Module docstring after the header.\"\"\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 119,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 31,
+          "end": 53
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 54,
+      "end": 55,
+      "line": 3,
+      "column": 1,
+      "text": "#",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\"\"\"Module docstring after the header.\"\"\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 119,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 54,
+          "end": 55
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 56,
+      "end": 117,
+      "line": 4,
+      "column": 1,
+      "text": "# Use of this source code is governed by a BSD-style license.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "\"\"\"Module docstring after the header.\"\"\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 119,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 56,
+          "end": 117
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 161,
+      "end": 218,
+      "line": 8,
+      "column": 1,
+      "text": "# Not part of the header: a docstring (code) precedes it.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "VALUE = 1"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 159,
+      "nextCodeStart": 219,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 161,
+          "end": 218
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 57.0,
+    "languageHasLineComments": true
+  }
+}

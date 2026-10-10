@@ -1,0 +1,122 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/go/cgo-grouped-import.go
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 31,
+      "end": 56,
+      "line": 6,
+      "column": 2,
+      "text": "/*\n\t#include <math.h>\n\t*/",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_spec",
+        "name": null,
+        "snippet": "\t\"C\"\n\t\"os\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 28,
+      "nextCodeStart": 58,
+      "enclosingTopLevel": {
+        "nodeKind": "import_declaration",
+        "name": null,
+        "start": 13,
+        "end": 121
+      },
+      "classification": "functional",
+      "tags": [
+        "cgo-preamble"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 31,
+          "end": 56
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 63,
+      "end": 113,
+      "line": 10,
+      "column": 2,
+      "text": "// A comment above a non-C spec is ordinary prose.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_spec",
+        "name": null,
+        "snippet": "\t\"os\"\n)"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 61,
+      "nextCodeStart": 115,
+      "enclosingTopLevel": {
+        "nodeKind": "import_declaration",
+        "name": null,
+        "start": 13,
+        "end": 121
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 63,
+          "end": 113
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 123,
+      "end": 166,
+      "line": 14,
+      "column": 1,
+      "text": "// Sqrt prints a square root computed in C.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "Sqrt",
+        "snippet": "func Sqrt(x float64) {\n\tfmt.Fprintln(os.Stdout, float64(C.sqrt(C.double(x))))\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 121,
+      "nextCodeStart": 167,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 123,
+          "end": 166
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 46.5,
+    "languageHasLineComments": true
+  }
+}

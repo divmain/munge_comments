@@ -1,0 +1,132 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/cpp/nolint.cpp
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 54,
+      "end": 85,
+      "line": 4,
+      "column": 5,
+      "text": "// NOLINTNEXTLINE(cert-err34-c)",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return std::atoi(text);\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 49,
+      "nextCodeStart": 154,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "risky",
+        "start": 20,
+        "end": 179
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:nolint",
+        "directive:nolintnextline"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 54,
+          "end": 85
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 90,
+      "end": 149,
+      "line": 5,
+      "column": 5,
+      "text": "// Prose between the directive and its target is protected.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return std::atoi(text);\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 49,
+      "nextCodeStart": 154,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "risky",
+        "start": 20,
+        "end": 179
+      },
+      "classification": "functional",
+      "tags": [
+        "directive-adjacent"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 90,
+          "end": 149
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 239,
+      "end": 262,
+      "line": 10,
+      "column": 29,
+      "text": "// NOLINT(cert-err34-c)",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return std::atoi(text);\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 238,
+      "nextCodeStart": 263,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "other",
+        "start": 181,
+        "end": 264
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:nolint"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 239,
+          "end": 262
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

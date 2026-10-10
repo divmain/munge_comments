@@ -1,0 +1,265 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/javascript/cjs-exports.cjs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "doc",
+      "start": 0,
+      "end": 56,
+      "line": 1,
+      "column": 1,
+      "text": "/** Exported via module.exports.alpha: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "alpha",
+        "snippet": "function alpha() {}\nmodule.exports.alpha = alpha;"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 57,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 56
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "doc",
+      "start": 108,
+      "end": 156,
+      "line": 5,
+      "column": 1,
+      "text": "/** Exported via exports.beta: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "beta",
+        "snippet": "function beta() {}\nexports.beta = beta;"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 106,
+      "nextCodeStart": 157,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 108,
+          "end": 156
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "doc",
+      "start": 198,
+      "end": 254,
+      "line": 9,
+      "column": 1,
+      "text": "/** Exported as module.exports itself: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "gamma",
+        "snippet": "function gamma() {}"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 196,
+      "nextCodeStart": 255,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 198,
+          "end": 254
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "doc",
+      "start": 276,
+      "end": 342,
+      "line": 12,
+      "column": 1,
+      "text": "/** Exported via shorthand in an object literal: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "delta",
+        "snippet": "function delta() {}"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 274,
+      "nextCodeStart": 343,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 276,
+          "end": 342
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "doc",
+      "start": 364,
+      "end": 416,
+      "line": 15,
+      "column": 1,
+      "text": "/** Exported via a key-value pair: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "epsilon",
+        "snippet": "function epsilon() {}"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 362,
+      "nextCodeStart": 417,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 364,
+          "end": 416
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "doc",
+      "start": 440,
+      "end": 467,
+      "line": 18,
+      "column": 1,
+      "text": "/** Not exported: prose. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "internal",
+        "snippet": "function internal() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 438,
+      "nextCodeStart": 468,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 440,
+          "end": 467
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C7",
+      "kind": "doc",
+      "start": 492,
+      "end": 552,
+      "line": 21,
+      "column": 1,
+      "text": "/** JSDoc on the export assignment itself: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "module.exports.zeta = function zeta() {};"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 490,
+      "nextCodeStart": 553,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 492,
+          "end": 552
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C8",
+      "kind": "doc",
+      "start": 596,
+      "end": 654,
+      "line": 24,
+      "column": 1,
+      "text": "/** JSDoc on an exports.name assignment: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "exports.eta = () => internal();\nmodule.exports = gamma;"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 594,
+      "nextCodeStart": 655,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 596,
+          "end": 654
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 1,
+    "avgLength": 27.0,
+    "languageHasLineComments": true
+  }
+}

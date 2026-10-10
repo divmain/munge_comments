@@ -1,0 +1,16 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/javascript/html-comment.js
+---
+{
+  "comments": [],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

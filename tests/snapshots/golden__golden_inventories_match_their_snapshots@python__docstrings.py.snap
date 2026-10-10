@@ -1,0 +1,53 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/docstrings.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 210,
+      "end": 247,
+      "line": 9,
+      "column": 9,
+      "text": "# The only real comment in this file.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "        return f\"hello {name}  # not a comment either\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 201,
+      "nextCodeStart": 256,
+      "enclosingTopLevel": {
+        "nodeKind": "class_definition",
+        "name": "Greeter",
+        "start": 64,
+        "end": 302
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 210,
+          "end": 247
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 37.0,
+    "languageHasLineComments": true
+  }
+}

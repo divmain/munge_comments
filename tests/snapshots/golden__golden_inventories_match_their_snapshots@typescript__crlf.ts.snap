@@ -1,0 +1,149 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/crlf.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 74,
+      "line": 1,
+      "column": 1,
+      "text": "// Line endings are CRLF throughout.\r\n// A CRLF group spans\r\n// two lines.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "a",
+        "snippet": "export const a = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 76,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 36
+        },
+        {
+          "start": 38,
+          "end": 59
+        },
+        {
+          "start": 61,
+          "end": 74
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 96,
+      "end": 119,
+      "line": 4,
+      "column": 21,
+      "text": "// trailing before CRLF",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "export_statement",
+        "name": "a",
+        "snippet": "export const a = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 95,
+      "nextCodeStart": 163,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 96,
+          "end": 119
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 121,
+      "end": 161,
+      "line": 5,
+      "column": 1,
+      "text": "/*\r\n * A block spanning CRLF lines.\r\n */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "b",
+        "snippet": "export const b = 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 95,
+      "nextCodeStart": 163,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 121,
+          "end": 161
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "doc",
+      "start": 184,
+      "end": 202,
+      "line": 9,
+      "column": 1,
+      "text": "/** Doc at EOF. */",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "end_of_file",
+        "name": null,
+        "snippet": ""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 182,
+      "nextCodeStart": 204,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 184,
+          "end": 202
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 1,
+    "avgLength": 38.75,
+    "languageHasLineComments": true
+  }
+}

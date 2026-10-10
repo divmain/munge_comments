@@ -1,0 +1,248 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/directive-adjacent.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 27,
+      "end": 46,
+      "line": 3,
+      "column": 1,
+      "text": "// @ts-expect-error",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "legacy",
+        "snippet": "const legacy: string = port;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 25,
+      "nextCodeStart": 95,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:ts-expect-error"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 27,
+          "end": 46
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "doc",
+      "start": 47,
+      "end": 94,
+      "line": 4,
+      "column": 1,
+      "text": "/** The legacy alias is still accepted here. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "legacy",
+        "snippet": "const legacy: string = port;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 25,
+      "nextCodeStart": 95,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive-adjacent"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 47,
+          "end": 94
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 125,
+      "end": 159,
+      "line": 7,
+      "column": 1,
+      "text": "// eslint-disable-next-line no-var",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "variable_declaration",
+        "name": "hoisted",
+        "snippet": "var hoisted = legacy;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 123,
+      "nextCodeStart": 223,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:eslint-disable",
+        "directive:eslint-disable-next-line"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 125,
+          "end": 159
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 160,
+      "end": 222,
+      "line": 8,
+      "column": 1,
+      "text": "// This explanation sits between the directive and its target.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "variable_declaration",
+        "name": "hoisted",
+        "snippet": "var hoisted = legacy;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 123,
+      "nextCodeStart": 223,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive-adjacent"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 160,
+          "end": 222
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "block",
+      "start": 246,
+      "end": 268,
+      "line": 11,
+      "column": 1,
+      "text": "/* c8 ignore next 2 */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "skipped",
+        "snippet": "const skipped = hoisted.length;\nconst counted = skipped + 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 244,
+      "nextCodeStart": 269,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:c8-ignore",
+        "directive:c8-ignore-next"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": 2,
+      "members": [
+        {
+          "start": 246,
+          "end": 268
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "line",
+      "start": 301,
+      "end": 339,
+      "line": 13,
+      "column": 1,
+      "text": "// Line 2 of the c8 window: protected.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "counted",
+        "snippet": "const counted = skipped + 1;\nexport const total = counted;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 300,
+      "nextCodeStart": 340,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive-adjacent"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 301,
+          "end": 339
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C7",
+      "kind": "line",
+      "start": 369,
+      "end": 412,
+      "line": 15,
+      "column": 1,
+      "text": "// Line 4, past the window: ordinary prose.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "total",
+        "snippet": "export const total = counted;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 368,
+      "nextCodeStart": 413,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 369,
+          "end": 412
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 43.0,
+    "languageHasLineComments": true
+  }
+}

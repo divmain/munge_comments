@@ -1,0 +1,129 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/java/formatter.java
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 58,
+      "end": 75,
+      "line": 4,
+      "column": 5,
+      "text": "// @formatter:off",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "MATRIX",
+        "snippet": "    private static final int[][] MATRIX = {\n        {1, 0},\n        {0, 1},"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 53,
+      "nextCodeStart": 80,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Formatter",
+        "start": 29,
+        "end": 298
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:formatter-off"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 58,
+          "end": 75
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 163,
+      "end": 179,
+      "line": 9,
+      "column": 5,
+      "text": "// @formatter:on",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "trace",
+        "snippet": "    public int trace() {\n        return MATRIX[0][0] + MATRIX[1][1];\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 158,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Formatter",
+        "start": 29,
+        "end": 298
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:formatter-on"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 163,
+          "end": 179
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 185,
+      "end": 221,
+      "line": 11,
+      "column": 5,
+      "text": "// A prose comment after the region.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "trace",
+        "snippet": "    public int trace() {\n        return MATRIX[0][0] + MATRIX[1][1];\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 158,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Formatter",
+        "start": 29,
+        "end": 298
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 185,
+          "end": 221
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 36.0,
+    "languageHasLineComments": true
+  }
+}

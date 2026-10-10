@@ -1,0 +1,115 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/cpp/raw-string-header.h
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 14,
+      "end": 54,
+      "line": 3,
+      "column": 1,
+      "text": "// A real comment before the raw string.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_definition",
+        "name": "pattern",
+        "snippet": "inline const char *pattern() {\n    return R\"(/* not a comment */ // nor this)\";\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 12,
+      "nextCodeStart": 55,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 14,
+          "end": 54
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 135,
+      "end": 161,
+      "line": 5,
+      "column": 50,
+      "text": "// a real trailing comment",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return R\"(/* not a comment */ // nor this)\";\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 134,
+      "nextCodeStart": 162,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "pattern",
+        "start": 55,
+        "end": 163
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 135,
+          "end": 161
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 165,
+      "end": 201,
+      "line": 8,
+      "column": 1,
+      "text": "/* A real block comment after it. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_definition",
+        "name": "delimited",
+        "snippet": "inline const char *delimited() {\n    return R\"xyz(text with )\" inside /* still text */)xyz\";\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 163,
+      "nextCodeStart": 202,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 165,
+          "end": 201
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 34.0,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,228 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/java/doc-comments.java
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "doc",
+      "start": 27,
+      "end": 82,
+      "line": 3,
+      "column": 1,
+      "text": "/**\n * A Javadoc comment on a class: doc-protected.\n */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "class_declaration",
+        "name": "DocComments",
+        "snippet": "public class DocComments {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 25,
+      "nextCodeStart": 83,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 27,
+          "end": 82
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "doc",
+      "start": 114,
+      "end": 166,
+      "line": 7,
+      "column": 5,
+      "text": "/// A Markdown doc comment (JEP 467): doc-protected.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "value",
+        "snippet": "    public int value;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 109,
+      "nextCodeStart": 212,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "DocComments",
+        "start": 83,
+        "end": 455
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 114,
+          "end": 166
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "doc",
+      "start": 171,
+      "end": 207,
+      "line": 8,
+      "column": 5,
+      "text": "/// Its lines form one comment each.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "value",
+        "snippet": "    public int value;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 109,
+      "nextCodeStart": 212,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "DocComments",
+        "start": 83,
+        "end": 455
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 171,
+          "end": 207
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "doc",
+      "start": 235,
+      "end": 292,
+      "line": 11,
+      "column": 5,
+      "text": "//// javac reads four slashes as a Markdown doc line too.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "hidden",
+        "snippet": "    private int hidden;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 229,
+      "nextCodeStart": 297,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "DocComments",
+        "start": 83,
+        "end": 455
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 235,
+          "end": 292
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "block",
+      "start": 322,
+      "end": 357,
+      "line": 14,
+      "column": 5,
+      "text": "/* A plain block comment: prose. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "get",
+        "snippet": "    public int get() {\n        return value + hidden;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 316,
+      "nextCodeStart": 398,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "DocComments",
+        "start": 83,
+        "end": 455
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 322,
+          "end": 357
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C6",
+      "kind": "line",
+      "start": 362,
+      "end": 393,
+      "line": 15,
+      "column": 5,
+      "text": "// A plain line comment: prose.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "get",
+        "snippet": "    public int get() {\n        return value + hidden;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 316,
+      "nextCodeStart": 398,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "DocComments",
+        "start": 83,
+        "end": 455
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 362,
+          "end": 393
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 33.0,
+    "languageHasLineComments": true
+  }
+}

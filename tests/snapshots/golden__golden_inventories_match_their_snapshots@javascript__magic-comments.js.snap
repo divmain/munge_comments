@@ -1,0 +1,309 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/javascript/magic-comments.js
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 22,
+      "line": 1,
+      "column": 1,
+      "text": "// Lazy-loaded routes.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "routes",
+        "snippet": "const routes = [\n  () => import( \"./home.js\"),\n  () => import( \"./about.js\"),"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 23,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 22
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 55,
+      "end": 85,
+      "line": 3,
+      "column": 16,
+      "text": "/* webpackChunkName: \"home\" */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "formal_parameters",
+        "name": null,
+        "snippet": "  () => import( \"./home.js\"),\n  () => import( \"./about.js\"),\n  () => import( \"./external.js\"),"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 55,
+      "nextCodeStart": 86,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "routes",
+        "start": 23,
+        "end": 297
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:webpack-chunk-name"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 55,
+          "end": 85
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 115,
+      "end": 169,
+      "line": 4,
+      "column": 16,
+      "text": "/* webpackChunkName: \"about\", webpackPrefetch: true */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "formal_parameters",
+        "name": null,
+        "snippet": "  () => import( \"./about.js\"),\n  () => import( \"./external.js\"),\n  () => import( \"./dynamic.js\"),"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 115,
+      "nextCodeStart": 170,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "routes",
+        "start": 23,
+        "end": 297
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:webpack-chunk-name"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 115,
+          "end": 169
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "block",
+      "start": 200,
+      "end": 225,
+      "line": 5,
+      "column": 16,
+      "text": "/* webpackIgnore: true */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "formal_parameters",
+        "name": null,
+        "snippet": "  () => import( \"./external.js\"),\n  () => import( \"./dynamic.js\"),\n];"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 200,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "routes",
+        "start": 23,
+        "end": 297
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:webpack-ignore"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 200,
+          "end": 225
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "block",
+      "start": 259,
+      "end": 277,
+      "line": 6,
+      "column": 16,
+      "text": "/* @vite-ignore */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "formal_parameters",
+        "name": null,
+        "snippet": "  () => import( \"./dynamic.js\"),\n];"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 259,
+      "nextCodeStart": 278,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "routes",
+        "start": 23,
+        "end": 297
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:vite-ignore"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 259,
+          "end": 277
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "block",
+      "start": 319,
+      "end": 332,
+      "line": 9,
+      "column": 21,
+      "text": "/*#__PURE__*/",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "export const make =  createFactory();\nexport const other =  createFactory();"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 318,
+      "nextCodeStart": 333,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "make",
+        "start": 299,
+        "end": 349
+      },
+      "classification": "functional",
+      "tags": [
+        "pure-annotation"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 319,
+          "end": 332
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C7",
+      "kind": "block",
+      "start": 371,
+      "end": 386,
+      "line": 10,
+      "column": 22,
+      "text": "/* @__PURE__ */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "export const other =  createFactory();"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 370,
+      "nextCodeStart": 387,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "other",
+        "start": 350,
+        "end": 403
+      },
+      "classification": "functional",
+      "tags": [
+        "pure-annotation"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 371,
+          "end": 386
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C8",
+      "kind": "block",
+      "start": 405,
+      "end": 429,
+      "line": 12,
+      "column": 1,
+      "text": "/*#__NO_SIDE_EFFECTS__*/",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "createFactory",
+        "snippet": "function createFactory() {\n  return {};\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 403,
+      "nextCodeStart": 430,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:no-side-effects"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 405,
+          "end": 429
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 22.0,
+    "languageHasLineComments": true
+  }
+}

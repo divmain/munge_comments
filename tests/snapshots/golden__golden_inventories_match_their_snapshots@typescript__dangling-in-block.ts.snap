@@ -1,0 +1,161 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/dangling-in-block.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 34,
+      "end": 54,
+      "line": 2,
+      "column": 3,
+      "text": "// Nothing here yet.",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "empty",
+        "snippet": "export function empty(): void {\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 31,
+      "nextCodeStart": 55,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "empty",
+        "start": 0,
+        "end": 56
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 34,
+          "end": 54
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 120,
+      "end": 175,
+      "line": 8,
+      "column": 3,
+      "text": "// After the final statement, before the closing brace.",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "last",
+        "snippet": "export function last(): number {\n  const x = 1;\n  return x;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 117,
+      "nextCodeStart": 176,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "last",
+        "start": 58,
+        "end": 177
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 120,
+          "end": 175
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 213,
+      "end": 243,
+      "line": 14,
+      "column": 3,
+      "text": "// Before the closing bracket.",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "array",
+        "name": null,
+        "snippet": "export const list = [\n  1,\n  2,"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 210,
+      "nextCodeStart": 244,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "list",
+        "start": 179,
+        "end": 246
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 213,
+          "end": 243
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "block",
+      "start": 285,
+      "end": 315,
+      "line": 19,
+      "column": 3,
+      "text": "/* before the closing paren */",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "arguments",
+        "name": null,
+        "snippet": "export const call = Math.max(\n  1,"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 282,
+      "nextCodeStart": 316,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "call",
+        "start": 248,
+        "end": 318
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 285,
+          "end": 315
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 33.75,
+    "languageHasLineComments": true
+  }
+}

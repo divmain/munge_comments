@@ -1,0 +1,115 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/module-format.mts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 47,
+      "line": 1,
+      "column": 1,
+      "text": "// An ES module in TypeScript's .mts extension.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { readFile } from \"node:fs/promises\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 48,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 47
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "doc",
+      "start": 94,
+      "end": 130,
+      "line": 4,
+      "column": 1,
+      "text": "/** Reads the configuration file. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "load",
+        "snippet": "export async function load(path: string): Promise<string> {\n  return readFile(path, \"utf8\");\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 92,
+      "nextCodeStart": 131,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 94,
+          "end": 130
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 224,
+      "end": 251,
+      "line": 6,
+      "column": 34,
+      "text": "// resolved relative to cwd",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return readFile(path, \"utf8\");\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 223,
+      "nextCodeStart": 252,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "load",
+        "start": 131,
+        "end": 253
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 224,
+          "end": 251
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 0,
+    "doc": 1,
+    "avgLength": 36.666666666666664,
+    "languageHasLineComments": true
+  }
+}

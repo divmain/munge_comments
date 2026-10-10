@@ -1,0 +1,110 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/tsx/generic-arrow.tsx
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 52,
+      "line": 1,
+      "column": 1,
+      "text": "// A generic arrow needs the trailing comma in .tsx.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "identity",
+        "snippet": "export const identity = <T,>(x: T): T => x;\nconst pair = <A, B>(a: A, b: B): [A, B] => [a, b];"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 53,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 52
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 149,
+      "end": 171,
+      "line": 4,
+      "column": 52,
+      "text": "// two type parameters",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "pair",
+        "snippet": "const pair = <A, B>(a: A, b: B): [A, B] => [a, b];"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 148,
+      "nextCodeStart": 198,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 149,
+          "end": 171
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 173,
+      "end": 197,
+      "line": 6,
+      "column": 1,
+      "text": "/* Uses both helpers. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "both",
+        "snippet": "export const both = () => pair(identity(1), identity(\"two\"));"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 148,
+      "nextCodeStart": 198,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 173,
+          "end": 197
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 32.666666666666664,
+    "languageHasLineComments": true
+  }
+}

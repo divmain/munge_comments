@@ -1,0 +1,79 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/dangling-eof.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 21,
+      "end": 48,
+      "line": 3,
+      "column": 1,
+      "text": "// Dangling at end of file.",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "end_of_file",
+        "name": null,
+        "snippet": ""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 19,
+      "nextCodeStart": 77,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 21,
+          "end": 48
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 49,
+      "end": 76,
+      "line": 4,
+      "column": 1,
+      "text": "/* And a block after it. */",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "end_of_file",
+        "name": null,
+        "snippet": ""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 19,
+      "nextCodeStart": 77,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 49,
+          "end": 76
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 27.0,
+    "languageHasLineComments": true
+  }
+}

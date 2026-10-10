@@ -1,0 +1,180 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/go/cgo-preamble.go
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 13,
+      "end": 35,
+      "line": 3,
+      "column": 1,
+      "text": "// #include <stdlib.h>",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_declaration",
+        "name": null,
+        "snippet": "import \"C\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 11,
+      "nextCodeStart": 111,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "cgo-preamble"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 13,
+          "end": 35
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 36,
+      "end": 57,
+      "line": 4,
+      "column": 1,
+      "text": "// #include <stdio.h>",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_declaration",
+        "name": null,
+        "snippet": "import \"C\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 11,
+      "nextCodeStart": 111,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "cgo-preamble"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 36,
+          "end": 57
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 58,
+      "end": 60,
+      "line": 5,
+      "column": 1,
+      "text": "//",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_declaration",
+        "name": null,
+        "snippet": "import \"C\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 11,
+      "nextCodeStart": 111,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "cgo-preamble"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 58,
+          "end": 60
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 61,
+      "end": 110,
+      "line": 6,
+      "column": 1,
+      "text": "// static int add(int a, int b) { return a + b; }",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_declaration",
+        "name": null,
+        "snippet": "import \"C\""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 11,
+      "nextCodeStart": 111,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "cgo-preamble"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 61,
+          "end": 110
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 123,
+      "end": 143,
+      "line": 9,
+      "column": 1,
+      "text": "// Add calls into C.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "Add",
+        "snippet": "func Add(a, b int) int {\n\treturn int(C.add(C.int(a), C.int(b)))\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 121,
+      "nextCodeStart": 144,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 123,
+          "end": 143
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 20.0,
+    "languageHasLineComments": true
+  }
+}

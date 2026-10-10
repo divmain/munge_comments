@@ -1,0 +1,114 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/cpp/doxygen.cpp
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 79,
+      "line": 1,
+      "column": 1,
+      "text": "/// Doxygen line documentation: ordinary prose in C++.\n/// A second line of it.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "documented",
+        "snippet": "int documented();"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 80,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 54
+        },
+        {
+          "start": 55,
+          "end": 79
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 99,
+      "end": 146,
+      "line": 5,
+      "column": 1,
+      "text": "/** Doxygen block documentation: also prose. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "alsoDocumented",
+        "snippet": "int alsoDocumented();"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 97,
+      "nextCodeStart": 147,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 99,
+          "end": 146
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 170,
+      "end": 207,
+      "line": 8,
+      "column": 1,
+      "text": "//! Qt-style Doxygen line: prose too.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "qtStyle",
+        "snippet": "int qtStyle();"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 168,
+      "nextCodeStart": 208,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 170,
+          "end": 207
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 54.333333333333336,
+    "languageHasLineComments": true
+  }
+}

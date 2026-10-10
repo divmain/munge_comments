@@ -1,0 +1,112 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/c/line-splice.c
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 71,
+      "line": 1,
+      "column": 1,
+      "text": "// A line comment ending in a backslash and a space splices for GCC: \\ ",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "x",
+        "snippet": "int x = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 119,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "line-splice"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 72,
+      "end": 118,
+      "line": 2,
+      "column": 1,
+      "text": "// so this line is inside it for the compiler.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "x",
+        "snippet": "int x = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 119,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 72,
+          "end": 118
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 131,
+      "end": 150,
+      "line": 5,
+      "column": 1,
+      "text": "// A plain comment.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "declaration",
+        "name": "y",
+        "snippet": "int y = 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 129,
+      "nextCodeStart": 151,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 131,
+          "end": 150
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 32.5,
+    "languageHasLineComments": true
+  }
+}

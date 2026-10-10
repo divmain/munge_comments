@@ -1,0 +1,85 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/javascript/source-map.js
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 87,
+      "line": 1,
+      "column": 1,
+      "text": "// A bundled file with a trailing source-map comment.\n//# sourceMappingURL=stale.js.map",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "answer",
+        "snippet": "export const answer = 42;"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 88,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 53
+        },
+        {
+          "start": 54,
+          "end": 87
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 114,
+      "end": 168,
+      "line": 4,
+      "column": 1,
+      "text": "//# sourceMappingURL=data:application/json;base64,e30=",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "end_of_file",
+        "name": null,
+        "snippet": ""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 113,
+      "nextCodeStart": 169,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "source-map"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 114,
+          "end": 168
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 87.0,
+    "languageHasLineComments": true
+  }
+}

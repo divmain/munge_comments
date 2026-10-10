@@ -1,0 +1,120 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/rust/derive.rs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 55,
+      "line": 1,
+      "column": 1,
+      "text": "// A comment above the attribute anchors to the struct.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "struct_item",
+        "name": "Point",
+        "snippet": "pub struct Point {\n    pub x: i32,"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 56,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 55
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 114,
+      "end": 143,
+      "line": 4,
+      "column": 5,
+      "text": "// The horizontal coordinate.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "x",
+        "snippet": "    pub x: i32,\n    pub y: i32,\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 109,
+      "nextCodeStart": 148,
+      "enclosingTopLevel": {
+        "nodeKind": "struct_item",
+        "name": "Point",
+        "start": 91,
+        "end": 204
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 114,
+          "end": 143
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 176,
+      "end": 202,
+      "line": 6,
+      "column": 17,
+      "text": "// the vertical coordinate",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "y",
+        "snippet": "    pub y: i32,\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 175,
+      "nextCodeStart": 203,
+      "enclosingTopLevel": {
+        "nodeKind": "struct_item",
+        "name": "Point",
+        "start": 91,
+        "end": 204
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 176,
+          "end": 202
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 36.666666666666664,
+    "languageHasLineComments": true
+  }
+}

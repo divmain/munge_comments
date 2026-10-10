@@ -1,0 +1,177 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/nested-blocks.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 0,
+      "end": 20,
+      "line": 1,
+      "column": 1,
+      "text": "/* outer /* inner */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "a",
+        "snippet": "const a = 1;\nconst b = 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 21,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 20
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 34,
+      "end": 45,
+      "line": 3,
+      "column": 1,
+      "text": "/* first */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "b",
+        "snippet": "const b = 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 33,
+      "nextCodeStart": 59,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 34,
+          "end": 45
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 46,
+      "end": 58,
+      "line": 3,
+      "column": 13,
+      "text": "/* second */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "b",
+        "snippet": "const b = 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 33,
+      "nextCodeStart": 59,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 46,
+          "end": 58
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "block",
+      "start": 72,
+      "end": 131,
+      "line": 5,
+      "column": 1,
+      "text": "/*\n * A multi-line block with a stray /* opener inside.\n */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "c",
+        "snippet": "const c = 3;\nconst d =  4;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 71,
+      "nextCodeStart": 132,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 72,
+          "end": 131
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "block",
+      "start": 155,
+      "end": 163,
+      "line": 9,
+      "column": 11,
+      "text": "/* /* */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "const d =  4;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 154,
+      "nextCodeStart": 164,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "d",
+        "start": 145,
+        "end": 166
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 155,
+          "end": 163
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 5,
+    "doc": 0,
+    "avgLength": 22.0,
+    "languageHasLineComments": true
+  }
+}

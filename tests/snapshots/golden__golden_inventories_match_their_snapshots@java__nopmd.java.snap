@@ -1,0 +1,207 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/java/nopmd.java
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 76,
+      "end": 108,
+      "line": 4,
+      "column": 29,
+      "text": "//NOPMD - kept for serialization",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "unused",
+        "snippet": "    private int unused = 0;\n    private int other = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 75,
+      "nextCodeStart": 113,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Nopmd",
+        "start": 27,
+        "end": 312
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:nopmd"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 76,
+          "end": 108
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 136,
+      "end": 144,
+      "line": 5,
+      "column": 28,
+      "text": "// NOPMD",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "other",
+        "snippet": "    private int other = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 135,
+      "nextCodeStart": 172,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Nopmd",
+        "start": 27,
+        "end": 312
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:nopmd"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 136,
+          "end": 144
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 150,
+      "end": 167,
+      "line": 7,
+      "column": 5,
+      "text": "// CHECKSTYLE:OFF",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "Bad_Name",
+        "snippet": "    public int Bad_Name() {\n        return unused + other;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 135,
+      "nextCodeStart": 172,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Nopmd",
+        "start": 27,
+        "end": 312
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:checkstyle-off"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 150,
+          "end": 167
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 237,
+      "end": 253,
+      "line": 11,
+      "column": 5,
+      "text": "// CHECKSTYLE:ON",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "ignored",
+        "snippet": "    private void ignored() {}\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 232,
+      "nextCodeStart": 285,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Nopmd",
+        "start": 27,
+        "end": 312
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:checkstyle-on"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 237,
+          "end": 253
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 259,
+      "end": 280,
+      "line": 13,
+      "column": 5,
+      "text": "//noinspection unused",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "ignored",
+        "snippet": "    private void ignored() {}\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 232,
+      "nextCodeStart": 285,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Nopmd",
+        "start": 27,
+        "end": 312
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:noinspection"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 259,
+          "end": 280
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

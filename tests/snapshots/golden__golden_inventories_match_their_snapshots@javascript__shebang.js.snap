@@ -1,0 +1,147 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/javascript/shebang.js
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 20,
+      "end": 51,
+      "line": 2,
+      "column": 1,
+      "text": "// Copyright 2026 Example Corp.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "'use strict';"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 144,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 20,
+          "end": 51
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 52,
+      "end": 99,
+      "line": 3,
+      "column": 1,
+      "text": "// Licensed under the MIT license; see LICENSE.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "'use strict';"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 144,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 52,
+          "end": 99
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 100,
+      "end": 142,
+      "line": 4,
+      "column": 1,
+      "text": "// keyword-free continuation of the header",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "'use strict';"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 144,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 100,
+          "end": 142
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 159,
+      "end": 192,
+      "line": 8,
+      "column": 1,
+      "text": "// Entry point: print a greeting.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "console.log(\"hello\");"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 157,
+      "nextCodeStart": 193,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 159,
+          "end": 192
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": true,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 33.0,
+    "languageHasLineComments": true
+  }
+}

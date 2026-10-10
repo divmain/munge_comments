@@ -21,14 +21,19 @@
     )
 )]
 
+pub mod comments;
 pub mod config;
+pub mod discover;
 pub mod errors;
+pub mod lang;
 pub mod llm;
 pub mod log;
 
 #[cfg(feature = "cli")]
 pub mod cli;
 
+pub use comments::inventory::{FileRef, Inventory, InventoryComment, inventory_file};
 pub use config::{Mode, PlanConfig};
 pub use errors::{Error, LlmErrorReason};
+pub use lang::{extensions::language_for, ids::LanguageId};
 pub use log::{CapturingLog, Log, NullLog, WriterLog};

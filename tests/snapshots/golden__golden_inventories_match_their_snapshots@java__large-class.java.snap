@@ -1,0 +1,1020 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/java/large-class.java
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "doc",
+      "start": 26,
+      "end": 98,
+      "line": 3,
+      "column": 1,
+      "text": "/**\n * A large class body: many members, each with its own comments.\n */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "snippet": "public class LargeClass {\n    private int total;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 24,
+      "nextCodeStart": 99,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 26,
+          "end": 98
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 129,
+      "end": 178,
+      "line": 7,
+      "column": 5,
+      "text": "// The running total, updated by every operation.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "field_declaration",
+        "name": "total",
+        "snippet": "    private int total;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 124,
+      "nextCodeStart": 183,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 129,
+          "end": 178
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "doc",
+      "start": 207,
+      "end": 236,
+      "line": 10,
+      "column": 5,
+      "text": "/** Adds the two operands. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "add",
+        "snippet": "    public int add(int a, int b) {\n        total = a + b;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 201,
+      "nextCodeStart": 241,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 207,
+          "end": 236
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 280,
+      "end": 308,
+      "line": 12,
+      "column": 9,
+      "text": "// Record the result of add.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = a + b;\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 271,
+      "nextCodeStart": 317,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 280,
+          "end": 308
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "doc",
+      "start": 365,
+      "end": 416,
+      "line": 17,
+      "column": 5,
+      "text": "/** Subtracts the second operand from the first. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "subtract",
+        "snippet": "    public int subtract(int a, int b) {\n        total = a - b;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 359,
+      "nextCodeStart": 421,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 365,
+          "end": 416
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "line",
+      "start": 465,
+      "end": 498,
+      "line": 19,
+      "column": 9,
+      "text": "// Record the result of subtract.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = a - b;\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 456,
+      "nextCodeStart": 507,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 465,
+          "end": 498
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C7",
+      "kind": "doc",
+      "start": 555,
+      "end": 586,
+      "line": 24,
+      "column": 5,
+      "text": "/** Multiplies the operands. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "multiply",
+        "snippet": "    public int multiply(int a, int b) {\n        total = a * b;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 549,
+      "nextCodeStart": 591,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 555,
+          "end": 586
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C8",
+      "kind": "line",
+      "start": 635,
+      "end": 668,
+      "line": 26,
+      "column": 9,
+      "text": "// Record the result of multiply.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = a * b;\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 626,
+      "nextCodeStart": 677,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 635,
+          "end": 668
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C9",
+      "kind": "doc",
+      "start": 725,
+      "end": 775,
+      "line": 31,
+      "column": 5,
+      "text": "/** Divides, returning zero for a zero divisor. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "divide",
+        "snippet": "    public int divide(int a, int b) {\n        total = b == 0 ? 0 : a / b;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 719,
+      "nextCodeStart": 780,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 725,
+          "end": 775
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C10",
+      "kind": "line",
+      "start": 822,
+      "end": 853,
+      "line": 33,
+      "column": 9,
+      "text": "// Record the result of divide.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = b == 0 ? 0 : a / b;\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 813,
+      "nextCodeStart": 862,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 822,
+          "end": 853
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C11",
+      "kind": "doc",
+      "start": 923,
+      "end": 975,
+      "line": 38,
+      "column": 5,
+      "text": "/** Takes the remainder, zero for a zero divisor. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "remainder",
+        "snippet": "    public int remainder(int a, int b) {\n        total = b == 0 ? 0 : a % b;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 917,
+      "nextCodeStart": 980,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 923,
+          "end": 975
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C12",
+      "kind": "line",
+      "start": 1025,
+      "end": 1059,
+      "line": 40,
+      "column": 9,
+      "text": "// Record the result of remainder.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = b == 0 ? 0 : a % b;\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1016,
+      "nextCodeStart": 1068,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1025,
+          "end": 1059
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C13",
+      "kind": "doc",
+      "start": 1129,
+      "end": 1163,
+      "line": 45,
+      "column": 5,
+      "text": "/** Returns the larger operand. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "max",
+        "snippet": "    public int max(int a, int b) {\n        total = Math.max(a, b);"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1123,
+      "nextCodeStart": 1168,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1129,
+          "end": 1163
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C14",
+      "kind": "line",
+      "start": 1207,
+      "end": 1235,
+      "line": 47,
+      "column": 9,
+      "text": "// Record the result of max.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = Math.max(a, b);\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1198,
+      "nextCodeStart": 1244,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1207,
+          "end": 1235
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C15",
+      "kind": "doc",
+      "start": 1301,
+      "end": 1336,
+      "line": 52,
+      "column": 5,
+      "text": "/** Returns the smaller operand. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "min",
+        "snippet": "    public int min(int a, int b) {\n        total = Math.min(a, b);"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1295,
+      "nextCodeStart": 1341,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1301,
+          "end": 1336
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C16",
+      "kind": "line",
+      "start": 1380,
+      "end": 1408,
+      "line": 54,
+      "column": 9,
+      "text": "// Record the result of min.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = Math.min(a, b);\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1371,
+      "nextCodeStart": 1417,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1380,
+          "end": 1408
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C17",
+      "kind": "doc",
+      "start": 1474,
+      "end": 1515,
+      "line": 59,
+      "column": 5,
+      "text": "/** Averages the operands, truncating. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "average",
+        "snippet": "    public int average(int a, int b) {\n        total = (a + b) / 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1468,
+      "nextCodeStart": 1520,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1474,
+          "end": 1515
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C18",
+      "kind": "line",
+      "start": 1563,
+      "end": 1595,
+      "line": 61,
+      "column": 9,
+      "text": "// Record the result of average.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = (a + b) / 2;\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1554,
+      "nextCodeStart": 1604,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1563,
+          "end": 1595
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C19",
+      "kind": "doc",
+      "start": 1658,
+      "end": 1704,
+      "line": 66,
+      "column": 5,
+      "text": "/** Raises the first operand to the second. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "power",
+        "snippet": "    public int power(int a, int b) {\n        total = (int) Math.pow(a, b);"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1652,
+      "nextCodeStart": 1709,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1658,
+          "end": 1704
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C20",
+      "kind": "line",
+      "start": 1750,
+      "end": 1780,
+      "line": 68,
+      "column": 9,
+      "text": "// Record the result of power.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = (int) Math.pow(a, b);\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1741,
+      "nextCodeStart": 1789,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1750,
+          "end": 1780
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C21",
+      "kind": "doc",
+      "start": 1852,
+      "end": 1891,
+      "line": 73,
+      "column": 5,
+      "text": "/** Returns the absolute difference. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "distance",
+        "snippet": "    public int distance(int a, int b) {\n        total = Math.abs(a - b);"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1846,
+      "nextCodeStart": 1896,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1852,
+          "end": 1891
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C22",
+      "kind": "line",
+      "start": 1940,
+      "end": 1973,
+      "line": 75,
+      "column": 9,
+      "text": "// Record the result of distance.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = Math.abs(a - b);\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1931,
+      "nextCodeStart": 1982,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1940,
+          "end": 1973
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C23",
+      "kind": "doc",
+      "start": 2040,
+      "end": 2084,
+      "line": 80,
+      "column": 5,
+      "text": "/** Clamps the first operand into [0, b]. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "clamp",
+        "snippet": "    public int clamp(int a, int b) {\n        total = Math.max(0, Math.min(a, b));"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 2034,
+      "nextCodeStart": 2089,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 2040,
+          "end": 2084
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C24",
+      "kind": "line",
+      "start": 2130,
+      "end": 2160,
+      "line": 82,
+      "column": 9,
+      "text": "// Record the result of clamp.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = Math.max(0, Math.min(a, b));\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 2121,
+      "nextCodeStart": 2169,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 2130,
+          "end": 2160
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C25",
+      "kind": "doc",
+      "start": 2239,
+      "end": 2276,
+      "line": 87,
+      "column": 5,
+      "text": "/** Compares the operands by sign. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "sign",
+        "snippet": "    public int sign(int a, int b) {\n        total = Integer.signum(a - b);"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 2233,
+      "nextCodeStart": 2281,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 2239,
+          "end": 2276
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C26",
+      "kind": "line",
+      "start": 2321,
+      "end": 2350,
+      "line": 89,
+      "column": 9,
+      "text": "// Record the result of sign.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = Integer.signum(a - b);\n        return total;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 2312,
+      "nextCodeStart": 2359,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 2321,
+          "end": 2350
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C27",
+      "kind": "line",
+      "start": 2423,
+      "end": 2450,
+      "line": 94,
+      "column": 5,
+      "text": "// Reset support for tests.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "reset",
+        "snippet": "    public void reset() {\n        total = 0;\n    }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 2417,
+      "nextCodeStart": 2455,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 2423,
+          "end": 2450
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C28",
+      "kind": "line",
+      "start": 2496,
+      "end": 2524,
+      "line": 96,
+      "column": 20,
+      "text": "// back to the initial state",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        total = 0;\n    }\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 2495,
+      "nextCodeStart": 2529,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "LargeClass",
+        "start": 99,
+        "end": 2532
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 2496,
+          "end": 2524
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 15,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 31.533333333333335,
+    "languageHasLineComments": true
+  }
+}

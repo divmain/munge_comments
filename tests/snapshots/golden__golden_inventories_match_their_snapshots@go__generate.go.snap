@@ -1,0 +1,114 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/go/generate.go
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 13,
+      "end": 47,
+      "line": 3,
+      "column": 1,
+      "text": "//go:generate stringer -type=Color",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "type_declaration",
+        "name": "Color",
+        "snippet": "type Color int"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 11,
+      "nextCodeStart": 78,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:go-generate"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 13,
+          "end": 47
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 49,
+      "end": 77,
+      "line": 5,
+      "column": 1,
+      "text": "// Color is a palette entry.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "type_declaration",
+        "name": "Color",
+        "snippet": "type Color int"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 11,
+      "nextCodeStart": 78,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 49,
+          "end": 77
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 94,
+      "end": 107,
+      "line": 8,
+      "column": 1,
+      "text": "//go:noinline",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "pick",
+        "snippet": "func pick() Color { return 0 }\nvar _ = pick"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 92,
+      "nextCodeStart": 108,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:go-noinline"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 94,
+          "end": 107
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 28.0,
+    "languageHasLineComments": true
+  }
+}

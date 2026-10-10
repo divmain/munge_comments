@@ -1,0 +1,115 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/regex-literals.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 23,
+      "line": 1,
+      "column": 1,
+      "text": "// Patterns used below.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "slashes",
+        "snippet": "const slashes = /\\/\\//g;\nconst block = /\\/\\*.*\\*\\//;\nconst klass = /[/]+/;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 24,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 23
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 99,
+      "end": 134,
+      "line": 4,
+      "column": 23,
+      "text": "// a slash inside a character class",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "klass",
+        "snippet": "const klass = /[/]+/;\nexport function strip(input: string): string {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 98,
+      "nextCodeStart": 136,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 99,
+          "end": 134
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 240,
+      "end": 260,
+      "line": 7,
+      "column": 58,
+      "text": "/* trailing block */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return input.replace(slashes, \"/\").replace(block, \"\");\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 239,
+      "nextCodeStart": 261,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "strip",
+        "start": 136,
+        "end": 262
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 240,
+          "end": 260
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 26.0,
+    "languageHasLineComments": true
+  }
+}

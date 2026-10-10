@@ -1,0 +1,953 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/directives.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 30,
+      "line": 1,
+      "column": 1,
+      "text": "/// <reference types=\"node\" />",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:reference"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 30
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 31,
+      "end": 67,
+      "line": 2,
+      "column": 1,
+      "text": "/// <amd-module name=\"directives\" />",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:amd-module"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 31,
+          "end": 67
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "doc",
+      "start": 68,
+      "end": 97,
+      "line": 3,
+      "column": 1,
+      "text": "/** @jest-environment node */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "test-environment"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 68,
+          "end": 97
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "doc",
+      "start": 98,
+      "end": 111,
+      "line": 4,
+      "column": 1,
+      "text": "/** @jsx h */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "jsx-pragma"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 98,
+          "end": 111
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "block",
+      "start": 112,
+      "end": 143,
+      "line": 5,
+      "column": 1,
+      "text": "/* eslint-disable no-console */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:eslint-disable"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 112,
+          "end": 143
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "block",
+      "start": 144,
+      "end": 173,
+      "line": 6,
+      "column": 1,
+      "text": "/* global window, document */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:global"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 144,
+          "end": 173
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C7",
+      "kind": "block",
+      "start": 174,
+      "end": 200,
+      "line": 7,
+      "column": 1,
+      "text": "/* eslint eqeqeq: \"off\" */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:eslint-config"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 174,
+          "end": 200
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C8",
+      "kind": "line",
+      "start": 201,
+      "end": 215,
+      "line": 8,
+      "column": 1,
+      "text": "// @ts-nocheck",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:ts-nocheck"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 201,
+          "end": 215
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C9",
+      "kind": "line",
+      "start": 216,
+      "end": 224,
+      "line": 9,
+      "column": 1,
+      "text": "// @flow",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": null,
+        "snippet": "import { helper } from \"./helper\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 226,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:flow"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 216,
+          "end": 224
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C10",
+      "kind": "line",
+      "start": 262,
+      "end": 275,
+      "line": 13,
+      "column": 1,
+      "text": "// @ts-ignore",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "a",
+        "snippet": "const a: number = \"not a number\";\nconst b: string = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 260,
+      "nextCodeStart": 276,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:ts-ignore"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 262,
+          "end": 275
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C11",
+      "kind": "line",
+      "start": 310,
+      "end": 329,
+      "line": 15,
+      "column": 1,
+      "text": "// @ts-expect-error",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "b",
+        "snippet": "const b: string = 1;\nconst unused = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 309,
+      "nextCodeStart": 330,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:ts-expect-error"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 310,
+          "end": 329
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C12",
+      "kind": "line",
+      "start": 351,
+      "end": 393,
+      "line": 17,
+      "column": 1,
+      "text": "// eslint-disable-next-line no-unused-vars",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "unused",
+        "snippet": "const unused = 1;\nconst loose: any = a;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 350,
+      "nextCodeStart": 394,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:eslint-disable",
+        "directive:eslint-disable-next-line"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 351,
+          "end": 393
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C13",
+      "kind": "line",
+      "start": 412,
+      "end": 446,
+      "line": 19,
+      "column": 1,
+      "text": "// tslint:disable-next-line:no-any",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "loose",
+        "snippet": "const loose: any = a;\nlet mutable = b;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 411,
+      "nextCodeStart": 447,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:tslint-disable",
+        "directive:tslint-disable-next-line"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 412,
+          "end": 446
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C14",
+      "kind": "line",
+      "start": 469,
+      "end": 522,
+      "line": 21,
+      "column": 1,
+      "text": "// biome-ignore lint/style/useConst: reassigned below",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "mutable",
+        "snippet": "let mutable = b;\nconst anything: any = mutable;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 468,
+      "nextCodeStart": 523,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:biome-ignore"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 469,
+          "end": 522
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C15",
+      "kind": "line",
+      "start": 540,
+      "end": 575,
+      "line": 23,
+      "column": 1,
+      "text": "// deno-lint-ignore no-explicit-any",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "anything",
+        "snippet": "const anything: any = mutable;\nconst matrix = [1, 0,"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 539,
+      "nextCodeStart": 576,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:deno-lint-ignore"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 540,
+          "end": 575
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C16",
+      "kind": "line",
+      "start": 607,
+      "end": 625,
+      "line": 25,
+      "column": 1,
+      "text": "// prettier-ignore",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "matrix",
+        "snippet": "const matrix = [1, 0,\n                0, 1];"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 606,
+      "nextCodeStart": 626,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:prettier-ignore"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 607,
+          "end": 625
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C17",
+      "kind": "line",
+      "start": 671,
+      "end": 684,
+      "line": 28,
+      "column": 1,
+      "text": "// $FlowFixMe",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "flowy",
+        "snippet": "const flowy = matrix;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 670,
+      "nextCodeStart": 685,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:flow-fix-me"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 671,
+          "end": 684
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C18",
+      "kind": "block",
+      "start": 708,
+      "end": 734,
+      "line": 31,
+      "column": 1,
+      "text": "/* istanbul ignore next */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "uncovered",
+        "snippet": "function uncovered(): number {\n  return 0;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 706,
+      "nextCodeStart": 735,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:istanbul-ignore-next"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 708,
+          "end": 734
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C19",
+      "kind": "block",
+      "start": 801,
+      "end": 832,
+      "line": 36,
+      "column": 21,
+      "text": "/* webpackChunkName: \"chunk\" */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "const lazy = import( \"./chunk\");\nconst pure =  helper();"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 801,
+      "nextCodeStart": 833,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "lazy",
+        "start": 781,
+        "end": 844
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:webpack-chunk-name"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 801,
+          "end": 832
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C20",
+      "kind": "block",
+      "start": 858,
+      "end": 871,
+      "line": 37,
+      "column": 14,
+      "text": "/*#__PURE__*/",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "const pure =  helper();"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 857,
+      "nextCodeStart": 872,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "pure",
+        "start": 845,
+        "end": 881
+      },
+      "classification": "functional",
+      "tags": [
+        "pure-annotation"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 858,
+          "end": 871
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C21",
+      "kind": "doc",
+      "start": 883,
+      "end": 902,
+      "line": 39,
+      "column": 1,
+      "text": "/** @license MIT */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "legal",
+        "snippet": "const legal = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 881,
+      "nextCodeStart": 920,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 883,
+          "end": 902
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C22",
+      "kind": "doc",
+      "start": 903,
+      "end": 919,
+      "line": 40,
+      "column": 1,
+      "text": "/** @preserve */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "legal",
+        "snippet": "const legal = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 881,
+      "nextCodeStart": 920,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:preserve"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 903,
+          "end": 919
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C23",
+      "kind": "line",
+      "start": 938,
+      "end": 956,
+      "line": 43,
+      "column": 1,
+      "text": "// #region Helpers",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "hidden",
+        "snippet": "export function hidden(): void {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 936,
+      "nextCodeStart": 974,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:region"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 938,
+          "end": 956
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C24",
+      "kind": "doc",
+      "start": 957,
+      "end": 973,
+      "line": 44,
+      "column": 1,
+      "text": "/** @internal */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "hidden",
+        "snippet": "export function hidden(): void {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 936,
+      "nextCodeStart": 974,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:internal"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 957,
+          "end": 973
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C25",
+      "kind": "line",
+      "start": 1008,
+      "end": 1021,
+      "line": 46,
+      "column": 1,
+      "text": "// #endregion",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "secret",
+        "snippet": "const secret = \"hunter2\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1007,
+      "nextCodeStart": 1023,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:endregion"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1008,
+          "end": 1021
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C26",
+      "kind": "line",
+      "start": 1049,
+      "end": 1059,
+      "line": 48,
+      "column": 27,
+      "text": "// NOSONAR",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "secret",
+        "snippet": "const secret = \"hunter2\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1048,
+      "nextCodeStart": 1103,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:nosonar"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1049,
+          "end": 1059
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C27",
+      "kind": "block",
+      "start": 1060,
+      "end": 1079,
+      "line": 49,
+      "column": 1,
+      "text": "/* eslint-enable */",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "end_of_file",
+        "name": null,
+        "snippet": ""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1048,
+      "nextCodeStart": 1103,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:eslint-enable"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1060,
+          "end": 1079
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C28",
+      "kind": "line",
+      "start": 1080,
+      "end": 1102,
+      "line": 50,
+      "column": 1,
+      "text": "// vim: set ts=2 sw=2:",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "end_of_file",
+        "name": null,
+        "snippet": ""
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 1048,
+      "nextCodeStart": 1103,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "modeline"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 1080,
+          "end": 1102
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

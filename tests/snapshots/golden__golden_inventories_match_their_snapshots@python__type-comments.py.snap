@@ -1,0 +1,152 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/type-comments.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 25,
+      "end": 67,
+      "line": 3,
+      "column": 1,
+      "text": "# Type comments are read by type checkers.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "values = []"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 23,
+      "nextCodeStart": 68,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 25,
+          "end": 67
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 81,
+      "end": 98,
+      "line": 4,
+      "column": 14,
+      "text": "# type: List[int]",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "values = []"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 79,
+      "nextCodeStart": 101,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:type"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 81,
+          "end": 98
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 120,
+      "end": 145,
+      "line": 8,
+      "column": 5,
+      "text": "# type: (int, int) -> int",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "    return a + b"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 115,
+      "nextCodeStart": 150,
+      "enclosingTopLevel": {
+        "nodeKind": "function_definition",
+        "name": "add",
+        "start": 101,
+        "end": 162
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:type"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 120,
+          "end": 145
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 178,
+      "end": 192,
+      "line": 12,
+      "column": 14,
+      "text": "# type: ignore",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "import_statement",
+        "name": "json",
+        "snippet": "import json"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 176,
+      "nextCodeStart": 193,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:type-ignore"
+      ],
+      "directiveScope": "inline",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 178,
+          "end": 192
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 42.0,
+    "languageHasLineComments": true
+  }
+}

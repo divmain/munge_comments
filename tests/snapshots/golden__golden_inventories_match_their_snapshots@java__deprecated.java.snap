@@ -1,0 +1,91 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/java/deprecated.java
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "doc",
+      "start": 57,
+      "end": 159,
+      "line": 4,
+      "column": 5,
+      "text": "/**\n     * Use {@link #replacement()} instead.\n     *\n     * @deprecated javac reads this tag.\n     */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "old",
+        "snippet": "    @java.lang.Deprecated\n    public void old() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 52,
+      "nextCodeStart": 164,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Deprecated",
+        "start": 27,
+        "end": 288
+      },
+      "classification": "functional",
+      "tags": [
+        "directive:deprecated"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 57,
+          "end": 159
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "doc",
+      "start": 216,
+      "end": 253,
+      "line": 12,
+      "column": 5,
+      "text": "/** Not deprecated: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "replacement",
+        "snippet": "    public void replacement() {}\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 210,
+      "nextCodeStart": 258,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Deprecated",
+        "start": 27,
+        "end": 288
+      },
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 216,
+          "end": 253
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

@@ -1,0 +1,110 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/rust/raw-string.rs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 45,
+      "line": 1,
+      "column": 1,
+      "text": "// A raw string containing comment-like text.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "const_item",
+        "name": "PATTERN",
+        "snippet": "pub const PATTERN: &str = r#\"// not a comment\"#;\npub const BLOCK: &str = r##\"/* not a comment \"# either */\"##;\npub const PLAIN: &str = \"// nor this\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 46,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 45
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 157,
+      "end": 183,
+      "line": 3,
+      "column": 63,
+      "text": "// a real trailing comment",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "const_item",
+        "name": "BLOCK",
+        "snippet": "pub const BLOCK: &str = r##\"/* not a comment \"# either */\"##;\npub const PLAIN: &str = \"// nor this\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 156,
+      "nextCodeStart": 184,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 157,
+          "end": 183
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 223,
+      "end": 249,
+      "line": 4,
+      "column": 40,
+      "text": "/* a real block comment */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "const_item",
+        "name": "PLAIN",
+        "snippet": "pub const PLAIN: &str = \"// nor this\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 222,
+      "nextCodeStart": 250,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 223,
+          "end": 249
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 32.333333333333336,
+    "languageHasLineComments": true
+  }
+}

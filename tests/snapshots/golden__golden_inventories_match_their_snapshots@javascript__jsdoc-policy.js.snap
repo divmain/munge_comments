@@ -1,0 +1,210 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/javascript/jsdoc-policy.js
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "doc",
+      "start": 0,
+      "end": 30,
+      "line": 1,
+      "column": 1,
+      "text": "/** Internal helper: prose. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "internal",
+        "snippet": "function internal(x) {\n  return x + 1;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 31,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 30
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "doc",
+      "start": 73,
+      "end": 104,
+      "line": 6,
+      "column": 1,
+      "text": "/** Exported: doc-protected. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "exported",
+        "snippet": "export function exported(x) {\n  return internal(x);\n}"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 71,
+      "nextCodeStart": 105,
+      "enclosingTopLevel": null,
+      "classification": "doc-protected",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 73,
+          "end": 104
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "doc",
+      "start": 160,
+      "end": 252,
+      "line": 11,
+      "column": 1,
+      "text": "/**\n * Load-bearing under checkJs: functional.\n * @param {number} x\n * @returns {number}\n */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "typed",
+        "snippet": "function typed(x) {\n  return x * 2;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 158,
+      "nextCodeStart": 253,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:param",
+        "directive:returns"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 160,
+          "end": 252
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C4",
+      "kind": "doc",
+      "start": 292,
+      "end": 329,
+      "line": 20,
+      "column": 1,
+      "text": "/** @typedef {{ id: number }} Item */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "legacy",
+        "snippet": "export function legacy(x) {\n  return typed(x);\n}"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 290,
+      "nextCodeStart": 374,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:typedef"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 292,
+          "end": 329
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C5",
+      "kind": "doc",
+      "start": 331,
+      "end": 373,
+      "line": 22,
+      "column": 1,
+      "text": "/** @deprecated Use exported() instead. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "legacy",
+        "snippet": "export function legacy(x) {\n  return typed(x);\n}"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 290,
+      "nextCodeStart": 374,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:deprecated"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 331,
+          "end": 373
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C6",
+      "kind": "block",
+      "start": 424,
+      "end": 477,
+      "line": 27,
+      "column": 1,
+      "text": "/* A plain block on an export is not JSDoc: prose. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "plain",
+        "snippet": "export const plain = 1;"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 422,
+      "nextCodeStart": 478,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 424,
+          "end": 477
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 1,
+    "doc": 1,
+    "avgLength": 41.5,
+    "languageHasLineComments": true
+  }
+}

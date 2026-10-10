@@ -1,0 +1,146 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/strings-and-urls.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 33,
+      "line": 1,
+      "column": 1,
+      "text": "// Endpoints the client talks to.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "base",
+        "snippet": "const base = \"http://example.com//api\";\nconst single = 'not // a comment';\nconst blockish = \"/* not a comment */\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 34,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 33
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 74,
+      "end": 104,
+      "line": 2,
+      "column": 41,
+      "text": "// trailing after a URL string",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "base",
+        "snippet": "const base = \"http://example.com//api\";\nconst single = 'not // a comment';\nconst blockish = \"/* not a comment */\";"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 73,
+      "nextCodeStart": 105,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 74,
+          "end": 104
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 227,
+      "end": 263,
+      "line": 7,
+      "column": 1,
+      "text": "/* A block comment after strings. */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "url",
+        "snippet": "export function url(path: string): string {\n  return base + \"//\" + path;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 225,
+      "nextCodeStart": 264,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 227,
+          "end": 263
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 337,
+      "end": 360,
+      "line": 9,
+      "column": 30,
+      "text": "// concatenated slashes",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return base + \"//\" + path;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 336,
+      "nextCodeStart": 361,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "url",
+        "start": 264,
+        "end": 362
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 337,
+          "end": 360
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 30.5,
+    "languageHasLineComments": true
+  }
+}

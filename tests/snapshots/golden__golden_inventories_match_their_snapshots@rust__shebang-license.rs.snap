@@ -1,0 +1,116 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/rust/shebang-license.rs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 27,
+      "end": 58,
+      "line": 2,
+      "column": 1,
+      "text": "// Copyright 2026 Example Corp.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "main",
+        "snippet": "fn main() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 122,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 27,
+          "end": 58
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 59,
+      "end": 104,
+      "line": 3,
+      "column": 1,
+      "text": "// SPDX-License-Identifier: MIT OR Apache-2.0",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "main",
+        "snippet": "fn main() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 122,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": "file",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 59,
+          "end": 104
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 106,
+      "end": 121,
+      "line": 5,
+      "column": 1,
+      "text": "// Entry point.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "main",
+        "snippet": "fn main() {}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 122,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "license"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 106,
+          "end": 121
+        }
+      ],
+      "editable": false
+    }
+  ],
+  "hasShebang": true,
+  "styleStats": {
+    "line": 0,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 0.0,
+    "languageHasLineComments": true
+  }
+}

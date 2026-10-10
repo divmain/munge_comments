@@ -1,0 +1,48 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/tsx/jsx-text.tsx
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 54,
+      "line": 1,
+      "column": 1,
+      "text": "// JSX text that looks like comments is not a comment.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "Banner",
+        "snippet": "export function Banner() {\n  return (\n    <div>"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 55,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 54
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 54.0,
+    "languageHasLineComments": true
+  }
+}

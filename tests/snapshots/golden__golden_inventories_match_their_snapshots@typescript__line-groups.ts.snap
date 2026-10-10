@@ -1,0 +1,390 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/line-groups.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 71,
+      "line": 1,
+      "column": 1,
+      "text": "// A group of three\n// consecutive line comments\n// at the same indent.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "grouped",
+        "snippet": "export function grouped(): number {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 72,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 19
+        },
+        {
+          "start": 20,
+          "end": 48
+        },
+        {
+          "start": 49,
+          "end": 71
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 110,
+      "end": 152,
+      "line": 5,
+      "column": 3,
+      "text": "// An indented group,\n  // two lines long.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "x",
+        "snippet": "  const x = 1;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 107,
+      "nextCodeStart": 155,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "grouped",
+        "start": 72,
+        "end": 230
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 110,
+          "end": 131
+        },
+        {
+          "start": 134,
+          "end": 152
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 170,
+      "end": 187,
+      "line": 8,
+      "column": 3,
+      "text": "// Indent changes",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return x;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 167,
+      "nextCodeStart": 219,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "grouped",
+        "start": 72,
+        "end": 230
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 170,
+          "end": 187
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 192,
+      "end": 216,
+      "line": 9,
+      "column": 5,
+      "text": "// split the group here.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return x;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 167,
+      "nextCodeStart": 219,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "grouped",
+        "start": 72,
+        "end": 230
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 192,
+          "end": 216
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 232,
+      "end": 256,
+      "line": 13,
+      "column": 1,
+      "text": "// Before the directive.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "console.log(\"interrupted\");"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 230,
+      "nextCodeStart": 342,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 232,
+          "end": 256
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C6",
+      "kind": "line",
+      "start": 257,
+      "end": 295,
+      "line": 14,
+      "column": 1,
+      "text": "// eslint-disable-next-line no-console",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "console.log(\"interrupted\");"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 230,
+      "nextCodeStart": 342,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive:eslint-disable",
+        "directive:eslint-disable-next-line"
+      ],
+      "directiveScope": "next",
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 257,
+          "end": 295
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C7",
+      "kind": "line",
+      "start": 296,
+      "end": 341,
+      "line": 15,
+      "column": 1,
+      "text": "// After the directive (adjacent, protected).",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "console.log(\"interrupted\");"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 230,
+      "nextCodeStart": 342,
+      "enclosingTopLevel": null,
+      "classification": "functional",
+      "tags": [
+        "directive-adjacent"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 296,
+          "end": 341
+        }
+      ],
+      "editable": false
+    },
+    {
+      "id": "C8",
+      "kind": "line",
+      "start": 371,
+      "end": 400,
+      "line": 18,
+      "column": 1,
+      "text": "// A blank line ends a group.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "y",
+        "snippet": "const y = 2;\nexport const z = y;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 369,
+      "nextCodeStart": 429,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 371,
+          "end": 400
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C9",
+      "kind": "line",
+      "start": 402,
+      "end": 428,
+      "line": 20,
+      "column": 1,
+      "text": "// So this starts another.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "y",
+        "snippet": "const y = 2;\nexport const z = y;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 369,
+      "nextCodeStart": 429,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 402,
+          "end": 428
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C10",
+      "kind": "line",
+      "start": 442,
+      "end": 463,
+      "line": 21,
+      "column": 14,
+      "text": "// a trailing comment",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "y",
+        "snippet": "const y = 2;\nexport const z = y;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 441,
+      "nextCodeStart": 488,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 442,
+          "end": 463
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C11",
+      "kind": "line",
+      "start": 464,
+      "end": 487,
+      "line": 22,
+      "column": 1,
+      "text": "// never joins a group.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "z",
+        "snippet": "export const z = y;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 441,
+      "nextCodeStart": 488,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 464,
+          "end": 487
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 9,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 30.77777777777778,
+    "languageHasLineComments": true
+  }
+}

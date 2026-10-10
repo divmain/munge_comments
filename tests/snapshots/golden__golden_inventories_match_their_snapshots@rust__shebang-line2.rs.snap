@@ -1,0 +1,48 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/rust/shebang-line2.rs
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 27,
+      "end": 75,
+      "line": 2,
+      "column": 1,
+      "text": "// A comment on line 2, right after the shebang.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_item",
+        "name": "main",
+        "snippet": "fn main() {\n    println!(\"hi\");\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 76,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 27,
+          "end": 75
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": true,
+  "styleStats": {
+    "line": 1,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 48.0,
+    "languageHasLineComments": true
+  }
+}

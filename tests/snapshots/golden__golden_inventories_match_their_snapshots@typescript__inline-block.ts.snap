@@ -1,0 +1,125 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/typescript/inline-block.ts
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "block",
+      "start": 71,
+      "end": 78,
+      "line": 3,
+      "column": 22,
+      "text": "/* c */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "identifier",
+        "name": null,
+        "snippet": "export const sum = a  + b;\nexport function f(x: number): number {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 70,
+      "nextCodeStart": 79,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "sum",
+        "start": 50,
+        "end": 83
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 71,
+          "end": 78
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 133,
+      "end": 140,
+      "line": 6,
+      "column": 10,
+      "text": "/* c */",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "  return  x;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 132,
+      "nextCodeStart": 141,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "f",
+        "start": 85,
+        "end": 145
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 133,
+          "end": 140
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "block",
+      "start": 150,
+      "end": 154,
+      "line": 9,
+      "column": 4,
+      "text": "/**/",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "y",
+        "snippet": "lety = 1;\nexport { y };"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 150,
+      "nextCodeStart": 154,
+      "enclosingTopLevel": {
+        "nodeKind": "lexical_declaration",
+        "name": "y",
+        "start": 147,
+        "end": 160
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 150,
+          "end": 154
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 0,
+    "block": 3,
+    "doc": 0,
+    "avgLength": 6.0,
+    "languageHasLineComments": true
+  }
+}
