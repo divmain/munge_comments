@@ -1,0 +1,60 @@
+[package]
+name = "munge-comments"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.90"
+license = "MIT"
+description = "LLM-driven code comment pruning and regeneration, across languages"
+
+[lib]
+name = "munge_comments"   # crate names can't contain hyphens; this is also Cargo's default
+path = "src/lib.rs"
+
+[[bin]]
+name = "munge-comments"
+path = "src/main.rs"
+required-features = ["cli"]
+
+[features]
+default = ["cli"]
+cli = ["dep:clap", "tokio/signal", "tokio/rt-multi-thread"]
+
+[dependencies]
+tree-sitter = "=0.27.1"
+tree-sitter-javascript = "=0.25.0"
+tree-sitter-typescript = "=0.23.2"
+tree-sitter-python = "=0.25.0"
+tree-sitter-go = "=0.25.0"
+tree-sitter-java = "=0.23.5"
+tree-sitter-c = "=0.24.2"
+tree-sitter-cpp = "=0.23.4"
+tree-sitter-rust = "=0.24.2"
+clap = { version = "4.6", features = ["derive"], optional = true }
+ignore = "0.4.33"
+globset = "0.4.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+schemars = "1.2"
+reqwest = { version = "0.13", default-features = false, features = ["rustls", "http2", "system-proxy"] }
+tokio = { version = "1.53", features = ["rt", "time"] }
+tokio-util = "0.7"
+futures = "0.3"
+thiserror = "2"
+regex = "1.13"
+unicode-segmentation = "1.13"
+sha2 = "0.11"
+tempfile = "3.27"
+
+[dev-dependencies]
+insta = { version = "1.49", features = ["json", "glob"] }
+proptest = "1.11"
+wiremock = "0.6"
+tokio = { version = "1.53", features = ["macros", "rt-multi-thread", "time"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+panic = "unwind"
+
+[profile.dev.package."*"]
+opt-level = 2          # optimized deps + grammar C code in debug/test builds (fast mutation suites)

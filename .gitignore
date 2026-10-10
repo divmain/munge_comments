@@ -1,2 +1,19 @@
 PLAN.md
 .janus/
+
+# Rust build output
+/target
+
+# default artifact/report output paths (a test leaking one must be caught,
+# not hidden — tests/conventions.rs fails on these at the package root)
+/munge-comments-*.json
+/munge-comments-*.md
+
+# insta pending snapshots
+*.snap.new
+*.pending-snap
+
+# local environment and logs
+.env
+*.log
+.DS_Store

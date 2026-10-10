@@ -1,0 +1,34 @@
+# Clippy configuration for the munge-comments package.
+#
+# `disallowed-methods` enforces the library's no-ambient-I/O contract: library
+# code never reads the environment, the process cwd, the console, or installs
+# signal handlers, and never exits the process. The print lints in
+# src/lib.rs catch the `println!`/`eprintln!` macros; this list catches the
+# raw calls those lints cannot see (`writeln!(std::io::stderr(), …)`,
+# dependency constructors that read the environment, signal handlers).
+#
+# The only sanctioned uses carry a local `#[allow(clippy::disallowed_methods)]`:
+# `Io::from_process()` in src/cli.rs, the binary shim in src/main.rs, and the
+# env-gate check of the real-endpoint tests.
+
+disallowed-methods = [
+    { path = "std::env::var", reason = "the library never reads ambient state; configuration arrives as explicit parameters" },
+    { path = "std::env::var_os", reason = "the library never reads ambient state; configuration arrives as explicit parameters" },
+    { path = "std::env::vars", reason = "the library never reads ambient state; the CLI reads the process env once, in Io::from_process" },
+    { path = "std::env::vars_os", reason = "the library never reads ambient state; the CLI reads the process env once, in Io::from_process (vars_os, so non-UTF-8 pairs are skipped rather than panicking)" },
+    { path = "std::env::args", reason = "argv is read only by the binary shim; library code receives explicit argument iterators" },
+    { path = "std::env::args_os", reason = "argv is read only by the binary shim; library code receives explicit argument iterators" },
+    { path = "std::env::current_dir", reason = "library code takes absolute paths or an explicit cwd parameter; the process cwd is never consulted" },
+    { path = "std::env::set_current_dir", reason = "the tool never changes the process working directory" },
+    { path = "std::env::set_var", reason = "the tool never mutates the process environment" },
+    { path = "std::env::remove_var", reason = "the tool never mutates the process environment" },
+    { path = "std::env::temp_dir", reason = "library temp files are created beside their target (NamedTempFile::new_in), never in the ambient temp dir" },
+    { path = "std::env::home_dir", reason = "no path may depend on the user's home directory" },
+    { path = "std::io::stdout", reason = "artifacts go to files and progress goes through the injected Log sink; streams are injected as Io" },
+    { path = "std::io::stderr", reason = "progress and warnings go through the injected Log sink; streams are injected as Io" },
+    { path = "std::io::stdin", reason = "the tool is never interactive" },
+    { path = "std::process::exit", reason = "exits happen only in the binary (the signal watcher's hard exits); library code returns Error with its exit code" },
+    { path = "reqwest::Client::new", reason = "Client::new reads proxy environment variables; build via Client::builder() with an explicit ProxyMode" },
+    { path = "tokio::signal::ctrl_c", allow-invalid = true, reason = "signal handlers are installed only by the binary shim; allow-invalid: the path does not resolve without tokio's signal feature (--no-default-features)" },
+    { path = "tokio::signal::unix::signal", allow-invalid = true, reason = "signal handlers are installed only by the binary shim (Unix); allow-invalid: the path does not resolve without tokio's signal feature or on Windows" },
+]
