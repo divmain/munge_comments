@@ -11,8 +11,7 @@ use Scope::{File, Inline, Next};
 
 /// Java directive rows.
 const DIRECTIVES: &[DirectiveRow] = &[
-    // Linters and formatters: PMD, Checkstyle, Eclipse/IntelliJ formatter
-    // tags, Spotless, IntelliJ inspections.
+    // Linters and formatters: PMD, Checkstyle, Eclipse/IntelliJ formatter tags, Spotless, IntelliJ inspections. File-scoped toggles bracket a region; inline markers apply to the current line.
     lit("NOPMD", "linter", "directive:nopmd", Inline),
     lit("CHECKSTYLE:OFF", "linter", "directive:checkstyle-off", File),
     lit("CHECKSTYLE:ON", "linter", "directive:checkstyle-on", File),
@@ -26,8 +25,7 @@ const DIRECTIVES: &[DirectiveRow] = &[
     lit("spotless:off", "formatter", "directive:spotless-off", File),
     lit("spotless:on", "formatter", "directive:spotless-on", File),
     lit("//noinspection", "linter", "directive:noinspection", Next).when_trailing(Inline),
-    // Eclipse compiler markers: externalized-string and fall-through
-    // suppressions.
+    // Eclipse compiler markers: $NON-NLS- suppresses externalized-string warnings, $FALL-THROUGH$ marks intentional switch fallthrough.
     lit("$NON-NLS-", "compiler", "directive:non-nls", Inline),
     lit("$FALL-THROUGH$", "compiler", "directive:fall-through", Next),
     // javac decodes unicode escapes before lexing, so such a comment may be
@@ -38,8 +36,7 @@ const DIRECTIVES: &[DirectiveRow] = &[
         "unicode-escape",
         Inline,
     ),
-    // tree-sitter-java's `//[^\n]*` swallows a lone CR; javac ends the line
-    // there.
+    // tree-sitter-java's `//[^\n]*` swallows a lone CR; javac ends the line there, so flag it as a byte hazard.
     LONE_CR,
 ];
 
@@ -91,8 +88,7 @@ pub const ADAPTER: LanguageAdapter = LanguageAdapter {
             triple_slash_lines: true,
         },
         policy: DocPolicy::AlwaysProtected,
-        // javac honors the `@deprecated` Javadoc tag (deprecation flag,
-        // `-Xlint:dep-ann`), so such Javadoc is load-bearing.
+        // Functional tags alter API semantics rather than merely documenting it; javac honors the `@deprecated` Javadoc tag (deprecation flag, `-Xlint:dep-ann`), so such Javadoc is load-bearing.
         functional_tags: &["@deprecated"],
     }),
     directives: DIRECTIVES,

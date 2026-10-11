@@ -146,8 +146,7 @@ pub fn gap_residues(text: &str, language: LanguageId) -> Result<Vec<String>, Err
     if tree.too_deep || tree.has_error {
         return Err(fail("the text does not parse cleanly"));
     }
-    // Edge settling only moves whitespace between a token and a gap, so
-    // residues do not depend on it.
+    // Edge settling only moves whitespace between a token and a gap, so residues do not depend on it; reusing the verifier's own view keeps the exposed residues in lockstep with the check they mirror.
     let view = TokenView::new(text, &tree, adapter_for(language))?;
     Ok((0..view.gap_count())
         .map(|index| view.residue(index))
@@ -577,8 +576,7 @@ mod tests {
 
     #[test]
     fn hidden_token_text_folds_into_the_surrounding_gap() {
-        // `a` `_newline` `b`, as a grammar materializing the hidden token
-        // would present it.
+        // `a` `_newline` `b`, as a grammar materializing the hidden token would present it; the hidden `_newline` leaf is skipped, so its text folds into gap 1, which still reports the break.
         let text = "a\nb";
         let root = node(
             "module",
@@ -640,8 +638,7 @@ mod tests {
 
     #[test]
     fn edge_whitespace_is_settled_jointly() {
-        // The shebang touches a comment only in the original; its `\n`
-        // leaves the compared text in both views.
+        // The shebang touches a comment only in the original; its `\n` leaves the compared text in both views. The shebang token lexes its own newline, so dropping the line-2 comment must leave both texts and the boundary intact.
         let original = "#!/bin/sh\n// c\nfn main() {}\n";
         let edited = "#!/bin/sh\nfn main() {}\n";
         let trees = (
@@ -656,8 +653,7 @@ mod tests {
 
     #[test]
     fn a_tokens_own_trailing_line_break_counts_for_the_boundary() {
-        // No comment touches the shebang: its `\n` stays token text, and
-        // the empty gap after it still has a line break.
+        // The shebang token keeps its trailing newline, so gap 1 is empty yet the boundary still counts as a break.
         let text = "#!/bin/sh\nfn main() {}\n";
         let tree = lang::parse(text, LanguageId::Rust).unwrap();
         let view = TokenView::new(text, &tree, adapter_for(LanguageId::Rust)).unwrap();

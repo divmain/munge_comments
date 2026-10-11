@@ -619,7 +619,6 @@ async fn a_chunked_file_yields_the_union_of_its_chunk_results() {
     assert_eq!(unique.len(), requested.len(), "no id is requested twice");
     assert_eq!(unique, targets);
 
-    // Each chunk call's meta covers exactly its requested ids.
     for request in chunked_llm.requests() {
         let item_ids: Vec<_> = request.meta.items.iter().map(|i| i.id.clone()).collect();
         assert_eq!(item_ids, request.meta.ids);
@@ -1376,7 +1375,6 @@ async fn adversarial_remove_citations_are_dropped_with_warnings() {
             "leading",
             "Refunds.",
         ),
-        // An unknown kind with a blank snippet.
         cited("???", None, "   \n\n", "leading", "Nothing to cite."),
         // A snippet that is not in the file, with multi-byte text.
         cited(

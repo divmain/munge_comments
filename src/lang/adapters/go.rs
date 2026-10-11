@@ -19,7 +19,7 @@ const DIRECTIVES: &[DirectiveRow] = &[
     lit("//line ", "compiler", "directive:line", File),
     lit("/*line ", "compiler", "directive:line", File),
     lit("//export ", "cgo", "directive:export", Next),
-    // Linters: golangci-lint, GoLand, staticcheck.
+    // Linters: golangci-lint, GoLand, staticcheck. The trailing-only forms are ignored when they stand alone rather than following code.
     lit("//nolint", "linter", "directive:nolint", Next).when_trailing(Inline),
     lit("//noinspection", "linter", "directive:noinspection", Next).when_trailing(Inline),
     lit("//lint:ignore", "linter", "directive:lint-ignore", Next).when_trailing(Inline),
@@ -29,7 +29,7 @@ const DIRECTIVES: &[DirectiveRow] = &[
         "directive:lint-file-ignore",
         File,
     ),
-    // A `Deprecated:` paragraph (staticcheck SA1019 and gopls key off it).
+    // A `Deprecated:` paragraph as recognized by `go doc` (staticcheck SA1019 and gopls key off it).
     re(
         r"(?m)^Deprecated: ",
         "deprecation",

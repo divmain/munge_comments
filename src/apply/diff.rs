@@ -96,8 +96,7 @@ fn line_changes(
     ordered.sort_by(|a, b| application_order(a, b));
 
     let mut merged: Vec<ByteChange> = Vec::new();
-    // The end of the previous edit in the original and in the edited text:
-    // the bytes between it and the next edit's start are unchanged.
+    // The end of the previous edit in the original and in the edited text: the bytes between it and the next edit's start are unchanged, so an edit's offsets can be translated to the edited text.
     let (mut old_cursor, mut new_cursor) = (0, 0);
     for edit in ordered {
         let (s, e) = (edit.start, edit.start + edit.length);
@@ -367,7 +366,6 @@ mod tests {
     #[test]
     fn no_edits_render_nothing() {
         assert_eq!(render_unified_diff("a.rs", "a\n", "a\n", &[]), "");
-        // An edit replacing nothing with nothing is no change.
         assert_eq!(
             render_unified_diff("a.rs", "a\n", "a\n", &[edit(1, 0, "")]),
             ""
@@ -434,7 +432,7 @@ mod tests {
     #[test]
     fn nearby_edits_share_a_hunk() {
         let original = numbered(14);
-        // Five unchanged lines apart: the context windows overlap.
+        // Five unchanged lines between the changes: their context windows overlap, so one hunk.
         check(
             "n.txt",
             &original,
@@ -445,7 +443,7 @@ mod tests {
             "--- a/n.txt\n+++ b/n.txt\n\
              @@ -1,12 +1,12 @@\n 1\n 2\n-3\n+three\n 4\n 5\n 6\n 7\n 8\n-9\n+nine\n 10\n 11\n 12\n",
         );
-        // Six apart: the context windows touch, which still merges.
+        // Six unchanged lines apart: the context windows just touch, so they still share a hunk.
         check(
             "n.txt",
             &original,
@@ -461,7 +459,7 @@ mod tests {
     #[test]
     fn distant_edits_get_separate_hunks() {
         let original = numbered(14);
-        // Seven unchanged lines apart: one line between the windows.
+        // Seven unchanged lines apart: one line between the context windows, so they no longer touch and form separate hunks.
         check(
             "n.txt",
             &original,
@@ -534,8 +532,7 @@ mod tests {
              @@ -1,3 +1,3 @@\n a\n b\n-c // c\n\\ No newline at end of file\n\
              +c\n\\ No newline at end of file\n",
         );
-        // Removing the unterminated last line leaves the line before it
-        // unterminated.
+        // Removing the final line also removes the newline before it, so the preceding line changes too.
         let original = "a\nb\n// c";
         check(
             "x.js",
@@ -545,7 +542,7 @@ mod tests {
              @@ -1,3 +1,2 @@\n a\n-b\n-// c\n\\ No newline at end of file\n\
              +b\n\\ No newline at end of file\n",
         );
-        // An unterminated line as trailing context.
+        // The unterminated final line is unchanged context, so it keeps its no-newline marker.
         let original = "a // c\nb";
         check(
             "x.js",
@@ -578,7 +575,7 @@ mod tests {
         check(
             "x.rs",
             original,
-            // Out of application order: the renderer orders them itself.
+            // Out of application order: the renderer orders them itself, merging an insertion and a removal at the same offset into one change.
             &[edit(start, 5, ""), edit(start, 0, "// n\n")],
             "--- a/x.rs\n+++ b/x.rs\n@@ -1,3 +1,3 @@\n a\n-// c\n+// n\n b\n",
         );

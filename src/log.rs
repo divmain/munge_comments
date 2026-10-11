@@ -138,8 +138,7 @@ mod tests {
         })
         .join();
 
-        // The mutex is poisoned now; logging must still work and use the
-        // data the poisoned guard left behind.
+        // The mutex is poisoned now; logging must still work and use the data the poisoned guard left behind, rather than propagate the poison.
         log.info("after poison");
         let buffer: Vec<u8> = log.lock().clone();
         let text = String::from_utf8(buffer).expect("log output is UTF-8");

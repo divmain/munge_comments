@@ -91,7 +91,6 @@ mod tests {
             } else {
                 assert!(adapter.block_delimiters.is_some());
             }
-            // Rust alone has nesting block comments.
             assert_eq!(adapter.block_comments_nest, adapter.id == LanguageId::Rust,);
         }
     }

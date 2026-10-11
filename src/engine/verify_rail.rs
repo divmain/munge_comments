@@ -80,16 +80,14 @@ pub fn verify_rail(
     if !has_actionable_edit(file, allow_add) {
         return Ok(report);
     }
-    // Holding records back only removes NEW insertions, so the full plan
-    // passing these checks covers every tentative subset.
+    // Holding records back only removes NEW insertions, so the full plan passing these checks covers every tentative subset. The plan must fit its own text before anything is edited: a mismatch here is an artifact error, not something the greedy walk below could demote away.
     check_plan_fits(file, text, inventory, allow_add)?;
     let functional = functional_sequence(inventory);
     let file_ref = FileRef {
         language: file.language,
         file_name: file.path.clone(),
     };
-    // `Ok(None)` when `edited` verifies; `Ok(Some(reason))` when the
-    // verifier rejects it.
+    // `Ok(None)` when `edited` verifies; `Ok(Some(reason))` when the verifier rejects it. Counts every verifier run for the report and separates a rejection (which the walk can act on) from any other error, which must propagate to the caller.
     let mut rejection = |edited: &str| -> Result<Option<String>, Error> {
         report.verifications += 1;
         match verify(text, edited, file_ref.clone(), &functional) {
@@ -120,8 +118,7 @@ pub fn verify_rail(
         trial.comments[index].decision = file.comments[index].decision;
         let edited = edit_in_memory(text, &trial, inventory, allow_add)?.text;
         if edited == verified {
-            // No new edit text (e.g. a rewrite the sanitizer skips): the
-            // verdict is the last one's.
+            // No new edit text (e.g. a rewrite the sanitizer skips): the verdict is the last one's. Verification depends only on the edited text, so an edit set that reproduces the last verified text is already known to pass and is kept without re-running the verifier.
             continue;
         }
         match rejection(&edited)? {

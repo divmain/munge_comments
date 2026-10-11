@@ -207,13 +207,13 @@ pub struct Inventory {
 /// statistics. The language is always passed explicitly (from discovery at
 /// plan time, from the artifact at apply time).
 pub fn inventory_file(text: &str, file: FileRef) -> Result<Inventory, Error> {
-    // 1. Adapter lookup.
+    // 1. Adapter lookup: resolve the adapter before `file` is consumed; it is needed again for style stats.
     let adapter = adapter_for(file.language);
     let language = file.language;
-    // 2. Scan (ranges, kinds, anchors).
+    // 2. Scan (ranges, kinds, anchors): copy out the fields the classifier needs, since `file` is moved into `scan_file`.
     let file_name = file.file_name.clone();
     let scanned = scan_file(text, file)?;
-    // 3. Classify (whole-file context).
+    // 3. Classify (whole-file context), before protecting and grouping: both depend on the classification.
     let mut classified = classify_all(
         scanned.comments,
         ClassifyCtx {
@@ -223,15 +223,15 @@ pub fn inventory_file(text: &str, file: FileRef) -> Result<Inventory, Error> {
             has_shebang: scanned.has_shebang,
         },
     )?;
-    // 4. Directive-adjacency protection.
+    // 4. Directive-adjacency protection; must precede grouping, since a protected comment is no longer groupable.
     protect_directive_adjacent(&mut classified);
-    // 5. Logical grouping; 6. ids, after grouping so they are gap-free.
+    // 5. Logical grouping; 6. ids, after grouping so they are gap-free over records, not raw comments.
     let comments: Vec<InventoryComment> = group(classified, text)
         .into_iter()
         .enumerate()
         .map(|(index, members)| merge(members, index + 1, text))
         .collect();
-    // 7. Per-file style statistics.
+    // 7. Per-file style statistics, computed from the final records so protection and grouping are reflected.
     let style_stats = StyleStats::over(&comments, adapter);
     Ok(Inventory {
         comments,
@@ -392,8 +392,7 @@ fn merge(run: Run, number: usize, text: &str) -> InventoryComment {
             editable,
         };
     };
-    // Every member is editable prose (the grouping precondition), so the
-    // group is too, and no member carries a directive scope or window.
+    // Union the members' tags: every member is editable prose (the grouping precondition), so the group is too, and no member carries a directive scope or window; one protected member makes the whole group non-editable.
     let mut tags = first.tags;
     for member in &rest {
         tags.extend(member.tags.iter().cloned());

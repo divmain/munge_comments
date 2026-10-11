@@ -346,7 +346,7 @@ const JS_CASES: &[Case] = &[
         "directive:node-coverage-enable",
         File,
     ),
-    // Bundlers and minifiers.
+    // Bundlers and minifiers, which sit inline in the import call.
     case(
         JS_FAMILY,
         "/* webpackChunkName: \"x\" */",
@@ -448,7 +448,7 @@ const JS_CASES: &[Case] = &[
         "test-environment",
         File,
     ),
-    // TypeScript's `stripInternal`: any comment kind.
+    // TypeScript's `stripInternal`: any comment kind; a directive only in the TypeScript adapters.
     case(TS_ONLY, "// @internal", "directive:internal", Next),
     case(TS_ONLY, "/* @internal */", "directive:internal", Next),
 ];
@@ -1079,8 +1079,7 @@ fn literal_rows_follow_the_tag_derivation_rule() {
             TagSpec::Fixed(tag) if tag.starts_with("directive:") => {
                 assert_eq!(tag, derived, "{literal:?}");
             }
-            // A named category's bare tag (`license`, `pure-annotation`,
-            // `test-environment`).
+            // A named category's bare tag (`license`, `pure-annotation`, `test-environment`) is not derived from the literal.
             TagSpec::Fixed(_) => {}
             TagSpec::Family { prefix } => assert_eq!(prefix, format!("{derived}-"), "{literal:?}"),
         }

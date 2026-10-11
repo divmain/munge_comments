@@ -15,7 +15,6 @@ pub const DIRECTIVES: &[DirectiveRow] = &[
     lit("NOLINTNEXTLINE", "linter", "directive:nolintnextline", Next),
     lit("NOLINTBEGIN", "linter", "directive:nolintbegin", File),
     lit("NOLINTEND", "linter", "directive:nolintend", File),
-    // clang-format.
     lit(
         "clang-format off",
         "formatter",
@@ -28,8 +27,7 @@ pub const DIRECTIVES: &[DirectiveRow] = &[
         "directive:clang-format-on",
         File,
     ),
-    // GCC's `-Wimplicit-fallthrough=3` comment regexes, verbatim from the
-    // GCC manual, each matched against the whole comment.
+    // Fallthrough annotations: GCC's `-Wimplicit-fallthrough=3` comment regexes, verbatim from the GCC manual, each matched against the whole comment; cover compiler/linter spellings (`-fallthrough`, `@fallthrough@`, `lint -fallthrough`) and free-form FALLTHROUGH variants.
     re(
         r"^(?:-fallthrough)$",
         "compiler",

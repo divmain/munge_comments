@@ -126,7 +126,6 @@ pub fn pre_llm_decision(
     if TAG_FLAG_TAGS.iter().any(|tag| record.has_tag(tag)) {
         return Some((Decision::KeepOriginal, vec![FLAGGED_FOR_REVIEW.to_owned()]));
     }
-    // Row 3: content-empty.
     if is_content_empty(original, adapter) {
         return Some((Decision::Remove, Vec::new()));
     }
@@ -154,7 +153,6 @@ pub fn pre_llm_decision(
 ///
 /// Meant for scanned records: a NEW-origin record is outside the matrix.
 pub fn route(record: &DraftRecord, threshold: f64, adapter: &LanguageAdapter) -> Route {
-    // Row 1: protected.
     if record.classification != Classification::Prose {
         return Route::Decided {
             decision: Decision::KeepProtected,
@@ -174,7 +172,6 @@ pub fn route(record: &DraftRecord, threshold: f64, adapter: &LanguageAdapter) ->
         };
     }
     let Some(regenerated) = record.regenerated.as_deref() else {
-        // Row 9: no regeneration.
         return judge(&REDUCED_SET);
     };
     // Row 5: EASY + redundant restatement.
@@ -186,7 +183,6 @@ pub fn route(record: &DraftRecord, threshold: f64, adapter: &LanguageAdapter) ->
         };
     }
     match record.difficulty {
-        // Rows 7–8.
         Some(Difficulty::Medium | Difficulty::Difficult) => judge(&FULL_SET),
         // Row 6 (and an unrated regeneration, conservatively).
         Some(Difficulty::Easy) | None => judge(&RESTRICTED_SET),

@@ -128,7 +128,7 @@ pub fn comment_body_with_lines(raw: &str, adapter: &LanguageAdapter) -> CommentB
         Shape::Line => raw,
         Shape::Block(payload) => payload,
         Shape::Plain => {
-            // Passes through unchanged.
+            // Delimiter-free text passes through verbatim, so its line map is just the `\n` positions.
             let mut line_starts = vec![(0, 0)];
             line_starts.extend(
                 raw.match_indices('\n')
@@ -392,7 +392,7 @@ fn strip_wrapped_block_delimiters(lines: &mut Vec<String>, adapter: &LanguageAda
     let inner = inner.strip_prefix([' ', '\t']).unwrap_or(inner);
     let inner = inner.strip_suffix([' ', '\t']).unwrap_or(inner);
     let mut stripped: Vec<String> = inner.split('\n').map(str::to_string).collect();
-    // The opener's and closer's own lines, when they held nothing else.
+    // The opener's and closer's own lines, when they held nothing else; reported back so the caller knows whether the first line still holds opener text.
     let opener_line_dropped =
         stripped.len() > 1 && stripped.first().is_some_and(|line| is_blank(line));
     if opener_line_dropped {

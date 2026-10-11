@@ -125,7 +125,7 @@ pub fn compute_edits(
     let mut planned: Vec<Planned> = Vec::new();
     let mut skipped = Vec::new();
     let mut to_remove: Vec<&InventoryComment> = Vec::new();
-    // Inventory index → id of the record editing it.
+    // Inventory index → id of the record editing it, so two records cannot claim one comment.
     let mut claimed: BTreeMap<usize, &str> = BTreeMap::new();
     let mut skip = |record: &CommentRecord, reason| {
         skipped.push(SkippedEdit {

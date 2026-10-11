@@ -763,8 +763,7 @@ fn mark_go_example_output(
         return Ok(());
     }
     let output = static_regex(&GO_EXAMPLE_OUTPUT)?;
-    // The example function whose output block has been entered (comments
-    // arrive in offset order and functions do not overlap).
+    // The example function whose output block has been entered; once an output marker is seen, every later comment in the same function counts (comments arrive in offset order and functions do not overlap).
     let mut entered: Option<usize> = None;
     for (comment, body) in classified.iter_mut().zip(bodies) {
         let Some(function) = comment.enclosing_top_level.as_ref().filter(|declaration| {
@@ -999,7 +998,7 @@ mod tests {
             TagSpec::Fixed("directive:shout"),
             Scope::Inline,
         ),
-        // Byte-level rows on the raw text, plus body twins that must miss.
+        // Byte-level rows on the raw text, plus body twins that must miss — RawRe sees bytes comment_body hides (a lone CR, trailing blanks).
         row(
             Pattern::RawRe(r"\r[^\n]"),
             TagSpec::Fixed("lone-cr"),

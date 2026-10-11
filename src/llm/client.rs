@@ -400,8 +400,7 @@ impl OpenAiCompatClient {
 
     /// One request, with retries and 400 fallbacks.
     async fn complete(&self, req: &ChatRequest) -> Result<RawResponse, Error> {
-        // Fallbacks applied while serving this request. Cached flags may also
-        // be set concurrently by other requests; both are honored.
+        // Fallbacks applied while serving this request only; cached flags may also be set concurrently by other requests, and the client-wide cache is unioned in below — both are honored.
         let mut applied = Downgrades::default();
         let mut retries_used: u32 = 0;
         loop {
@@ -508,7 +507,7 @@ impl OpenAiCompatClient {
         // RandomState is seeded randomly per instance: a dependency-free
         // source of jitter, which only needs to de-synchronize clients.
         let bits = RandomState::new().hash_one(retry);
-        let unit = (bits >> 11) as f64 / (1u64 << 53) as f64; // in [0, 1)
+        let unit = (bits >> 11) as f64 / (1u64 << 53) as f64; // Top 53 bits give a uniform fraction in [0, 1).
         exponential.mul_f64(1.0 - 0.25 * unit)
     }
 }
@@ -811,7 +810,6 @@ mod tests {
             retry_after(&headers(&[("retry-after", "1.5")])),
             Some(Duration::from_millis(1500))
         );
-        // Milliseconds win over seconds.
         assert_eq!(
             retry_after(&headers(&[("retry-after-ms", "10"), ("retry-after", "3")])),
             Some(Duration::from_millis(10))

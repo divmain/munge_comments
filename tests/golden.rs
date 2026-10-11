@@ -332,12 +332,7 @@ fn syntax_error_fixtures_trip_has_error() {
     }
 }
 
-// ---------------------------------------------------------------------------
-// The expectation table, written by hand: per fixture (keyed by its path
-// under `golden/`), the ordered raw texts of its records and their
-// classifications. A logical group of line comments is one record whose
-// text spans its members.
-// ---------------------------------------------------------------------------
+// The table below is long enough that spelling out `Classification::Prose` on every record would drown the texts it exists to pin, so the variants get single-letter aliases here; they also match the letters `render_entry` prints, which keeps a failure report readable against the table it quotes. The table itself is written by hand: per fixture (keyed by its path under `golden/`), the ordered raw texts of its records and their classifications. A logical group of line comments is one record whose text spans its members.
 
 use Classification::{DocProtected as D, Functional as F, Prose as P};
 
@@ -1062,9 +1057,7 @@ const EXPECTATIONS: &[Entry] = &[
             ("# Line 1 is blank, so the line-2 cookie counts.", P),
         ],
     ),
-    // Content-empty comments (decision-matrix row 3) in every tier-1
-    // language beside TypeScript, so offline mode's only edit — removing
-    // them — is planned, applied and verified in each grammar.
+    // Content-empty comments (decision-matrix row 3) in every tier-1 language beside TypeScript, so offline mode's only edit — removing them — is planned, applied and verified in each grammar. Empty and separator-only comments are prose in every language — there is nothing for a classifier to latch onto — yet each language still gets its own fixture so the per-language scanner paths are exercised; the `------` case pins that a body of pure punctuation is not mistaken for a directive.
     (
         "javascript/empty-comments.js",
         &[("//", P), ("/* */", P), ("//", P), ("// ------", P)],

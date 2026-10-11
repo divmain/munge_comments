@@ -173,7 +173,6 @@ mod tests {
         // 5 beats 6
         assert_eq!(pick_exit_code(&[5, 6]), 5);
         assert_eq!(pick_exit_code(&[6, 5]), 5);
-        // input order never matters
         assert_eq!(pick_exit_code(&[6, 5, 4, 7, 3, 2]), 2);
     }
 

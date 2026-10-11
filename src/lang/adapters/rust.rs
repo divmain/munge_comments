@@ -12,8 +12,7 @@ const DIRECTIVES: &[DirectiveRow] = &[
     // clippy's `undocumented_unsafe_blocks` looks for a `SAFETY:` comment
     // directly above the unsafe block.
     lit("SAFETY:", "lint", "directive:safety", Scope::Next),
-    // compiletest (rustc's UI-test harness): `//@` header directives and
-    // `//~` error annotations, both read only at the comment's opener.
+    // compiletest (rustc's UI-test harness): `//@` header directives, optionally revision-qualified as `//@[rev]`, and `//~` error annotations, both read only at the comment's opener.
     raw_family(
         r"^//@(?:\[[^\]]*\])?\s*(?P<word>[A-Za-z][\w-]*)?",
         "test-harness",

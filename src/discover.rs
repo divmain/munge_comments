@@ -233,15 +233,14 @@ impl Collector<'_> {
 
     /// Applies the filter chain to one walked entry.
     fn consider_entry(&mut self, entry: ignore::DirEntry, extra: Option<&GlobMatcher>) {
-        // The walk root is a directory and never a file candidate.
+        // The walk root is always yielded at depth 0; it is a directory, so the file check below would reject it anyway, but skipping it here keeps the root exempt from the filters.
         if entry.depth() == 0 {
             return;
         }
         let Some(file_type) = entry.file_type() else {
             return;
         };
-        // Symlinked files found by traversal are never recorded; symlinked
-        // directories are never followed (`follow_links(false)`).
+        // Symlinked files found by traversal are never recorded; symlinked directories are never followed (`follow_links(false)`). Explicitly named symlinks are resolved by the caller instead.
         if file_type.is_symlink() {
             return;
         }
@@ -256,16 +255,13 @@ impl Collector<'_> {
             ));
             return;
         }
-        // A glob argument additionally requires the absolute POSIX path to
-        // match the absolute pattern (identical from any cwd).
+        // A glob argument walks only the pattern's literal prefix, so this final match against the absolute pattern is what actually selects the files; the absolute POSIX path is identical from any cwd.
         if let Some(matcher) = extra
             && !matcher.is_match(posix_string(abs))
         {
             return;
         }
-        // Include/exclude globs are matched against the POSIX path relative
-        // to glob_base (the built-in excludes are `**/`-prefixed, so they
-        // are base-independent).
+        // Include/exclude globs are matched against the POSIX path relative to glob_base, not the cwd-relative one, so a resumed run selects the same files from any cwd (the built-in excludes are `**/`-prefixed, so they are base-independent).
         let rel = posix_relative(self.glob_base, abs);
         if !self.include.is_match(&rel) {
             return;
@@ -588,9 +584,7 @@ mod tests {
     fn glob_characters_in_directory_names_have_no_special_meaning() {
         let dir = tempfile::tempdir().expect("tests may create temp dirs");
         write_file(dir.path(), "app/[id]/route.ts");
-        // Named explicitly (the directory exists, so it is walked
-        // literally); the recorded path stays relative to the cwd, not the
-        // walk root.
+        // Named explicitly (the directory exists, so it is walked literally, not read as a glob even though `[id]` looks like a character class); the recorded path stays relative to the cwd, not the walk root.
         let named = discover_with(
             dir.path(),
             &["app/[id]"],
@@ -600,7 +594,7 @@ mod tests {
             &crate::log::NullLog,
         );
         assert_eq!(rel_paths(&named), ["app/[id]/route.ts"]);
-        // And found by a plain walk of the tree.
+        // Walking the parent, by contrast, treats `[id]` as an ordinary directory name.
         let walked = discover_default(dir.path());
         assert_eq!(rel_paths(&walked), ["app/[id]/route.ts"]);
     }
@@ -704,7 +698,7 @@ mod tests {
         write_file(dir.path(), "x/c.js");
         std::fs::create_dir_all(dir.path().join("sib")).expect("tests may create dirs");
 
-        // From the sibling directory: ../x/**/*.ts
+        // The same relative glob spelled from a sibling directory (`../x/**/*.ts`) must select the same files as from the parent.
         let from_sibling = discover_with(
             dir.path().join("sib").as_path(),
             &["../x/**/*.ts"],
@@ -713,7 +707,6 @@ mod tests {
             None,
             &crate::log::NullLog,
         );
-        // From the parent: x/**/*.ts
         let from_parent = discover_with(
             dir.path(),
             &["x/**/*.ts"],
@@ -739,7 +732,7 @@ mod tests {
         write_file(dir.path(), "wd/w.ts");
         let exclude = ["sub/**"];
 
-        // Without the exclude, the nested walk finds both files.
+        // Baseline without excludes: both files are found, and paths are relative to the cwd (`wd`), hence the `../` prefix.
         let no_exclude = discover_with(
             dir.path().join("wd").as_path(),
             &[".."],
@@ -772,7 +765,7 @@ mod tests {
 
         assert_eq!(rel_paths(&from_nested), ["w.ts"]);
         assert_eq!(rel_paths(&from_base), ["wd/w.ts"]);
-        // Same file sets (relative to their different cwds).
+        // Only the relative spelling differs; the absolute files selected are identical.
         let abs_of = |d: &Discovered| -> Vec<PathBuf> {
             let mut paths: Vec<PathBuf> = d.files.iter().map(|f| f.abs_path.clone()).collect();
             paths.sort();
@@ -799,7 +792,7 @@ mod tests {
         let dir = tempfile::tempdir().expect("tests may create temp dirs");
         write_file(dir.path(), "node_modules/pkg.ts");
         let exclude = ["node_modules/**"];
-        // Default excludes do not apply to explicit files; user excludes do.
+        // An explicitly named file bypasses the default excludes (node_modules is not special here) but still honors the user's `--exclude` globs.
         let defaults_bypassed = discover_with(
             dir.path(),
             &["node_modules/pkg.ts"],
@@ -871,7 +864,7 @@ mod tests {
         let discovered = discover_default(dir.path());
         assert_eq!(rel_paths(&discovered), ["real/r.ts", "target.ts"]);
 
-        // A symlink argument resolves to its target and dedupes against it.
+        // Naming the symlink explicitly resolves it to its real path, so it dedupes against the walked `target.ts`.
         let with_alias = discover_with(
             dir.path(),
             &[".", "alias.ts", "target.ts"],

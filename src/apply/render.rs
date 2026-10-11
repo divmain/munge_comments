@@ -537,7 +537,6 @@ mod tests {
             ),
             "function f() {\n    /**\n     * line one\n     *\n     * line three\n     */\n    function g() {}\n}\n",
         );
-        // A multi-line original receiving one-line text.
         let text = "/*\n * old\n * text\n */\nint x;\n";
         assert_eq!(
             rewrite(text, LanguageId::C, "/*", "short"),
@@ -571,7 +570,7 @@ mod tests {
             rewrite(text, LanguageId::Javascript, "/* old", "new\ntext"),
             "const s = a /* new text */ + b;\n",
         );
-        // CRLF: the kept break is the slot line's.
+        // The break kept after an inline block slot uses the slot's own terminator.
         let text = "function f(x) {\r\n  return /* a\r\n b */ x;\r\n}\r\n";
         assert_eq!(
             rewrite(text, LanguageId::Javascript, "/* a", "new"),
@@ -621,7 +620,7 @@ mod tests {
             rewrite(text, LanguageId::Rust, "/**", "new"),
             "/** new */\nfn f() {}\n"
         );
-        // `/**/` is not doc-like.
+        // `/**/` is not doc-like: the JSDoc rule needs a non-`/` after `**`.
         let text = "int x; /**/\nint y;\n";
         let record = scanned(text, LanguageId::C, "/**/");
         let slot = slot_for(text, &record, adapter_for(LanguageId::C)).expect("slot");
@@ -640,7 +639,6 @@ mod tests {
 
     #[test]
     fn rendering_uses_the_slot_lines_eol() {
-        // Mixed EOLs: each slot takes its own line's terminator.
         let text = "// a\r\nx();\n// b\ny();\r\n";
         assert_eq!(
             rewrite(text, LanguageId::Javascript, "// a", "1\n2"),
@@ -650,7 +648,6 @@ mod tests {
             rewrite(text, LanguageId::Javascript, "// b", "1\n2"),
             "// a\r\nx();\n// 1\n// 2\ny();\r\n",
         );
-        // CRLF stays CRLF, block layout included.
         let text = "x = 1\r\n# old\r\ny = 2\r\n";
         assert_eq!(
             rewrite(text, LanguageId::Python, "# old", "1\n2"),
@@ -667,7 +664,6 @@ mod tests {
             rewrite(text, LanguageId::Python, "# old", "1\n2"),
             "x = 1\r\ny = 2\n# 1\r\n# 2",
         );
-        // No terminator anywhere: `\n`.
         assert_eq!(
             rewrite("# old", LanguageId::Python, "# old", "1\n2"),
             "# 1\n# 2"
@@ -713,7 +709,6 @@ mod tests {
         let trailing = record("N2", CommentKind::Line, (6, 6), Position::Trailing, None);
         let slot = slot_for(text, &trailing, js).expect("slot");
         assert_eq!(render_comment("a\nb", &slot), " // a b");
-        // An insertion point already after whitespace needs no gap.
         let text = "x();  \n";
         let trailing = record("N2", CommentKind::Line, (6, 6), Position::Trailing, None);
         let slot = slot_for(text, &trailing, js).expect("slot");

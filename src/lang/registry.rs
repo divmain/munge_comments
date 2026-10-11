@@ -229,8 +229,7 @@ fn init_language(id: LanguageId) -> Result<LanguageEntry, Error> {
     // Leaked once per process: the symbol tables below borrow their names
     // from this handle, and the parser and query keep pointers into it.
     let language: &'static Language = Box::leak(Box::new(grammar(id)));
-    // The ABI check. A grammar compiled against an incompatible tree-sitter
-    // ABI fails here, at startup, and never reaches a parse.
+    // The ABI check: a grammar compiled against an incompatible tree-sitter ABI fails here, at startup, and never reaches a parse. The parser is a throwaway used only for this check; the parser used for real parses is built fresh per call.
     let mut parser = Parser::new();
     parser
         .set_language(language)
@@ -330,7 +329,7 @@ fn validate_adapter(language: &Language, adapter: &LanguageAdapter) -> Result<()
             return Err(drift("node kind", kind));
         }
     }
-    // Closing tokens are anonymous tokens.
+    // Closing tokens are anonymous, so they are looked up with `named = false` rather than as named node kinds.
     for token in adapter.closing_tokens {
         if language.id_for_node_kind(token, false) == 0 {
             return Err(drift("anonymous closing token", token));

@@ -228,8 +228,7 @@ impl Block {
             .map(|(index, cluster)| {
                 let code_left = index > 0 || !is_blank(&text[self.start..cluster.start]);
                 let code_right = index < last || !is_blank(&text[cluster.end..self.content_end]);
-                // Code on the left ends at `code_end`; code on the right
-                // starts at `code_start`, past the right-side whitespace.
+                // Code on the left ends at `code_end`; code on the right starts at `code_start`, past the right-side whitespace. The horizontal whitespace between code and comment is folded into the removal, so the separator never survives as a stray gap.
                 let code_end = text[..cluster.start]
                     .trim_end_matches(is_horizontal_space)
                     .len();
@@ -242,8 +241,7 @@ impl Block {
                     // after it go too; the line terminator stays.
                     (true, false) => deletion(code_end..self.content_end),
                     (true, true) => inline_edit(text, cluster, code_end, code_start),
-                    // Leading (a block that keeps code has code beside
-                    // every cluster): the indentation stays.
+                    // Leading: no code on the left, so the cluster opens the line and the deletion also swallows the whitespace preceding the code that follows; the indentation before the cluster stays (a block that keeps code has code beside every cluster).
                     (false, _) => deletion(cluster.start..code_start),
                 }
             })
@@ -344,8 +342,7 @@ enum LineFate {
 /// line-aligned ranges of the emptied and the rewritten blocks.
 fn blank_run_edits(text: &str, deleted: &[Range<usize>], rewritten: &[Range<usize>]) -> Vec<Edit> {
     let mut edits = Vec::new();
-    // The blank lines of the current run of blank-or-deleted lines, and
-    // whether the run holds a deleted line.
+    // The blank lines of the current run of blank-or-deleted lines, and whether the run holds a deleted line — the only case that collapses the run.
     let mut run_blanks: Vec<Range<usize>> = Vec::new();
     let mut run_has_deletion = false;
     let mut flush = |blanks: &mut Vec<Range<usize>>, has_deletion: &mut bool| {
@@ -356,7 +353,6 @@ fn blank_run_edits(text: &str, deleted: &[Range<usize>], rewritten: &[Range<usiz
         *has_deletion = false;
     };
     let (mut next_deleted, mut next_rewritten) = (0, 0);
-    // Line 1 starts after a leading BOM.
     let mut start = if text.starts_with('\u{FEFF}') {
         '\u{FEFF}'.len_utf8()
     } else {

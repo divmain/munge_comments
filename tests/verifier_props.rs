@@ -227,7 +227,7 @@ fn check_oracle(fixture: &Fixture, edited: &str) -> Result<(), String> {
         Err(Error::Verify(reason)) => reason,
         Err(other) => return Err(format!("verification errored: {other}")),
     };
-    // Check 5 runs last, so its failure means every other check passed.
+    // Check 5 runs last, so its failure means every other check passed. Only a functional-comment mismatch may be excused, and only when the difference is a positional (de)activation; any other rejection is a false rejection.
     if !reason.starts_with("functional-comment mismatch") {
         return Err(format!("false rejection: {reason}"));
     }
@@ -568,7 +568,6 @@ fn apply_token_change(fixture: &Fixture, sites: &[Range<usize>], change: &TokenC
     let site = &sites[change.site.index(sites.len())];
     let text = &fixture.text;
     if change.insert {
-        // Boundaries from the site's start to its end, both included.
         let boundaries: Vec<usize> = (site.start..=site.end)
             .filter(|offset| text.is_char_boundary(*offset))
             .collect();
@@ -581,7 +580,6 @@ fn apply_token_change(fixture: &Fixture, sites: &[Range<usize>], change: &TokenC
         .filter(|(_, character)| !character.is_whitespace())
         .collect();
     let (at, old) = characters[change.position.index(characters.len())];
-    // A different character than the one replaced.
     let new = if old == change.character {
         CODE_CHARS[(CODE_CHARS.iter().position(|c| *c == old).unwrap() + 1) % CODE_CHARS.len()]
     } else {
@@ -739,9 +737,7 @@ fn python_indentation_shifts_fail_the_shape_check() {
                     fixture.key
                 ),
             };
-            // A dedent changes whitespace inside one line-broken gap. When
-            // the result still parses cleanly to the same tokens, the token
-            // and gap checks cannot see it: the shape check must.
+            // A dedent changes whitespace inside one line-broken gap. When the result still parses cleanly to the same tokens, the token and gap checks cannot see it: the shape check must. Only such dedents are guaranteed to fail on shape alone; others may be rejected earlier for unrelated reasons.
             let tree = lang::parse(&edited, language).unwrap();
             if !tree.has_error && token_texts(&edited) == original_tokens {
                 assert!(

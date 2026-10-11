@@ -252,7 +252,7 @@ fn math_mut(value: &mut Value) -> &mut Value {
     file_mut(value, "src/math.ts")
 }
 
-// ---- round trips -----------------------------------------------------------
+// Round trips: whatever the writer emits must read back unchanged.
 
 #[test]
 fn write_then_read_is_lossless() {

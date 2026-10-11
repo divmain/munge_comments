@@ -518,8 +518,7 @@ mod tests {
     fn every_adapters_patterns_compile() {
         for adapter in ALL_ADAPTERS {
             let compiled = compiled(adapter).expect("every adapter's patterns compile");
-            // Each language's line opener matches a representative opener
-            // for its prefix family (`//` vs `#`).
+            // Each language's line opener matches a representative opener for its prefix family (`//` vs `#`). Python's `^#:?` also admits Sphinx `#:` lines, so it needs a `#`-style sample rather than the c-family `//`.
             let opener_sample = if adapter.id == LanguageId::Python {
                 "#: sphinx-style"
             } else {

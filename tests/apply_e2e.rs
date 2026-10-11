@@ -269,7 +269,7 @@ async fn a_clean_apply_writes_every_file_and_the_report() {
 #[tokio::test]
 async fn a_hand_authored_remove_on_a_multiline_return_comment_keeps_its_newline() {
     let mut e2e = E2e::new();
-    // Only the JS file, kept as is but for one record decided by hand.
+    // Narrow the plan to the one file and re-plan it keeping every comment, so only the hand edit below changes the outcome.
     e2e.files.retain(|file| file.path == "js/asi.js");
     e2e.plan("js/asi.js", |_| (Decision::KeepOriginal, None));
     let record = e2e.record_mut("js/asi.js", "/*");
@@ -294,7 +294,7 @@ async fn a_dry_run_passes_git_apply_check_and_matches_the_real_run() {
         assert!(cli.out.contains(&format!("--- a/{path}\n")), "{}", cli.out);
     }
 
-    // Apply the diff to a pristine copy with git.
+    // Prove the dry-run diff is a real patch: feed it to `git apply --check` and then `git apply` in a fresh copy.
     let copy = common::copy_fixture_tree(TREE);
     let git = |args: &[&str]| {
         use std::io::Write as _;
@@ -496,7 +496,7 @@ async fn drift_aborts_the_whole_apply() {
 async fn a_range_tampered_record_in_the_last_file_aborts_before_any_write() {
     let mut e2e = E2e::new();
     assert_eq!(FILES.last(), Some(&"ts/greet.ts"), "the last selected file");
-    // Shifted by one byte: still well-formed, but no longer the comment.
+    // Shift the record's range by one byte so it no longer matches the comment it was scanned from; still well-formed, but no longer the comment.
     let record = e2e.record_mut("ts/greet.ts", "// join the parts");
     record.start += 1;
     record.end += 1;
@@ -567,7 +567,7 @@ async fn a_hand_edited_new_out_of_bounds_aborts_with_exit_2() {
 #[tokio::test]
 async fn a_firewall_rejection_skips_the_file_with_exit_4() {
     let mut e2e = E2e::new();
-    // Route a REMOVE into the functional `# noqa` by relabeling it.
+    // The `# noqa` comment is a tool directive the firewall protects; force the removal through anyway to see it refused.
     let record = e2e.record_mut("py/calc.py", "# noqa");
     record.classification = Classification::Prose;
     record.tags.clear();

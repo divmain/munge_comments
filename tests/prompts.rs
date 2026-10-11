@@ -361,7 +361,7 @@ fn redact_prompt_lists_exactly_the_requested_ids() {
         120_000,
     )
     .remove(0);
-    // A truncation retry asks for a subset of the chunk's placeholders.
+    // A truncation retry asks for a subset of the chunk's placeholders; requesting only half means a prompt that echoed every id would fail.
     let all_ids = requested_ids(&chunk);
     assert!(all_ids.len() >= 2, "the TS sample has several targets");
     let half = all_ids[..all_ids.len() / 2].to_vec();
@@ -470,6 +470,6 @@ fn redact_prompt_for_a_500_line_file_fits_the_token_budget() {
     let source_tokens = tokens(&chunk.prompt_text);
     let overhead = total - source_tokens;
     assert!(overhead <= 2_500, "template overhead is {overhead} tokens");
-    // The raw source itself, unredacted, also fits beside the overhead.
+    // The raw source itself, unredacted, also fits beside the overhead — the worst case the budget must cover.
     assert!(tokens(&text) + overhead <= 10_000);
 }

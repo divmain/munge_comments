@@ -195,7 +195,7 @@ pub async fn run_plan(req: PlanRequest, deps: PlanDeps<'_>) -> Result<PlanOutcom
         source,
     })?;
 
-    // 1. Output paths, and the existing-artifact check.
+    // 1. Output paths, and the existing-artifact check: resolve them before anything else, so a path that names no file fails before discovery or any write.
     let out = output_target(&cwd, &req.out, "artifact")?;
     let report_target = req
         .report_path
@@ -209,13 +209,12 @@ pub async fn run_plan(req: PlanRequest, deps: PlanDeps<'_>) -> Result<PlanOutcom
         )));
     }
     let existing = prepare_start(&out, req.resume, deps.log)?;
-    // A resumed run reuses the artifact's root and glob base, after its
-    // snapshot check (before any discovery work).
+    // A resumed run reuses the artifact's root and glob base, after its snapshot check (before any discovery work); without one, the root is computed below from the discovered paths.
     let resumed = existing
         .map(|artifact| resume_base(artifact, &out, &cwd, &req.config))
         .transpose()?;
 
-    // 2. Discovery.
+    // 2. Discovery: matches globs against the stored base when resuming, so the same files are selected as in the original run.
     let discovered = discover(
         &req.config.paths,
         DiscoverOptions {
@@ -229,7 +228,7 @@ pub async fn run_plan(req: PlanRequest, deps: PlanDeps<'_>) -> Result<PlanOutcom
     // 3. The grammar registry (a failed initialization is run-fatal).
     let registry = registry()?;
 
-    // 4. Root, glob base, snapshot paths and the per-file jobs.
+    // 4. Root, glob base, snapshot paths and the per-file jobs: the root is reused from the resume snapshot, or computed over the canonical discovered paths and resolved exactly as apply will resolve it.
     let (root, root_abs, glob_base) = match &resumed {
         Some(base) => {
             check_under_root(&discovered.files, &base.root_abs)?;
@@ -268,8 +267,7 @@ pub async fn run_plan(req: PlanRequest, deps: PlanDeps<'_>) -> Result<PlanOutcom
         })
         .collect::<Result<Vec<FileJob>, Error>>()?;
 
-    // 5. Resume reconciliation, then the writer performs the first write
-    // (the header plus any carried files).
+    // 5. Resume reconciliation, then the writer performs the first write (the header plus any carried files): reconcile the discovered jobs against the stored entries, carrying unchanged complete/skipped files; createdAt is preserved from the original artifact.
     let (created_at, carried) = match resumed {
         Some(base) => {
             let (carried, process) = reconcile_jobs(base.files, jobs, deps.log).await?;
@@ -370,7 +368,7 @@ pub async fn run_plan(req: PlanRequest, deps: PlanDeps<'_>) -> Result<PlanOutcom
         writer.record_all(not_attempted)?;
     }
 
-    // 7. The final write, always.
+    // 7. The final write, always: finish the artifact before writing the report, so a report failure can never lose the plan.
     let artifact = writer.finish()?;
     let mut exit_code = if aborted {
         INTERRUPTED_EXIT_CODE
@@ -652,8 +650,7 @@ async fn process_file(job: FileJob, ctx: &FileCtx<'_>) -> Result<FilePlan, Error
         Ok(planned) => complete(&job, &facts, planned),
         Err(err) => return Ok(ctx.failed(&job, Some(&facts), &err)),
     };
-    // The plan-time verification rail, last: on its own blocking stage, as
-    // a demotion may cost O(n) verifications.
+    // The plan-time verification rail, last: on its own blocking stage, as a demotion may cost O(n) verifications. It runs apply's in-memory pipeline on the planned records and demotes any edit that would fail verification, so every complete file of a fresh artifact applies cleanly.
     let allow_add = ctx.config.allow_add;
     let verify_hook = ctx.verify_hook.clone();
     let railed = blocking(&job.path, "verification rail", move || {

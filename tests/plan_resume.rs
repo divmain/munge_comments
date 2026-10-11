@@ -194,7 +194,7 @@ async fn an_interrupted_run_resumes_without_repeating_completed_work() {
         .collect();
     assert!(!expected.is_empty());
     assert_eq!(called, expected);
-    // The final artifact equals an uninterrupted run's.
+    // And the artifact it leaves behind must match one written by an uninterrupted run, modulo the timestamp.
     assert_eq!(paths(&artifact), FILES);
     assert_eq!(timeless(artifact), timeless(full));
 }
@@ -251,7 +251,7 @@ async fn skipped_files_are_retried_only_when_their_hash_changed() {
     let broken = first.artifact.files.iter().find(|f| f.path == "broken.ts");
     assert_eq!(broken.unwrap().skip_reason, Some(SkipReason::SyntaxErrors));
 
-    // Unchanged: both files are carried, nothing is planned.
+    // Nothing changed on disk, so both files are carried and nothing is planned: no model calls, no drops.
     let (fake2, llm) = fake(Scenario::default());
     let (second, log) = plan_ok(root, request(config(), "plan.json", true), llm).await;
     assert_eq!(second.exit_code, 0, "{log:#?}");
@@ -263,7 +263,7 @@ async fn skipped_files_are_retried_only_when_their_hash_changed() {
     );
     assert_eq!(second.artifact.files, first.artifact.files);
 
-    // Fixed on disk: the skipped file is re-planned (and only it).
+    // Fixed on disk: the file's hash changes, so the previously skipped file is re-planned (and only it).
     fs::write(root.join("broken.ts"), "// fixed\nexport const y = 2;\n").unwrap();
     let (fake3, llm) = fake(Scenario::default());
     let (third, log) = plan_ok(root, request(config(), "plan.json", true), llm).await;
@@ -507,7 +507,6 @@ async fn deleted_files_are_dropped_and_edited_files_replanned() {
             .iter()
             .any(|record| record.original.as_deref() == Some("// say goodbye"))
     );
-    // The unchanged files are carried as they were.
     for file in artifact.files.iter().filter(|f| f.path != "ts/greet.ts") {
         let before = first.artifact.files.iter().find(|f| f.path == file.path);
         assert_eq!(Some(file), before, "{}", file.path);
@@ -523,8 +522,7 @@ async fn a_resume_from_another_cwd_reuses_the_root() {
     let (first, _log) = plan_ok(tree.path(), request(config(), &out, false), llm).await;
     assert_eq!(first.exit_code, 0);
 
-    // From `outside`, the same artifact (relative `--out`) and the tree
-    // given by its absolute path: equivalent inputs.
+    // From `outside`, the same artifact (relative `--out`) and the tree given by its absolute path: equivalent inputs, so the stored root is reused.
     let tree_abs = fs::canonicalize(tree.path()).unwrap();
     let resumed = PlanConfig {
         paths: vec![tree_abs.to_str().unwrap().to_owned()],
@@ -562,7 +560,7 @@ async fn a_resume_whose_discovery_escapes_the_stored_root_is_refused() {
     assert_eq!(first.artifact.root, ".", "every file lay under the cwd");
     let before = fs::read(a.join("plan.json")).unwrap();
 
-    // `../b` now yields a file outside the stored root `a/`.
+    // `../b` now yields a file outside the stored root `a/`, so the resume must be refused.
     fs::write(tree.path().join("b/y.ts"), "// in b\nexport const y = 2;\n").unwrap();
     let (fake, llm) = fake(Scenario::default());
     let (result, _log) = plan(

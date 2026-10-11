@@ -40,10 +40,6 @@ use tokio_util::sync::CancellationToken;
 /// The convergence target of a second pass.
 const CONVERGENCE: f64 = 0.95;
 
-// ---------------------------------------------------------------------
-// Harness.
-// ---------------------------------------------------------------------
-
 /// One run's workspace: a fresh copy of the noisy repo, plus a separate
 /// directory for artifacts and reports.
 struct Run {

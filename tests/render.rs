@@ -105,7 +105,6 @@ fn slot_from_record_matches_slot_for_on_every_golden_record() {
             assert_eq!(from_text.trailing, from_record.trailing, "{context}");
             assert_eq!(from_text.block_close, from_record.block_close, "{context}");
 
-            // The slot's kind follows the comment's shape.
             let original = record.original.as_deref().expect("scanned");
             let block_shaped = adapter
                 .block_delimiters
@@ -116,7 +115,6 @@ fn slot_from_record_matches_slot_for_on_every_golden_record() {
                 (true, _) => SlotKind::Block,
             };
             assert_eq!(from_text.kind, expected_kind, "{context}");
-            // The opener is a prefix of the original.
             assert!(original.starts_with(&from_text.opener), "{context}");
             assert_eq!(
                 from_text.trailing,
@@ -144,7 +142,7 @@ fn every_golden_slot_rerenders_its_own_content() {
                 let lines = rendered.trim_end_matches(['\r', '\n']);
                 assert!(!lines.contains('\n'), "{context}");
             }
-            // Every rendered line ends with the slot's EOL style.
+            // Rendering must not mix line endings: LF slots stay LF, CRLF slots use CRLF throughout.
             if slot.eol == "\n" {
                 assert!(!rendered.contains("\r\n"), "{context}");
             } else {

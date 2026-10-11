@@ -182,8 +182,7 @@ fn an_exact_citation_pairs_with_its_original() {
             "// Sum of the operands.",
         ),
     )]);
-    // The comment text is normalized on the way through (a wrapped
-    // line opener is stripped).
+    // Pairing is by anchor; the citation's text replaces the original's, normalized on the way through (a wrapped line opener is stripped).
     assert_eq!(
         paired_ids(&alignment),
         [(file.id("Adds").as_str(), "Sum of the operands.")]
@@ -207,7 +206,7 @@ fn different_names_never_pair_even_with_the_same_kind_and_snippet() {
     )]);
     assert!(alignment.pairs.is_empty());
     assert_eq!(alignment.unmatched_originals, [file.id("Adds")]);
-    // It resolves by snippet, but its slot is the original's.
+    // It resolves by snippet, but its slot is the original's, so the citation is dropped and the original stays unmatched.
     assert_dropped(&alignment, "already holds a comment");
 }
 
@@ -350,7 +349,7 @@ fn a_dangling_eof_original_pairs_only_with_an_end_of_file_citation_from_the_last
     assert_eq!(paired_ids(&alignment), [(eof.as_str(), "The end.")]);
     assert!(alignment.warnings.is_empty());
 
-    // Chunked: the same citation is unresolvable from the first chunk.
+    // Chunked: the EOF original lives only in the last chunk, so the same citation is unresolvable from the first chunk.
     let file = File::chunked(PY_EOF, LanguageId::Python, "a.py", 30);
     assert!(file.chunk_texts.len() >= 2, "{:#?}", file.chunk_texts);
     let last = file.chunk_texts.len() - 1;
@@ -709,7 +708,6 @@ fn a_shebang_line_is_never_preceded() {
     )]);
     assert!(alignment.warnings.is_empty(), "{alignment:#?}");
     assert_eq!(alignment.new_candidates[0].offset, file.line_of("def f"));
-    // Citing the shebang line itself yields no slot, leading or trailing.
     for citation in [
         leading("comment", None, "#!/usr/bin/env python3", "Shebang."),
         trailing("comment", None, "#!/usr/bin/env python3", "Shebang."),
@@ -733,7 +731,7 @@ fn a_leading_new_on_line_one_goes_after_the_bom() {
 
 #[test]
 fn a_clean_text_that_does_not_parse_degrades_to_snippet_resolution() {
-    // The source itself has a syntax error, so its clean text does too.
+    // The source itself has a syntax error, so its clean text does too, but the leading comment is still clean.
     let text = "// Starts things.\nfunction start() {\n    go(;\n}\n";
     let file = File::new(text, LanguageId::Typescript, "a.ts");
     // A name-only citation has nothing to match without declarations...

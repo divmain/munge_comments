@@ -118,7 +118,6 @@ const DIRECTIVES: &[DirectiveRow] = &[
         "directive:pragma-no-",
         Inline,
     ),
-    // Cython compiler directives.
     family(
         r"^\s*cython:\s*(?P<word>[A-Za-z]\w*)",
         "compiler",

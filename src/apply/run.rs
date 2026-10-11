@@ -166,17 +166,17 @@ pub fn run_apply(req: ApplyRequest, deps: ApplyDeps<'_>) -> Result<ApplyOutcome,
         )));
     }
 
-    // 1. Load + validate the artifact.
+    // 1. Load + validate the artifact; its root anchors every target path.
     let artifact_path = canonical_artifact_path(&cwd, &req.artifact)?;
     let artifact = read_artifact(&artifact_path)?;
-    // 2. Resolve the root and validate every artifact path.
+    // 2. Resolve the root and validate every artifact path, selected or not (exit 2).
     let root = resolve_root(&artifact_path, &artifact.root)?;
     let targets = artifact
         .files
         .iter()
         .map(|file| check_file_path(&root, &file.path))
         .collect::<Result<Vec<PathBuf>, Error>>()?;
-    // 3. Resolve `--only`.
+    // 3. Resolve `--only`; a path naming no artifact file is a usage error.
     let selected = resolve_selection(&req.only, &cwd, &root, &targets)?;
 
     // 4. Phase A.
@@ -185,7 +185,7 @@ pub fn run_apply(req: ApplyRequest, deps: ApplyDeps<'_>) -> Result<ApplyOutcome,
         log: deps.log,
         hooks: &deps.hooks,
     };
-    // `None` while a file is staged (or aborts the run).
+    // Phase A: triage and stage every selected file, collecting aborts. `None` while a file is staged (or aborts the run).
     let mut results: Vec<Option<ApplyFileResult>> = Vec::with_capacity(artifact.files.len());
     let mut staged: Vec<Staged> = Vec::new();
     let mut aborts = Aborts::default();
@@ -235,7 +235,7 @@ pub fn run_apply(req: ApplyRequest, deps: ApplyDeps<'_>) -> Result<ApplyOutcome,
         results.push(Some(result));
     }
     aborts.into_result()?;
-    // Verification, only once the run is known not to abort.
+    // Verify only once no abort is pending: a doomed run pays nothing.
     let mut ready: Vec<Staged> = Vec::with_capacity(staged.len());
     for item in staged {
         let file = &artifact.files[item.index];
@@ -308,13 +308,13 @@ pub fn run_apply(req: ApplyRequest, deps: ApplyDeps<'_>) -> Result<ApplyOutcome,
             .write_all(diffs.as_bytes())
             .and_then(|()| deps.stdout.flush())
     {
-        // An output failure is filesystem I/O: exit 6.
+        // An output failure is filesystem I/O: exit 6, but the run's outcomes stand.
         deps.log
             .warn(&format!("apply: could not write the dry-run diffs: {err}"));
         exit_code = pick_exit_code(&[exit_code, 6]);
     }
 
-    // 6. Post-apply report.
+    // 6. Post-apply report: best-effort, a failure warns and folds into the exit code.
     if let Some(target) = report_target {
         match write_report(&artifact, &result, &target) {
             Ok(()) => deps
@@ -326,7 +326,6 @@ pub fn run_apply(req: ApplyRequest, deps: ApplyDeps<'_>) -> Result<ApplyOutcome,
             }
         }
     }
-    // 7. Summary.
     log_summary(deps.log, &result);
     Ok(ApplyOutcome { result, exit_code })
 }

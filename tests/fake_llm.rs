@@ -299,7 +299,6 @@ async fn remove_mode_cites_each_item_at_its_own_anchor() {
         (&items[1].anchor, CitedPosition::Trailing, "Trailing note."),
         // `dangling` is only expressible as `leading` on the wire.
         (&items[2].anchor, CitedPosition::Leading, "Before a closer."),
-        // An `end_of_file` anchor is cited as-is.
         (&eof.anchor, CitedPosition::Leading, "The end."),
     ];
     for (comment, (anchor, position, text)) in reply.comments.iter().zip(expected) {

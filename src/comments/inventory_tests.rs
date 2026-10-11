@@ -402,7 +402,7 @@ fn grouping_breakers_in_every_language() {
         let beta = lang.prose("beta prose paragraph");
         let stmt = lang.stmt.to_string();
 
-        // A functional line in between.
+        // A directive breaks the run: it is functional, so the prose cannot group across it.
         let directive = format!("{} NOSONAR", lang.prefix);
         assert_ungrouped(
             lang,
@@ -411,7 +411,7 @@ fn grouping_breakers_in_every_language() {
             "directive",
         );
 
-        // An indent change.
+        // A change of indent starts a new group.
         let deeper = format!("  {beta}");
         assert_ungrouped(
             lang,
@@ -420,7 +420,7 @@ fn grouping_breakers_in_every_language() {
             "indent change",
         );
 
-        // A blank line.
+        // A blank line separates paragraphs.
         assert_ungrouped(
             lang,
             &[alpha.clone(), String::new(), beta.clone(), stmt.clone()],
@@ -428,12 +428,12 @@ fn grouping_breakers_in_every_language() {
             "blank line",
         );
 
-        // A trailing comment, with the next line's comment aligned under it.
+        // A trailing comment is anchored to its code, so it never joins the following run.
         let trailing = format!("{stmt} {alpha}");
         let aligned = format!("{}{beta}", " ".repeat(stmt.len() + 1));
         assert_ungrouped(lang, &[trailing, aligned, stmt.clone()], 2, "trailing");
 
-        // A leading line followed by a trailing comment on the next line.
+        // A trailing comment also cannot be joined by a preceding run.
         let trailing_beta = format!("{stmt} {beta}");
         assert_ungrouped(lang, &[alpha.clone(), trailing_beta], 2, "trailing next");
     }
@@ -514,7 +514,7 @@ function f() {
     assert_eq!(texts(&inventory).len(), 2);
     let group = &inventory.comments[1];
 
-    // The members, as the classifier sees them.
+    // Re-scan and re-classify to check the group's fields against its individual members.
     let file = FileRef {
         language: Javascript,
         file_name: "a.js".to_string(),

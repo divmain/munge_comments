@@ -133,7 +133,7 @@ pub const JS_DIRECTIVES: &[DirectiveRow] = &[
         "directive:",
         File,
     ),
-    // ESLint.
+    // ESLint directives; block-only forms are raw-text regexes.
     lit("eslint-disable", "linter", "directive:eslint-disable", File),
     lit(
         "eslint-disable-next-line",
@@ -161,7 +161,6 @@ pub const JS_DIRECTIVES: &[DirectiveRow] = &[
         "directive:eslint-config",
         File,
     ),
-    // TSLint, oxlint, Deno, Biome.
     lit("tslint:disable", "linter", "directive:tslint-disable", File),
     lit(
         "tslint:disable-next-line",
@@ -214,7 +213,6 @@ pub const JS_DIRECTIVES: &[DirectiveRow] = &[
         "directive:biome-ignore-end",
         File,
     ),
-    // Formatters.
     lit(
         "prettier-ignore",
         "formatter",
@@ -239,7 +237,6 @@ pub const JS_DIRECTIVES: &[DirectiveRow] = &[
         "directive:dprint-ignore-file",
         File,
     ),
-    // Coverage.
     lit(
         "istanbul ignore next",
         "coverage",
@@ -328,10 +325,8 @@ pub const JS_DIRECTIVES: &[DirectiveRow] = &[
     lit("@license", "legal", "license", File),
     lit("@preserve", "legal", "directive:preserve", File),
     raw(r"^/\*!", "legal", "directive:legal-comment", File),
-    // Editor folding regions.
     lit("#region", "editor", "directive:region", File),
     lit("#endregion", "editor", "directive:endregion", File),
-    // JSX and Flow pragmas.
     re(
         r"(?:^|\s)@jsx(?:Frag|ImportSource|Runtime)?\b",
         "jsx-pragma",
@@ -352,7 +347,6 @@ pub const JS_DIRECTIVES: &[DirectiveRow] = &[
     lit("$FlowIssue", "flow", "directive:flow-issue", Next),
     lit("$FlowIgnore", "flow", "directive:flow-ignore", Next),
     raw(r"^/\*:", "flow", "directive:flow-comment-type", Inline),
-    // Test-environment docblocks.
     lit(
         "@vitest-environment",
         "test-environment",

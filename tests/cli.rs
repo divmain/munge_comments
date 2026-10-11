@@ -343,7 +343,7 @@ async fn report_writes_the_markdown_to_an_absolute_out() {
 
 #[tokio::test]
 async fn report_defaults_out_under_the_injected_cwd() {
-    // The cwd must outlive the run to inspect it, so no `TestIo` here.
+    // The cwd must outlive the run to inspect it, so no `TestIo` here; with no --out, the report must default into the injected cwd, not the process's working directory.
     let cwd = common::tempdir();
     write_report_artifact(cwd.path(), "plan.json");
     let err = SharedBuf::new();
@@ -410,8 +410,7 @@ async fn report_with_an_invalid_artifact_is_exit_two() {
 async fn report_with_an_unwritable_out_is_exit_six() {
     let harness = TestIo::new(HashMap::new());
     write_report_artifact(harness.dir.path(), "plan.json");
-    // The would-be parent directory is a regular file, so it can be
-    // neither created nor written into (whatever the user's privileges).
+    // The would-be parent directory is a regular file, so it can be neither created nor written into (whatever the user's privileges); creating the out path fails as an I/O error.
     let out_dir = common::tempdir();
     let blocker = out_dir.path().join("not-a-dir");
     std::fs::write(&blocker, "").unwrap();
@@ -424,7 +423,7 @@ async fn report_with_an_unwritable_out_is_exit_six() {
 
 #[tokio::test]
 async fn cooperative_cancel_is_armed_for_plan_only() {
-    // plan: armed.
+    // plan is the only subcommand that arms cooperative cancellation; the token starts unarmed.
     let harness = TestIo::new(HashMap::new());
     let cooperative = Arc::clone(&harness.io.cooperative_cancel);
     let (code, _, err) = harness.run(&["plan", "--offline"]).await;
@@ -434,7 +433,7 @@ async fn cooperative_cancel_is_armed_for_plan_only() {
         "run must arm cooperative cancellation for plan",
     );
 
-    // apply: left unset.
+    // apply is not cooperatively cancellable, so the token must stay unarmed.
     let harness = TestIo::new(HashMap::new());
     let cooperative = Arc::clone(&harness.io.cooperative_cancel);
     write_apply_fixture(harness.dir.path(), "plan.json");
@@ -445,7 +444,7 @@ async fn cooperative_cancel_is_armed_for_plan_only() {
         "apply is not cooperatively cancellable",
     );
 
-    // report: left unset.
+    // report likewise leaves the cooperative token unarmed.
     let harness = TestIo::new(HashMap::new());
     let cooperative = Arc::clone(&harness.io.cooperative_cancel);
     write_report_artifact(harness.dir.path(), "plan.json");
@@ -906,7 +905,7 @@ async fn assert_hint_recovers(case: HintCase<'_>) {
         "the report carries the hint:\n{report}"
     );
 
-    // Re-run the hint as printed.
+    // The hint must be a command that actually works: split it and feed it back through run().
     let words = common::shell_words(hint);
     assert_eq!(words[..2], ["munge-comments", "apply"], "{words:?}");
     let args: Vec<&str> = words[1..].iter().map(String::as_str).collect();

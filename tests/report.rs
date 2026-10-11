@@ -411,7 +411,7 @@ fn the_summary_reconciles_with_the_records_exactly() {
 fn new_insertions_count_toward_char_reduction_only_under_allow_add() {
     let off = summary_of(&artifact(false));
     let on = summary_of(&artifact(true));
-    // N1 renders as `// Negates a.` (13 chars); the held N2 never counts.
+    // With allowAdd on, N1 renders as `// Negates a.` (13 chars) and its insertion adds 13 chars; the held N2 never counts.
     assert_eq!(on.char_reduction_pct, (127.0 - (107.0 + 13.0)) / 127.0);
     assert!(on.char_reduction_pct < off.char_reduction_pct);
     assert_eq!(
@@ -442,7 +442,7 @@ fn a_char_reduction_that_lengthens_is_reported_unclamped() {
         }
     }
     let summary = summary_of(&artifact);
-    // `// The product of a and b.` is 26 chars: 15 more than the original.
+    // `// The product of a and b.` is 26 chars: 15 more than the original, so the ratio goes negative instead of clamping at zero.
     assert_eq!(summary.char_reduction_pct, -15.0 / 127.0);
 }
 

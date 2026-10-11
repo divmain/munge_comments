@@ -132,7 +132,7 @@ pub fn align_remove_mode(
 ) -> Result<Alignment, Error> {
     let mut warnings = Vec::new();
 
-    // Resolution, against the whole-file clean text parsed once.
+    // Build the whole-file clean text once, over every target and with no range: chunk texts are never parsed, since a sub-chunk of a class body is no standalone program.
     let clean = remove_comments(
         text,
         inventory,
@@ -184,7 +184,7 @@ pub fn align_remove_mode(
         }
     }
 
-    // Pairing against the targets the clean text hides.
+    // Candidates are the file's editable target records: only comments the model was actually asked to remove can pair with a citation.
     let originals: Vec<&InventoryComment> = inventory
         .comments
         .iter()
@@ -320,8 +320,7 @@ impl Resolver<'_> {
             })
             .collect();
         let chosen = match occurrence {
-            // Nearest to the snippet occurrence; `min_by_key` keeps the
-            // first (in document order) of equally near matches.
+            // Nearest to the snippet occurrence, since the model cites the text it saw; `min_by_key` keeps the first (in document order) of equally near matches.
             Some(at) => matches
                 .iter()
                 .min_by_key(|declaration| declaration.start.abs_diff(at)),
@@ -356,13 +355,11 @@ fn pair_score(cited: &Anchor, original: &Anchor, adapter: &LanguageAdapter) -> O
     let kind_score = if kind_match { 1.0 } else { 0.0 };
     match (&cited.name, &original.name) {
         (Some(cited_name), Some(original_name)) => {
-            // Different names are different declarations, whatever the
-            // kind or snippet.
+            // Both sides name a declaration: the names must agree exactly, and the score rewards kind and snippet agreement on top.
             (cited_name == original_name).then_some(2.0 + kind_score + jaccard)
         }
         _ => {
-            // Statement-level anchors: the model cannot be expected to
-            // know a tree-sitter kind outside the prompt's vocabulary.
+            // Statement-level anchors: the model cannot be expected to know a tree-sitter kind outside the prompt's vocabulary, so a kind match or a statement-level pair is accepted.
             let statement_level = !adapter
                 .declaration_kinds
                 .contains(&cited.node_kind.as_str())
@@ -550,15 +547,14 @@ impl<'a> Slots<'a> {
         let text = self.text;
         let mut forbidden = Vec::new();
         for comment in &self.inventory.comments {
-            // Between a next-scoped directive and the code it governs.
+            // A next-line directive governs the code that follows it, so nothing may be inserted between the two.
             if comment.directive_scope == Some(Scope::Next) {
                 forbidden.push((
                     comment.end..comment.next_code_start + 1,
                     "between a next-line directive and its code",
                 ));
             }
-            // Inside a line-window directive's window: the comment's own
-            // line's remainder plus the `window` lines after it.
+            // Inside a line-window directive's window: the comment's own line's remainder plus the `window` lines after it; inserting inside that window would change what it applies to.
             if let Some(window) = comment.directive_line_window {
                 let mut end = comment.end;
                 let mut lines = 0;
@@ -576,7 +572,7 @@ impl<'a> Slots<'a> {
                 }
                 forbidden.push((comment.end..end, "inside a line-window directive's window"));
             }
-            // Between a `//go:` directive and the declaration it annotates.
+            // A //go: directive must stay adjacent to the declaration it configures, so the gap before that declaration is off limits.
             if self.adapter.id == LanguageId::Go
                 && comment.classification == Classification::Functional
                 && comment
@@ -605,8 +601,7 @@ impl<'a> Slots<'a> {
                 forbidden.push((previous_end..target + 1, "immediately before import \"C\""));
             }
         }
-        // Inside a Go example function's output block: from the line of its
-        // first output comment to the function's end.
+        // Inside a Go example function's output block: from the line of its first output comment to the function's end; the block must stay contiguous with its function.
         if rules.contains(&PositionalRuleId::GoExampleOutput) {
             let mut seen = HashSet::new();
             for comment in &self.inventory.comments {
@@ -775,8 +770,7 @@ impl Slots<'_> {
         }
         let line = self.line_bounds(citation.original);
         let mut position = citation.comment.position;
-        // Appending after a comment would corrupt it (`// eslint-disable-line
-        // x // new`): such a trailing NEW goes above the line instead.
+        // A trailing insertion would land after an existing comment on the line and corrupt it (`// eslint-disable-line x // new`), so it becomes leading instead.
         if position == CitedPosition::Trailing && self.line_ends_in_comment(&line) {
             position = CitedPosition::Leading;
         }

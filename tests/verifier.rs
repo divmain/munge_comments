@@ -163,8 +163,7 @@ fn editable(comment: &InventoryComment) -> bool {
     comment.classification == Classification::Prose && !comment.tags.contains("jsx-expression")
 }
 
-// Golden-fixture edits the verifier rejects although the edit is correct
-// (see the list's documentation).
+// Golden-fixture edits the verifier rejects although the edit is correct (see the list's documentation): a shared table of (fixture, comment text, reason prefix) triples the golden sweep consults, living in `common` so the fixture tests and the verifier agree on one source of truth.
 use common::EXPECTED_VERIFIER_REJECTIONS as EXPECTED_REJECTIONS;
 
 /// The fixture key (`language/file`) of a golden path.
@@ -196,7 +195,7 @@ fn removing_editable_comments_verifies_on_every_golden_fixture() {
         let name = path.file_name().unwrap().to_str().unwrap().to_owned();
         let text = fs::read_to_string(&path).unwrap();
         let inventory = inventory_file(&text, file_ref(&name)).unwrap();
-        // Each editable record alone.
+        // Each editable comment is removed on its own: the table says whether that removal must verify or must be rejected, and with which reason prefix.
         for comment in inventory
             .comments
             .iter()
@@ -220,7 +219,7 @@ fn removing_editable_comments_verifies_on_every_golden_fixture() {
                 }
             }
         }
-        // Every editable record at once, the expected rejections excepted.
+        // Removing every editable comment that is not expected to be rejected must still verify: the rejections are local to a comment, not cumulative.
         let edited = remove_where(&name, &text, |comment| {
             editable(comment) && expected_rejection(&key, comment).is_none()
         });
@@ -274,8 +273,7 @@ fn removing_the_comment_beside_a_c_define_verifies() {
 
 #[test]
 fn changing_string_edge_whitespace_fails() {
-    // No comment touches a string's content, so its edge whitespace is
-    // token text.
+    // Leading whitespace inside a string literal is part of the token, so dropping it is a token-stream mismatch rather than a gap change.
     let original = "const s = \" a\"; // c\n";
     let edited = "const s = \"a\"; // c\n";
     let reason = rejection(verify("a.ts", original, edited));
@@ -469,8 +467,7 @@ fn a_line_break_after_an_inline_comment_in_a_c_define_fails() {
 
 #[test]
 fn the_python_dedent_pair_fails_the_shape_check() {
-    // Identical tokens and gaps (see the unit test in apply::verify); only
-    // the nesting of `y()` differs.
+    // Identical tokens and gaps (see the unit test in apply::verify); only the nesting of `y()` differs — removing the comment dedents `y()` out of the `if` body, which the tree-shape check must catch.
     let original = "if a:\n    x()\n    # c\n    y()\nz()\n";
     let edited = "if a:\n    x()\n    # c\ny()\nz()\n";
     let reason = rejection(verify("a.py", original, edited));

@@ -218,7 +218,7 @@ fn a_new_in_a_member_only_chunk_lands_at_its_member() {
     assert_eq!(alignment.new_candidates.len(), 1, "{alignment:#?}");
     let candidate = &alignment.new_candidates[0];
     assert_eq!(candidate.comment.comment, "Hand it back.");
-    // At the start of the line of the chunk's first `return total;`.
+    // Candidate offsets are whole-file offsets, not chunk-relative: the expected position is the start of the line of the chunk's first `return total;`.
     let chunk_start = file.chunk_texts[member].chunk.original_start;
     let expected = chunk_start
         + file.text[chunk_start..]

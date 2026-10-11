@@ -263,6 +263,7 @@ fn inline_block_ts_rewrites() {
 // ---------------------------------------------------------------------
 // Line-break hazards
 // ---------------------------------------------------------------------
+// Removing or rewriting a comment must not join lines in a way that changes ASI or statement boundaries.
 
 /// `asi-hazard.ts`: removing either comment keeps the line break between
 /// `return` and `x`, so ASI still ends the `return` statement.
@@ -318,6 +319,7 @@ fn go_multi_line_comment_keeps_its_line_break() {
 // ---------------------------------------------------------------------
 // KEEP_GENERATED / HYBRID layouts
 // ---------------------------------------------------------------------
+// A rewritten comment keeps its slot's indentation and opener, and multi-line text is re-laid out for the comment kind.
 
 #[test]
 fn rewrite_line_group_keeps_indent_and_opener() {
@@ -378,6 +380,7 @@ fn python_hash_slots_render_through_compute_edits() {
 // ---------------------------------------------------------------------
 // Byte preservation: CRLF, BOM, shebang
 // ---------------------------------------------------------------------
+// CRLF stays CRLF, and a BOM or shebang is preserved while edits are placed after it.
 
 #[test]
 fn crlf_stays_crlf() {
@@ -433,6 +436,7 @@ fn bom_and_shebang_are_preserved() {
 // ---------------------------------------------------------------------
 // Skipped edits
 // ---------------------------------------------------------------------
+// A JSX container comment, an invalid final comment, or a new comment without allow_add is skipped rather than fatal.
 
 #[test]
 fn jsx_container_comment_is_never_edited() {
@@ -514,6 +518,7 @@ fn held_new_record_makes_no_edit() {
 // ---------------------------------------------------------------------
 // NEW insertions
 // ---------------------------------------------------------------------
+// Leading insertions get their own line, trailing insertions share the line, and ordering at one offset is by record id.
 
 #[test]
 fn new_leading_and_trailing_insertions() {
@@ -604,6 +609,7 @@ fn new_inside_whitespace_a_trailing_remove_deletes_is_an_artifact_error() {
 // ---------------------------------------------------------------------
 // Mixed decisions and edit invariants
 // ---------------------------------------------------------------------
+// Rewrites and removals on one line are computed so their ranges do not overlap.
 
 #[test]
 fn rewrite_and_remove_on_one_line_do_not_overlap() {
@@ -636,7 +642,7 @@ fn overlapping_edits_are_an_invariant_error() {
         let err = apply_edits(text, &edits).expect_err("overlap");
         assert!(matches!(err, Error::Invariant(_)), "{edits:?}: {err:?}");
     }
-    // Touching edits and an insertion at either boundary are fine.
+    // Touching edits and an insertion at either boundary are fine; non-overlapping edits are applied left to right, and zero-length insertions at the same offset keep their relative order.
     assert_eq!(
         apply_edits(text, &[edit(3, 0), edit(1, 2), edit(3, 2), edit(1, 0)]).expect("no overlap"),
         "aXXXXf"

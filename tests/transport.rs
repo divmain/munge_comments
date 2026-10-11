@@ -457,7 +457,7 @@ async fn fallbacks_compose_in_order_within_one_request() {
 
 #[tokio::test]
 async fn repeated_400_after_its_fallback_is_http() {
-    // The server keeps complaining about temperature even once it is gone.
+    // The server keeps complaining about temperature even once it is gone, so the fallback applies once and the second 400 surfaces as an error.
     let server = MockServer::start().await;
     Mock::given(method("POST"))
         .respond_with(
@@ -736,7 +736,7 @@ async fn base_url_without_key_sends_bearer_unused() {
         .mount(&server)
         .await;
     let client = OpenAiCompatClient::new(OpenAiCompatConfig {
-        // A trailing slash on the base URL is tolerated.
+        // A trailing slash on the base URL is tolerated: it is normalized away so the request path is not doubled.
         base_url: format!("{}/v1/", server.uri()),
         api_key: None,
         ..config(&server)

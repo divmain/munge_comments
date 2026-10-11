@@ -76,7 +76,7 @@ async fn an_offline_plan_apply_report_round_trip_runs_on_the_root_api() {
     let plan_report = outputs.join("plan-report.md");
     let apply_report = outputs.join("apply-report.md");
 
-    // Plan: offline, so no client is supplied.
+    // Plan: offline, so no client is supplied; the captured log backs the assertion messages.
     let log = CapturingLog::new();
     let outcome = run_plan(
         PlanRequest {
@@ -112,7 +112,7 @@ async fn an_offline_plan_apply_report_round_trip_runs_on_the_root_api() {
     assert_eq!((summary.files_failed, summary.files_skipped), (0, 0));
     let languages: BTreeSet<LanguageId> = summary.languages.keys().copied().collect();
     assert_eq!(languages, BTreeSet::from(LanguageId::ALL));
-    // Offline decisions only keep, protect or remove (content-empty).
+    // Redact mode never rewrites or adds; offline decisions only keep, protect or remove (content-empty).
     assert_eq!((summary.rewritten, summary.new), (0, 0));
     assert!(summary.removed > 0);
     for record in artifact.files.iter().flat_map(|file| &file.comments) {
@@ -174,7 +174,6 @@ async fn an_offline_plan_apply_report_round_trip_runs_on_the_root_api() {
     }
     assert_eq!(applied_languages, languages, "every language was edited");
 
-    // Report: the post-apply report is the artifact plus the apply result.
     assert_eq!(
         fs::read_to_string(&apply_report).unwrap(),
         render_markdown(&artifact, Some(&applied.result)).unwrap()

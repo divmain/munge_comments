@@ -179,7 +179,6 @@ async fn a_mixed_language_tree_plans_end_to_end() {
         assert!(file.content_hash.is_some());
         assert!(!file.comments.is_empty(), "{}", file.path);
     }
-    // One artifact spans (at least) three grammars.
     assert!(artifact.summary.languages.len() >= 3);
     assert!(!fake.calls().is_empty(), "online planning calls the model");
     assert!(tree.path().join("plan-report.md").is_file());
@@ -265,7 +264,7 @@ async fn unsupported_inputs_are_skipped_without_affecting_the_exit_code() {
         assert!(skipped.content_hash.is_some(), "{path}");
         assert!(skipped.error.is_some(), "{path}");
         assert!(skipped.comments.is_empty(), "{path}");
-        // The final summary lists every skipped file with its reason.
+        // The final summary lists every skipped file with its reason, spelled as the serialized enum name with the JSON quotes stripped.
         let listed = format!(
             "plan: skipped {path} ({})",
             serde_json::to_value(reason).unwrap()
@@ -278,7 +277,6 @@ async fn unsupported_inputs_are_skipped_without_affecting_the_exit_code() {
     }
     assert_eq!(file(&artifact, "ok.py").status, FileStatus::Complete);
     assert_eq!(artifact.summary.files_skipped, 4);
-    // Only the clean file reached the model.
     assert!(fake.calls().iter().all(|call| call.path == "ok.py"));
 }
 
@@ -444,8 +442,7 @@ async fn an_unreadable_file_fails_with_io_and_no_hash() {
     let locked = tree.path().join("py/calc.py");
     fs::set_permissions(&locked, fs::Permissions::from_mode(0o000)).unwrap();
     if fs::read(&locked).is_ok() {
-        // Running with privileges that ignore permission bits: the
-        // condition under test cannot be produced here.
+        // Running as root (or on a filesystem that ignores mode bits) defeats the lock, so skip instead of asserting a failure that cannot be produced.
         fs::set_permissions(&locked, fs::Permissions::from_mode(0o644)).unwrap();
         return;
     }
@@ -672,8 +669,7 @@ async fn an_offline_plan_of_the_golden_tree_applies_cleanly_in_every_tier_1_lang
         };
         assert_eq!(result.status, expected, "{}: {apply_log:#?}", result.path);
     }
-    // Every grammar had an offline edit (a content-empty removal) applied
-    // and verified, not just a file left unchanged.
+    // Every grammar had an offline edit (a content-empty removal) applied and verified, not just a file left unchanged; otherwise the round trip is not exercising it.
     let applied_languages: BTreeSet<LanguageId> = applied
         .result
         .files
@@ -905,14 +901,14 @@ async fn a_removal_that_activates_a_dormant_cookie_is_demoted() {
     let orders = file(&artifact, "orders.py");
     assert_eq!(orders.status, FileStatus::Complete);
 
-    // Removing line 1 would move the line-3 cookie onto line 2.
+    // Removing line 1 would move the line-3 `# coding=utf-8` cookie onto line 2, so the rail demotes it.
     let first = record_with(orders, "Tally the order lines");
     assert_demoted(orders, first, Decision::Remove, Decision::KeepOriginal);
     // The file's other edit survives.
     let inner = record_with(orders, "add every price together");
     assert_eq!(inner.decision, Decision::Remove);
     assert!(!inner.tags.iter().any(|tag| tag == VERIFY_RAIL_TAG));
-    // The failed full verification, then one per re-admitted record.
+    // The rail runs per comment rather than per file: the failed full verification, then one per re-admitted record.
     assert_eq!(counts.lock().unwrap().get("orders.py"), Some(&3));
     assert!(
         log.iter()
@@ -1182,7 +1178,6 @@ async fn a_run_cancelled_mid_way_keeps_only_the_files_it_finished() {
     let artifact = check_artifact(&tree.path().join("plan.json"), &outcome.artifact);
     assert!(tree.path().join("report.md").is_file());
 
-    // Only completed files, and fewer than were discovered.
     assert!(!artifact.files.is_empty(), "the in-flight file finished");
     assert!(artifact.files.len() < FILES.len(), "{:?}", artifact.files);
     for file in &artifact.files {
@@ -1402,7 +1397,7 @@ async fn an_artifact_write_failing_mid_run_stops_the_run_with_the_writers_error(
         calls.iter().all(|call| call.path == calls[0].path),
         "{calls:#?}"
     );
-    // The artifact on disk is the header-only one written at start.
+    // The artifact on disk is the header-only one written at start; the failed write left it untouched.
     let on_disk = read_artifact(&out_dir.join("plan.json"))
         .unwrap()
         .into_inner();

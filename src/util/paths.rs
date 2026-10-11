@@ -113,8 +113,7 @@ pub fn relative_posix(base: &Path, target: &Path) -> Option<String> {
     let target = lexical_normalize(target);
     let base: Vec<Component<'_>> = base.components().collect();
     let target: Vec<Component<'_>> = target.components().collect();
-    // Absolute paths share their root (and, on Windows, must share the
-    // prefix); everything after is the walk.
+    // Absolute paths share their root (and, on Windows, must share the prefix); everything after is the walk. This longest common prefix of the two component lists is only consumed after the roots are confirmed equal, so a prefix shared across differing roots cannot yield a bogus walk-up.
     let shared = base
         .iter()
         .zip(target.iter())

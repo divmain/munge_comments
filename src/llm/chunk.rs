@@ -175,7 +175,7 @@ pub fn chunk_file(
         ctx.descend(piece, &mut leaves);
     }
 
-    // Packing, restricted to the requested span.
+    // Greedy packing, restricted to the requested span: extend the open chunk while it stays within budget; an unsplittable oversized leaf is flushed whole with a warning.
     let mut chunks: Vec<Range<usize>> = Vec::new();
     let mut warnings = Vec::new();
     let mut current: Option<(Range<usize>, usize)> = None;

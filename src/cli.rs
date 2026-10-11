@@ -376,8 +376,7 @@ fn report_parse_error(err: &clap::error::Error, io: &mut Io) -> u8 {
 async fn dispatch(command: Command, io: &mut Io) -> Result<u8, Error> {
     match command {
         Command::Plan(args) => {
-            // `plan` alone is cooperatively interruptible; the signal
-            // watcher reads this flag on the first signal.
+            // `plan` alone is cooperatively interruptible; the flag is set before dispatching so the signal watcher cancels on the first signal instead of hard-exiting.
             io.cooperative_cancel.store(true, Ordering::Relaxed);
             run_plan_command(&args, io).await
         }

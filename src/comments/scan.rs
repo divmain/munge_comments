@@ -97,9 +97,7 @@ pub fn scan_file(text: &str, file: FileRef) -> Result<ScanOutput, Error> {
     // ancestors without threading paths through every helper.
     let parents = parent_map(&tree.root);
 
-    // All normalized comment ranges up front: the snippet builder excises
-    // every comment on the anchor's lines, including ones not yet
-    // processed.
+    // All normalized comment ranges up front (shebang excluded, EOL-trimmed so a comment's own line terminator is not excised): the snippet builder excises every comment on the anchor's lines, including ones not yet processed.
     let normalized_ranges: Vec<(usize, usize)> = found
         .iter()
         .enumerate()
@@ -124,7 +122,7 @@ pub fn scan_file(text: &str, file: FileRef) -> Result<ScanOutput, Error> {
         let line = 1 + text[..start].matches('\n').count();
         let column = 1 + text[line_start..start].chars().count();
 
-        // Token context.
+        // Nearest code token before/after the comment by byte offset; None/EOF when there is none.
         let prev_index = tokens.partition_point(|token| token.end <= start);
         let prev_code_end = if prev_index == 0 {
             None
@@ -154,14 +152,13 @@ pub fn scan_file(text: &str, file: FileRef) -> Result<ScanOutput, Error> {
             }
         };
 
-        // The anchor, per position.
+        // Anchor by position: leading uses the chain at the next code token, trailing the preceding node, dangling the enclosing node.
         let anchor_node: Option<&PlainNode> = match position {
             Position::Leading => {
                 let chain = chain_at(&tree.root, next_code_start, adapter);
                 match choose_from_chain(&chain, adapter) {
                     Some(chosen) => Some(apply_wrappers(chosen, adapter, &parents)),
-                    // Empty or all-container chain: the dangling rule's
-                    // anchor, position stays leading.
+                    // Empty or all-container chain (e.g. the token is a closing delimiter): fall back to the dangling rule's anchor; position stays leading.
                     None => dangling_anchor_node(node, &tree.root, adapter, &parents),
                 }
             }
@@ -216,7 +213,7 @@ pub fn scan_file(text: &str, file: FileRef) -> Result<ScanOutput, Error> {
                         == 0
             });
 
-        // The root's named child strictly containing this comment.
+        // The root's named child strictly containing this comment, for remove-mode citation matching.
         let enclosing_top_level = tree
             .root
             .children
@@ -469,8 +466,7 @@ fn chain_at<'tree>(
             && !node.kind.starts_with('_')
             && !is_shebang_node(node)
     }
-    // Pre-order search: the first node starting at the offset is the
-    // outermost one (its ancestors, visited earlier, start earlier).
+    // Pre-order search: the first node starting at the offset is the outermost one (its ancestors, visited earlier, start earlier); the token may be indented, so it need not be a root child.
     fn shallowest_starting<'tree>(
         node: &'tree PlainNode,
         offset: usize,
@@ -1283,7 +1279,6 @@ mod tests {
         ));
         // exports.x = …
         assert!(exported("// c\nfunction x() {}\nexports.x = x;\n", "a.js"));
-        // module.exports = x
         assert!(exported(
             "// c\nfunction x() {}\nmodule.exports = x;\n",
             "a.js"

@@ -200,8 +200,7 @@ pub async fn regenerate_file(
             join_regenerations(&mut records, regenerations)?;
         }
         Mode::Remove => {
-            // The answered (sub-)chunk texts in file order, and each
-            // citation with the index of its leaf in that list.
+            // The answered (sub-)chunk texts in file order, and each citation with the index of its leaf in that list; gathered so they can all be aligned at once against the whole-file text.
             let mut leaves = Vec::new();
             let mut cited = Vec::new();
             for chunk_text in chunk_texts {
@@ -385,7 +384,7 @@ impl<'a> CallCtx<'a> {
         }
         let functional_texts = self.functional_texts(chunk_text)?;
 
-        // A stack of pending requests: the last pushed is sent next.
+        // Worklist of (requested ids, split depth); LIFO, so a split's first half is retried before its second.
         let mut pending = vec![(requested, 0_u32)];
         while let Some((ids, depth)) = pending.pop() {
             let request = ChatRequest::new(
@@ -468,7 +467,7 @@ impl<'a> CallCtx<'a> {
     ) -> Result<Vec<(ChunkText, Vec<RemoveModeComment>)>, Error> {
         let top_index = chunk_text.chunk.index;
         let mut answered = Vec::new();
-        // A stack of pending chunk texts: the last pushed is sent next.
+        // Worklist of (sub-chunk, split depth); LIFO, so a split's first sub-chunk is retried before the rest.
         let mut pending = vec![(chunk_text, 0_u32)];
         while let Some((chunk_text, depth)) = pending.pop() {
             let items = self.hidden_targets(&chunk_text, targets)?;

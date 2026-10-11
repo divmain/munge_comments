@@ -53,7 +53,7 @@ pub static GLOBAL_DIRECTIVES: &[DirectiveRow] = &[
     lit("NOSONAR", "scanner", "directive:nosonar", Scope::Inline),
     // Semgrep.
     lit("nosemgrep", "scanner", "directive:nosemgrep", Scope::Next).when_trailing(Scope::Inline),
-    // LGTM / CodeQL alert suppressions.
+    // GitHub code scanning suppressions (LGTM and CodeQL) follow the same next-line-or-trailing convention as the other scanner directives.
     lit("lgtm[", "scanner", "directive:lgtm", Scope::Next).when_trailing(Scope::Inline),
     lit("codeql[", "scanner", "directive:codeql", Scope::Next).when_trailing(Scope::Inline),
     // gosec `#nosec` / bandit `# nosec`: at the start of the comment body

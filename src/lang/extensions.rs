@@ -156,7 +156,7 @@ mod tests {
             format!("**/*.{{{}}}", extensions.join(",")),
             "the glob is derived from the table, in table order",
         );
-        // every table extension appears; no duplicates
+        // Every table extension appears; no duplicates. Redundant with the equality check above, but names the offending extension.
         for ext in &extensions {
             assert!(globs[0].contains(ext), "missing {ext}");
         }

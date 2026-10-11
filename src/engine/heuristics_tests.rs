@@ -152,7 +152,7 @@ fn row_1_protected_classifications_keep_protected() {
         );
         assert_eq!(pre_llm_decision(&record, js()), None);
     }
-    // Prose is not protected.
+    // Prose is never protected, whatever its rating.
     let prose = rated(
         "// keeps a running total",
         &[],
@@ -168,7 +168,7 @@ fn row_1_protected_classifications_keep_protected() {
 
 #[test]
 fn row_1_precedes_every_other_row() {
-    // A functional, tag-flagged, content-empty-looking EASY record.
+    // A functional, tag-flagged, content-empty-looking EASY record: row 1 outranks tags, difficulty and the would-you flag.
     let record = DraftRecord {
         classification: Classification::Functional,
         ..rated(
@@ -383,7 +383,7 @@ fn row_5_easy_redundant_restatement_is_removed() {
 
 #[test]
 fn row_5_threshold_is_inclusive_and_configurable() {
-    // {increment, the, counter} vs {increment, counter, by, one}: 0.4.
+    // {increment, the, counter} vs {increment, counter, by, one}: 0.4, so the threshold is inclusive.
     let record = rated(
         "// Increment the counter",
         &[],

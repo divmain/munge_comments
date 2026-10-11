@@ -54,7 +54,6 @@ fn batches_pack_greedily_and_ignore_allowed_sets() {
         LanguageId::Javascript,
     );
     assert_eq!(ids(&spill), [vec!["C1", "C2", "C3"], vec!["C4"]]);
-    // Room for C1 + C2 exactly.
     let pairs = batch_packets(packets.clone(), costs[0] + costs[1], LanguageId::Javascript);
     assert_eq!(ids(&pairs)[0], ["C1", "C2"]);
     // No room at all: every packet alone, none dropped.

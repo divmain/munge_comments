@@ -268,8 +268,7 @@ fn strict_object(object: &mut Map<String, Value>) {
             None => {
                 object.insert("anyOf".to_string(), one_of);
             }
-            // Never emitted by schemars for the wire types; kept total by
-            // requiring both alternatives lists to hold.
+            // Never emitted by schemars for the wire types; strict mode cannot express both, so require each via `allOf`.
             Some(any_of) => {
                 let both = Value::Array(vec![
                     Value::Object(Map::from_iter([("anyOf".to_string(), any_of)])),
@@ -400,7 +399,7 @@ mod tests {
     fn defs_are_processed() {
         let schema = strict_schema::<JudgeResponse>();
         let item = &schema["$defs"]["JudgeItem"];
-        // `finalComment` is an Option, which schemars leaves out of `required`.
+        // `finalComment` is an `Option`, which schemars leaves out of `required`; strict mode must list every key.
         assert!(
             !raw_schema::<JudgeResponse>()["$defs"]["JudgeItem"]["required"]
                 .as_array()
@@ -445,7 +444,7 @@ mod tests {
 
     #[test]
     fn ref_objects_have_no_sibling_keywords() {
-        // A documented field of enum type: schemars puts its doc beside `$ref`.
+        // A documented field of enum type: schemars puts its doc beside `$ref`; strict mode forbids siblings.
         let raw = raw_schema::<RegenerationResponse>();
         let difficulty = &raw["$defs"]["RegeneratedComment"]["properties"]["difficulty"];
         assert!(difficulty.get("$ref").is_some() && difficulty.get("description").is_some());
@@ -592,7 +591,7 @@ mod tests {
         let wrong_name = r#"{"decisions": [{"id": "C1", "decision": "NEW",
             "finalComment": null, "confidence": 1, "rationale": "r"}]}"#;
         assert!(serde_json::from_str::<JudgeResponse>(wrong_name).is_err());
-        // A missing nullable key is accepted as `None` (json_object leniency).
+        // A missing nullable key is accepted as `None` (json_object leniency): an omitted `Option` field deserializes to `None` without `#[serde(default)]`.
         let lenient = r#"{"decisions": [{"id": "C1", "decision": "REMOVE",
             "confidence": 1, "rationale": "r"}]}"#;
         let parsed: JudgeResponse = serde_json::from_str(lenient).unwrap();

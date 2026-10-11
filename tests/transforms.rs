@@ -391,7 +391,7 @@ fn crlf_survives_outside_replaced_ranges() {
     for fixture in crlf_fixtures {
         let output = fixture.redact(TransformOpts::default());
         let blind = output.blind_text.as_bytes();
-        // (original range, placeholder span) pairs, both ascending.
+        // Pair each placeholder with the original range it replaced: (original range, placeholder span) pairs, both ascending.
         let found = placeholders(fixture.adapter(), &output.blind_text);
         let replaced: Vec<(Range<usize>, Range<usize>)> = found
             .iter()
@@ -410,7 +410,7 @@ fn crlf_survives_outside_replaced_ranges() {
             {
                 continue;
             }
-            // Shift by every replacement before this CRLF.
+            // Shift the original offset into the blind text past every replacement before this CRLF.
             let blind_offset = replaced
                 .iter()
                 .filter(|(original, _)| original.end <= offset)
@@ -425,8 +425,7 @@ fn crlf_survives_outside_replaced_ranges() {
             );
             survivors += 1;
         }
-        // Every other CRLF of the blind text is a kept placeholder line
-        // break, and no CR was split from its LF.
+        // CRLFs inside placeholders are kept as block line breaks, not survivors: every other CRLF of the blind text is a kept placeholder line break, and no CR was split from its LF.
         let kept = found
             .iter()
             .filter(|placeholder| placeholder.line_break == "\r\n")
@@ -562,7 +561,7 @@ fn removal_violation(
     if output.original_base != range.start {
         return Some(format!("{key}: original_base {}", output.original_base));
     }
-    // The partition.
+    // The segments must be contiguous and cover the range in order.
     let (mut clean_at, mut original_at) = (0, range.start);
     for segment in map {
         if segment.clean_start != clean_at || segment.original_start != original_at {
@@ -585,7 +584,7 @@ fn removal_violation(
     if map.is_empty() || clean_at != clean.len() || original_at != range.end {
         return Some(format!("{key}: segments end at {clean_at}/{original_at}"));
     }
-    // Which original bytes survive verbatim.
+    // A span is verbatim when one verbatim segment contains it, removed when no verbatim segment overlaps it.
     let verbatim = |span: &Range<usize>| {
         map.iter().any(|segment| {
             segment.verbatim
@@ -616,7 +615,7 @@ fn removal_violation(
             }
         }
     }
-    // The code is unchanged.
+    // The code — all non-whitespace outside removed members — must be unchanged.
     let mut code = String::new();
     let mut at = range.start;
     for member in &removed_members {
@@ -632,7 +631,7 @@ fn removal_violation(
     if code != clean_code {
         return Some(format!("{key}: the code changed"));
     }
-    // Offset mapping.
+    // Every clean offset must map inside its segment's original side.
     for (offset, clean_char) in clean.char_indices() {
         let segment = map
             .iter()
@@ -1059,7 +1058,7 @@ fn a_positional_tag_switched_on_by_either_transform_is_exempt_but_byte_identical
     let blind = fixture.redact(TransformOpts::default()).blind_text;
     let clean = fixture.remove(TransformOpts::default()).clean_text;
     for transformed in [blind, clean] {
-        // Moved to line 2 (redact) or line 1 (remove), it now counts.
+        // Moved to line 2 (redact) or line 1 (remove), it now counts as a PEP 263 cookie.
         let shifted = kept(&rescan(fixture, &transformed));
         assert_eq!(shifted.text, original.text);
         assert!(shifted.tags.contains("encoding-cookie"), "{transformed:?}");
