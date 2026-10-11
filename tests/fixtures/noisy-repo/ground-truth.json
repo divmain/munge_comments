@@ -1,0 +1,838 @@
+{
+  "entries": [
+    {
+      "anchorName": "LedgerCodes",
+      "key": "Status codes the ledger service returns in its `X-Ledger-Status` header.",
+      "label": "protected",
+      "path": "java/src/main/java/com/acme/billing/LedgerCodes.java"
+    },
+    {
+      "anchorName": "ACCEPTED",
+      "key": "@formatter:off",
+      "label": "functional",
+      "path": "java/src/main/java/com/acme/billing/LedgerCodes.java"
+    },
+    {
+      "anchorName": "ACCEPTED",
+      "key": "Codes 40-49 are retryable; the ledger documents that range as transient, and RetryPolicy relies on this ordering.",
+      "label": "valuable",
+      "path": "java/src/main/java/com/acme/billing/LedgerCodes.java"
+    },
+    {
+      "anchorName": "isRetryable",
+      "key": "@formatter:on",
+      "label": "functional",
+      "path": "java/src/main/java/com/acme/billing/LedgerCodes.java"
+    },
+    {
+      "anchorName": "isRetryable",
+      "key": "Check if the code is retryable.",
+      "label": "superfluous",
+      "path": "java/src/main/java/com/acme/billing/LedgerCodes.java"
+    },
+    {
+      "anchorName": "legacy",
+      "key": "NOPMD - read reflectively by the old exporter",
+      "label": "functional",
+      "path": "java/src/main/java/com/acme/billing/LedgerCodes.java"
+    },
+    {
+      "anchorName": "defaultCode",
+      "key": "the default",
+      "label": "superfluous",
+      "path": "java/src/main/java/com/acme/billing/LedgerCodes.java"
+    },
+    {
+      "anchorName": "RateLimiter",
+      "key": "Sliding-window limiter for calls to the ledger service. <p>Instances are not thread-safe; give each worker its own.",
+      "label": "protected",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": "maxCalls",
+      "key": "The maximum number of calls.",
+      "label": "superfluous",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": "windowMillis",
+      "key": "The window in milliseconds.",
+      "label": "superfluous",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": "RateLimiter",
+      "key": "Constructor.",
+      "label": "superfluous",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": "tryAcquire",
+      "key": "Returns whether a call may be made at {@code nowMillis}, recording it if so.",
+      "label": "protected",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": null,
+      "key": "Evict before counting: the ledger's own limiter uses a sliding window too, and counting stale calls here makes us back off when the ledger would have accepted the request.",
+      "label": "valuable",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": null,
+      "key": "check if were at the limit, if so say no",
+      "label": "superfluous",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": null,
+      "key": "Add the call.",
+      "label": "superfluous",
+      "path": "java/src/main/java/com/acme/billing/RateLimiter.java"
+    },
+    {
+      "anchorName": null,
+      "key": "magic byte",
+      "label": "superfluous",
+      "path": "native/frame.c"
+    },
+    {
+      "anchorName": "header_length",
+      "key": "Returns the header length for a frame type.",
+      "label": "superfluous",
+      "path": "native/frame.c"
+    },
+    {
+      "anchorName": null,
+      "key": "extended frames carry a 4 byte sequence number in front of the normal header",
+      "label": "valuable",
+      "path": "native/frame.c"
+    },
+    {
+      "anchorName": null,
+      "key": "FALLTHROUGH",
+      "label": "functional",
+      "path": "native/frame.c"
+    },
+    {
+      "anchorName": null,
+      "key": "Unknown types are treated as headerless so old readers can skip frames added by newer firmware instead of rejecting the stream.",
+      "label": "valuable",
+      "path": "native/frame.c"
+    },
+    {
+      "anchorName": "is_frame",
+      "key": "Check the magic byte.",
+      "label": "superfluous",
+      "path": "native/frame.c"
+    },
+    {
+      "anchorName": null,
+      "key": "Compare the first byte with the magic.",
+      "label": "superfluous",
+      "path": "native/frame.c"
+    },
+    {
+      "anchorName": "get",
+      "key": "Get a value from the cache.",
+      "label": "superfluous",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": "found",
+      "key": "Look up the key.",
+      "label": "superfluous",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": null,
+      "key": "move to front so it doesnt get evicted next, splice keeps the iterator in index_ valid",
+      "label": "rewrite",
+      "path": "native/lru_cache.cpp",
+      "rewriteTo": "Mark the entry most recently used. splice relinks the node in place, so the iterator stored in index_ stays valid."
+    },
+    {
+      "anchorName": null,
+      "key": "A capacity of zero means caching is disabled by configuration; the early return keeps the eviction loop below from popping an empty list.",
+      "label": "valuable",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": null,
+      "key": "Update the value.",
+      "label": "superfluous",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": null,
+      "key": "Insert at the front.",
+      "label": "superfluous",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": null,
+      "key": "Evict the least recently used entry when over capacity.",
+      "label": "superfluous",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": null,
+      "key": "NOLINTNEXTLINE(cert-err34-c)",
+      "label": "functional",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": null,
+      "key": "atoi's silent 0 on garbage is intended: 0 disables the cache.",
+      "label": "functional",
+      "path": "native/lru_cache.cpp"
+    },
+    {
+      "anchorName": "LruCache",
+      "key": "An LRU cache.",
+      "label": "superfluous",
+      "path": "native/lru_cache.hpp"
+    },
+    {
+      "anchorName": "LruCache",
+      "key": "Constructor.",
+      "label": "superfluous",
+      "path": "native/lru_cache.hpp"
+    },
+    {
+      "anchorName": "capacity_",
+      "key": "The capacity.",
+      "label": "superfluous",
+      "path": "native/lru_cache.hpp"
+    },
+    {
+      "anchorName": "order_",
+      "key": "Front is most recently used. The map stores list iterators, which std::list keeps valid across splice, so touching an entry never has to rewrite the map.",
+      "label": "valuable",
+      "path": "native/lru_cache.hpp"
+    },
+    {
+      "anchorName": "RING_CAPACITY",
+      "key": "Capacity must stay a power of two: the index math below masks with (RING_CAPACITY - 1) instead of using a modulo.",
+      "label": "valuable",
+      "path": "native/ring_buffer.c"
+    },
+    {
+      "anchorName": "ring",
+      "key": "The ring buffer struct.",
+      "label": "superfluous",
+      "path": "native/ring_buffer.c"
+    },
+    {
+      "anchorName": "head",
+      "key": "head index",
+      "label": "superfluous",
+      "path": "native/ring_buffer.c"
+    },
+    {
+      "anchorName": "ring_push",
+      "key": "Push a byte.",
+      "label": "superfluous",
+      "path": "native/ring_buffer.c"
+    },
+    {
+      "anchorName": null,
+      "key": "Full when the free-running indices are exactly one capacity apart; head and tail are never reset, so this also works after wraparound.",
+      "label": "valuable",
+      "path": "native/ring_buffer.c"
+    },
+    {
+      "anchorName": null,
+      "key": "Store the byte.",
+      "label": "superfluous",
+      "path": "native/ring_buffer.c"
+    },
+    {
+      "anchorName": null,
+      "key": "Increment head.",
+      "label": "superfluous",
+      "path": "native/ring_buffer.c"
+    },
+    {
+      "anchorName": "POLY",
+      "key": "Frame checksums shared with the firmware in `native/frame.c`.",
+      "label": "protected",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": "POLY",
+      "key": "The CRC-16/CCITT-FALSE polynomial.",
+      "label": "protected",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": "crc16",
+      "key": "Computes the checksum of `bytes`.",
+      "label": "protected",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "Start from 0xFFFF, not 0: the firmware seeds its CRC register that way, and a different seed yields checksums that never match.",
+      "label": "valuable",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "Loop over the bytes.",
+      "label": "superfluous",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "XOR the byte into the high bits.",
+      "label": "superfluous",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "shift and xor w/ poly if top bit set",
+      "label": "superfluous",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "Return the CRC.",
+      "label": "superfluous",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": "stored_checksum",
+      "key": "Reads the big-endian checksum stored in the last two bytes of `frame`.",
+      "label": "protected",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "SAFETY: `tail + 1 < frame.len()` because `frame.len() >= 2`.",
+      "label": "functional",
+      "path": "rust/src/checksum.rs"
+    },
+    {
+      "anchorName": "Ledger",
+      "key": "A ledger.",
+      "label": "superfluous",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": "balances",
+      "key": "The balances.",
+      "label": "superfluous",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": "post",
+      "key": "Posts `cents` to `account`, returning the new balance.",
+      "label": "protected",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "Get the balance or insert zero.",
+      "label": "superfluous",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "Saturate rather than wrap: an overflowing balance is a data bug we want to surface in reconciliation, and a wrapped value would look like a plausible (negative) balance instead.",
+      "label": "valuable",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": "balance",
+      "key": "FIXME: the reconciliation job still reads balances through the debug output; give it a real accessor.",
+      "label": "valuable",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "Missing accounts read as zero /* not an error */ because the ledger is sparse: accounts appear on their first posting.",
+      "label": "valuable",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "end of file",
+      "label": "superfluous",
+      "path": "rust/src/ledger.rs"
+    },
+    {
+      "anchorName": null,
+      "key": "go:build !wasm",
+      "label": "functional",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": null,
+      "key": "Package server exposes the billing API over HTTP.",
+      "label": "valuable",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": "Invoice",
+      "key": "Invoice is an invoice.",
+      "label": "superfluous",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": "ID",
+      "key": "The ID.",
+      "label": "superfluous",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": "TotalCents",
+      "key": "Cents rather than a float: the ledger service rejects amounts that do not round-trip exactly through its decimal type.",
+      "label": "valuable",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": "requestTimeout",
+      "key": "requestTimeout matches the load balancer's idle timeout minus a margin, so we always answer before the balancer cuts the connection and the client retries a request that may already have been billed.",
+      "label": "valuable",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": "HandleInvoice",
+      "key": "HandleInvoice handles the invoice request.",
+      "label": "superfluous",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": null,
+      "key": "Set the content type.",
+      "label": "superfluous",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": null,
+      "key": "encode it, ignore err since headers r already sent anyway",
+      "label": "rewrite",
+      "path": "server/invoice.go",
+      "rewriteTo": "Headers are already sent by the time Encode fails, so the error cannot be reported to the client and is ignored."
+    },
+    {
+      "anchorName": null,
+      "key": "nolint:errcheck",
+      "label": "functional",
+      "path": "server/invoice.go"
+    },
+    {
+      "anchorName": "ExampleHandleInvoice",
+      "key": "ExampleHandleInvoice shows the JSON body the handler writes.",
+      "label": "superfluous",
+      "path": "server/invoice_test.go"
+    },
+    {
+      "anchorName": null,
+      "key": "Create a recorder.",
+      "label": "superfluous",
+      "path": "server/invoice_test.go"
+    },
+    {
+      "anchorName": null,
+      "key": "Print the body.",
+      "label": "superfluous",
+      "path": "server/invoice_test.go"
+    },
+    {
+      "anchorName": "ExampleHandleInvoice",
+      "key": "Output: {\"id\":\"inv-7\",\"totalCents\":0}",
+      "label": "functional",
+      "path": "server/invoice_test.go"
+    },
+    {
+      "anchorName": "ExampleInvoice_zero",
+      "key": "The zero value must encode with totalCents present (no omitempty): the ledger treats a missing amount as \"unknown\", not as zero.",
+      "label": "valuable",
+      "path": "server/invoice_test.go"
+    },
+    {
+      "anchorName": "ExampleInvoice_zero",
+      "key": "Output: 0",
+      "label": "functional",
+      "path": "server/invoice_test.go"
+    },
+    {
+      "anchorName": "Line",
+      "key": "An invoice line.",
+      "label": "superfluous",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": "subtotal",
+      "key": "Calculate the subtotal.",
+      "label": "superfluous",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": "sum",
+      "key": "Start at zero.",
+      "label": "superfluous",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": null,
+      "key": "Iterate over each line.",
+      "label": "superfluous",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": "lateFee",
+      "key": "Late fee for an overdue invoice.",
+      "label": "superfluous",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": null,
+      "key": "The grace period is contractual: customers were promised three days, so a fee on day one or two generates a support ticket, not revenue.",
+      "label": "valuable",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": null,
+      "key": "divide by 10000 bc its bps",
+      "label": "rewrite",
+      "path": "src/billing/invoice.ts",
+      "rewriteTo": "LATE_FEE_BASIS_POINTS is in basis points, so divide by 10,000 to get the fee fraction."
+    },
+    {
+      "anchorName": "legacyPlan",
+      "key": "@ts-expect-error",
+      "label": "functional",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": "legacyPlan",
+      "key": "The legacy importer still passes the plan as a number.",
+      "label": "functional",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": "isEmpty",
+      "key": "Check if the invoice is empty.",
+      "label": "superfluous",
+      "path": "src/billing/invoice.ts"
+    },
+    {
+      "anchorName": "LATE_FEE_BASIS_POINTS",
+      "key": "Rates are stored in basis points (1/100 of a percent) because the finance export rejects fractional percentages; invoice.ts divides by 10_000 when it applies them.",
+      "label": "valuable",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": "LOYALTY_DISCOUNT_BASIS_POINTS",
+      "key": "The discount rate.",
+      "label": "superfluous",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": "name",
+      "key": "the name",
+      "label": "superfluous",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": "unitCents",
+      "key": "Per-unit price in cents.",
+      "label": "superfluous",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": "rateCardFor",
+      "key": "Returns the rate card for a plan.",
+      "label": "superfluous",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": null,
+      "key": "Enterprise prices are negotiated per contract and live in the CRM, not here; callers must never bill an enterprise plan from this table.",
+      "label": "valuable",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": null,
+      "key": "return the card",
+      "label": "superfluous",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": null,
+      "key": "That's the end of the rate helpers.",
+      "label": "superfluous",
+      "path": "src/billing/rates.ts"
+    },
+    {
+      "anchorName": null,
+      "key": "-*- coding: utf-8 -*-",
+      "label": "functional",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": "json",
+      "key": "noqa: F401",
+      "label": "functional",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "Column names in the export.",
+      "label": "superfluous",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "type: (str) -> List[Dict[str, str]]",
+      "label": "functional",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "Open the file.",
+      "label": "superfluous",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "The export is written by a Windows job with a UTF-8 BOM; csv would otherwise read the first header as \"\\ufeffaccount\" and every row would miss its account.",
+      "label": "valuable",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "Create a reader.",
+      "label": "superfluous",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "Return the rows as a list.",
+      "label": "superfluous",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "type: Dict[str, int]",
+      "label": "functional",
+      "path": "tools/ingest.py"
+    },
+    {
+      "anchorName": null,
+      "key": "skip header row that sometimes shows up twice when finance re-runs the job",
+      "label": "rewrite",
+      "path": "tools/ingest.py",
+      "rewriteTo": "Finance re-runs of the export can repeat the header row; skip those repeated headers."
+    },
+    {
+      "anchorName": null,
+      "key": "Number of retries.",
+      "label": "superfluous",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": null,
+      "key": "Full jitter, not equal jitter: when the finance API recovers from an outage, every ingest worker retries at once, and only a fully random delay spreads them out enough to avoid tripping its rate limiter again.",
+      "label": "valuable",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": null,
+      "key": "Loop over the attempts.",
+      "label": "superfluous",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": null,
+      "key": "Call the function.",
+      "label": "superfluous",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": null,
+      "key": "TODO: tell 429 from 503 once the client exposes status codes",
+      "label": "valuable",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": null,
+      "key": "sleep a bit",
+      "label": "superfluous",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": null,
+      "key": "one more try w/o catching so the caller sees the real error",
+      "label": "valuable",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": null,
+      "key": "",
+      "label": "superfluous",
+      "path": "tools/retry.py"
+    },
+    {
+      "anchorName": "InvoiceTableProps",
+      "key": "Props for the table.",
+      "label": "superfluous",
+      "path": "ui/InvoiceTable.tsx"
+    },
+    {
+      "anchorName": "InvoiceTable",
+      "key": "Render the invoice table.",
+      "label": "superfluous",
+      "path": "ui/InvoiceTable.tsx"
+    },
+    {
+      "anchorName": "rows",
+      "key": "The key must be the index, not the plan: an invoice may bill the same plan twice (a mid-cycle upgrade), and duplicate keys drop rows.",
+      "label": "valuable",
+      "path": "ui/InvoiceTable.tsx"
+    },
+    {
+      "anchorName": null,
+      "key": "Screen readers announce the caption before the rows, so it stays first.",
+      "label": "valuable",
+      "path": "ui/InvoiceTable.tsx"
+    },
+    {
+      "anchorName": "useDebouncedValue",
+      "key": "A hook that debounces a value.",
+      "label": "superfluous",
+      "path": "ui/useDebouncedValue.tsx"
+    },
+    {
+      "anchorName": "[debounced, setDebounced]",
+      "key": "State for the debounced value.",
+      "label": "superfluous",
+      "path": "ui/useDebouncedValue.tsx"
+    },
+    {
+      "anchorName": "handle",
+      "key": "Set a timeout.",
+      "label": "superfluous",
+      "path": "ui/useDebouncedValue.tsx"
+    },
+    {
+      "anchorName": null,
+      "key": "Clearing on every change is what makes this a debounce rather than a throttle: only the last value within the window is ever committed.",
+      "label": "valuable",
+      "path": "ui/useDebouncedValue.tsx"
+    },
+    {
+      "anchorName": "SEARCH_DEBOUNCE_MS",
+      "key": "300ms felt laggy in user testing so we use 150, dont bump it w/o asking design",
+      "label": "rewrite",
+      "path": "ui/useDebouncedValue.tsx",
+      "rewriteTo": "150 ms rather than 300: user testing found 300 ms laggy. Check with design before changing it."
+    },
+    {
+      "anchorName": "TAX_RATE_BASIS_POINTS",
+      "key": "Tax is applied per line rather than once on the subtotal: the regional rules we follow round each taxable line separately, and rounding the subtotal instead drifts by a cent on large carts.",
+      "label": "valuable",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": "addItem",
+      "key": "Adds an item to the cart, merging quantities when the SKU is already present.",
+      "label": "protected",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": "existing",
+      "key": "Find the existing line.",
+      "label": "superfluous",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": null,
+      "key": "make sure we dont double count stuff when the same sku comes in twice",
+      "label": "rewrite",
+      "path": "web/cart.js",
+      "rewriteTo": "A repeated SKU adds to the existing line's quantity instead of adding a duplicate line."
+    },
+    {
+      "anchorName": null,
+      "key": "Add the item to the lines.",
+      "label": "superfluous",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": "lineTax",
+      "key": "Computes the tax for one line.",
+      "label": "superfluous",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": null,
+      "key": "Math.round rounds half up, which is what the tax authority publishes; a banker's-rounding helper would under-collect on exact half cents.",
+      "label": "valuable",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": "total",
+      "key": "initialize total to zero",
+      "label": "superfluous",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": null,
+      "key": "loop over the lines and add each line total plus its tax",
+      "label": "superfluous",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": "EMPTY_CART",
+      "key": "TODO: support coupon codes once the pricing service exposes them.",
+      "label": "valuable",
+      "path": "web/cart.js"
+    },
+    {
+      "anchorName": "formatCents",
+      "key": "Formats an amount of integer cents as a dollar string. @param {number} cents @returns {string}",
+      "label": "functional",
+      "path": "web/money.js"
+    },
+    {
+      "anchorName": "dollars",
+      "key": "Every amount in the web client is integer cents (cart.js never hands us floats), so the only division happens here, at display time.",
+      "label": "valuable",
+      "path": "web/money.js"
+    },
+    {
+      "anchorName": "rest",
+      "key": "Get the remaining cents.",
+      "label": "superfluous",
+      "path": "web/money.js"
+    },
+    {
+      "anchorName": null,
+      "key": "Pad the cents to two digits.",
+      "label": "superfluous",
+      "path": "web/money.js"
+    },
+    {
+      "anchorName": null,
+      "key": "eslint-disable-next-line no-restricted-globals",
+      "label": "functional",
+      "path": "web/money.js"
+    },
+    {
+      "anchorName": null,
+      "key": "The legacy checkout page still reads this global until it is migrated.",
+      "label": "functional",
+      "path": "web/money.js"
+    },
+    {
+      "anchorName": "CURRENCY",
+      "key": "",
+      "label": "superfluous",
+      "path": "web/money.js"
+    }
+  ]
+}

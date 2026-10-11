@@ -1,0 +1,120 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/tsx/empty-comments.tsx
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 2,
+      "line": 1,
+      "column": 1,
+      "text": "//",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "function_declaration",
+        "name": "Label",
+        "snippet": "export function Label(props: { text: string }) {\n  const text = props.text.trim();"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 3,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 2
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 54,
+      "end": 59,
+      "line": 3,
+      "column": 3,
+      "text": "/* */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "text",
+        "snippet": "  const text = props.text.trim();\n  return <span>{text}</span>;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 51,
+      "nextCodeStart": 62,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "Label",
+        "start": 3,
+        "end": 128
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 54,
+          "end": 59
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 94,
+      "end": 96,
+      "line": 4,
+      "column": 35,
+      "text": "//",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "text",
+        "snippet": "  const text = props.text.trim();\n  return <span>{text}</span>;\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 93,
+      "nextCodeStart": 99,
+      "enclosingTopLevel": {
+        "nodeKind": "export_statement",
+        "name": "Label",
+        "start": 3,
+        "end": 128
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 94,
+          "end": 96
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 2,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 3.0,
+    "languageHasLineComments": true
+  }
+}

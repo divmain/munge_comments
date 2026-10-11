@@ -1,0 +1,161 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/java/empty-comments.java
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 85,
+      "end": 87,
+      "line": 5,
+      "column": 9,
+      "text": "//",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "        count++;\n        if (count < 0) {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 76,
+      "nextCodeStart": 96,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Counter",
+        "start": 0,
+        "end": 205
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 85,
+          "end": 87
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 113,
+      "end": 118,
+      "line": 7,
+      "column": 9,
+      "text": "/* */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "if_statement",
+        "name": null,
+        "snippet": "        if (count < 0) {\n            count = 0;\n        }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 104,
+      "nextCodeStart": 127,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Counter",
+        "start": 0,
+        "end": 205
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 113,
+          "end": 118
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 167,
+      "end": 169,
+      "line": 9,
+      "column": 24,
+      "text": "//",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "            count = 0;\n        }"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 166,
+      "nextCodeStart": 178,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Counter",
+        "start": 0,
+        "end": 205
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 167,
+          "end": 169
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 188,
+      "end": 197,
+      "line": 11,
+      "column": 9,
+      "text": "// ------",
+      "position": "dangling",
+      "anchor": {
+        "nodeKind": "method_declaration",
+        "name": "increment",
+        "snippet": "    public void increment() {\n        count++;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 179,
+      "nextCodeStart": 202,
+      "enclosingTopLevel": {
+        "nodeKind": "class_declaration",
+        "name": "Counter",
+        "start": 0,
+        "end": 205
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 188,
+          "end": 197
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 4.5,
+    "languageHasLineComments": true
+  }
+}

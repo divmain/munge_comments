@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/cpp/empty-comments.cpp
+---
+"#include <vector>\n\nint sum(const std::vector<int>& xs) {\n    //⟦C1⟧\n    int total = 0;\n    /*⟦C2⟧*/\n    for (int x : xs) {\n        total += x; //⟦C3⟧\n    }\n    //⟦C4⟧\n    return total;\n}\n"

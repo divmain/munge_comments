@@ -1,0 +1,6 @@
+---
+source: tests/verifier.rs
+expression: residues
+input_file: tests/fixtures/golden/java/empty-comments.java
+---
+[]

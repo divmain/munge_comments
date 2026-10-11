@@ -10,11 +10,12 @@
 //! 1. link checks, read, and the disk hash against `contentHash`;
 //! 2. [`inventory_file`] + firewall check (a) (every scanned record's range
 //!    and text match a current inventory record), plus the NEW-offset
-//!    checks;
-//! 3. [`compute_edits`];
+//!    checks ([`check_plan_fits`]);
+//! 3. [`compute_edits`](super::edits::compute_edits);
 //! 4. firewall check (b) (no edit intersects a currently-functional
 //!    comment);
-//! 5. [`apply_edits`] in memory.
+//! 5. [`apply_edits`](super::edits::apply_edits) in memory (steps 3–5 are
+//!    [`edit_in_memory`], which `plan`'s verification rail shares).
 //!
 //! Steps 3–5 are replaceable through [`ApplyHooks::apply_file`]. Drift
 //! (exit 3) and artifact/codebase disagreement (exit 2) in any selected
@@ -45,16 +46,15 @@ use std::io::{ErrorKind, Write};
 use std::path::{Path, PathBuf};
 
 use super::diff::render_unified_diff;
-use super::edits::{EditOpts, apply_edits, compute_edits};
+use super::stage::{check_plan_fits, edit_in_memory, has_actionable_edit};
 use super::types::{ApplyFileResult, ApplyResult, ApplyStatus, SkippedEdit};
 use super::verify::{FunctionalComment, functional_sequence, verify_semantic_equality};
 use crate::artifact::read::read_artifact;
-use crate::artifact::types::{Decision, FilePlan, FileStatus, PlanArtifact};
+use crate::artifact::types::{FilePlan, FileStatus, PlanArtifact};
 use crate::artifact::validate::{check_file_path, content_hash, decode_utf8, resolve_root};
 use crate::comments::inventory::{Inventory, inventory_file};
-use crate::comments::types::{Classification, Edit, FileRef};
+use crate::comments::types::{Edit, FileRef};
 use crate::errors::{Error, pick_exit_code};
-use crate::lang::adapters::adapter_for;
 use crate::log::Log;
 use crate::report::markdown::render_markdown;
 use crate::util::fs::{atomic_write, ensure_parent_dir};
@@ -497,17 +497,6 @@ fn wire_name<T: serde::Serialize>(value: &T) -> String {
     }
 }
 
-/// Whether `file` has any edit to make: a scanned record decided
-/// `REMOVE`/`KEEP_GENERATED`/`HYBRID`, or (with `allowAdd`) a record
-/// decided `NEW`.
-fn has_actionable_edit(file: &FilePlan, allow_add: bool) -> bool {
-    file.comments.iter().any(|record| match record.decision {
-        Decision::Remove | Decision::KeepGenerated | Decision::Hybrid => true,
-        Decision::New => allow_add,
-        Decision::KeepOriginal | Decision::NeedsReview | Decision::KeepProtected => false,
-    })
-}
-
 /// What every per-file step shares.
 struct FileCtx<'a> {
     /// The artifact's `config.allowAdd`.
@@ -616,8 +605,7 @@ fn stage_file(file: &FilePlan, target: &Path, ctx: &FileCtx<'_>) -> Result<Stage
             file_name: file.path.clone(),
         },
     )?;
-    check_scanned_records(file, &inventory)?;
-    check_new_offsets(file, &original, &inventory, ctx.allow_add)?;
+    check_plan_fits(file, &original, &inventory, ctx.allow_add)?;
     let functional = functional_sequence(&inventory);
     let (edited, edits, skipped) = match &ctx.hooks.apply_file {
         Some(hook) => {
@@ -626,18 +614,8 @@ fn stage_file(file: &FilePlan, target: &Path, ctx: &FileCtx<'_>) -> Result<Stage
             (edited, edits, Vec::new())
         }
         None => {
-            let computed = compute_edits(
-                &original,
-                file,
-                &inventory,
-                adapter_for(file.language),
-                EditOpts {
-                    allow_add: ctx.allow_add,
-                },
-            )?;
-            check_functional_intersections(&computed.edits, &inventory)?;
-            let edited = apply_edits(&original, &computed.edits)?;
-            (edited, computed.edits, computed.skipped)
+            let edited = edit_in_memory(&original, file, &inventory, ctx.allow_add)?;
+            (edited.text, edited.edits, edited.skipped)
         }
     };
     Ok(Stage {
@@ -754,140 +732,6 @@ fn warn_if_hard_linked(meta: &fs::Metadata, path: &str, log: &dyn Log) {
 
 #[cfg(not(unix))]
 fn warn_if_hard_linked(_meta: &fs::Metadata, _path: &str, _log: &dyn Log) {}
-
-/// Firewall check (a): every scanned record's `[start, end)` is exactly a
-/// current inventory record's range, and that record's text equals the
-/// record's `original`. Any mismatch is [`Error::Artifact`].
-fn check_scanned_records(file: &FilePlan, inventory: &Inventory) -> Result<(), Error> {
-    for record in &file.comments {
-        let Some(original) = record.original.as_deref() else {
-            continue;
-        };
-        let current = inventory
-            .comments
-            .binary_search_by_key(&record.start, |entry| entry.start)
-            .ok()
-            .map(|index| &inventory.comments[index])
-            .filter(|entry| entry.end == record.end);
-        match current {
-            None => {
-                return Err(Error::Artifact(format!(
-                    "record {} range [{}, {}) matches no comment in the current file",
-                    record.id, record.start, record.end
-                )));
-            }
-            Some(entry) if entry.text != original => {
-                return Err(Error::Artifact(format!(
-                    "record {} text does not match the comment at [{}, {}) in the current file",
-                    record.id, record.start, record.end
-                )));
-            }
-            Some(_) => {}
-        }
-    }
-    Ok(())
-}
-
-/// The NEW-offset checks, for every NEW-origin record that will insert
-/// (decided `NEW`, with `allowAdd` on; a held or disabled NEW makes no
-/// edit): `start` must be in bounds, on a `char` boundary, not before or
-/// inside a leading BOM, not before the end of a shebang line (its `\n`
-/// included, the only terminator the kernel honors), and not strictly
-/// inside a current comment's range. Any violation is [`Error::Artifact`].
-fn check_new_offsets(
-    file: &FilePlan,
-    text: &str,
-    inventory: &Inventory,
-    allow_add: bool,
-) -> Result<(), Error> {
-    if !allow_add {
-        return Ok(());
-    }
-    const BOM: char = '\u{feff}';
-    let bom_end = if text.starts_with(BOM) {
-        BOM.len_utf8()
-    } else {
-        0
-    };
-    // `None`: the whole file is the shebang line.
-    let shebang_end = inventory
-        .has_shebang
-        .then(|| text.find('\n').map(|newline| newline + 1));
-    for record in &file.comments {
-        if !record.is_new_origin() || record.decision != Decision::New {
-            continue;
-        }
-        let start = record.start;
-        let bad = |detail: String| {
-            Err(Error::Artifact(format!(
-                "NEW record {} at offset {start} {detail}",
-                record.id
-            )))
-        };
-        if start > text.len() {
-            return bad(format!("is out of bounds of the {}-byte file", text.len()));
-        }
-        if !text.is_char_boundary(start) {
-            return bad("is not on a character boundary".to_owned());
-        }
-        if start < bom_end {
-            return bad("lies before the end of the leading byte-order mark".to_owned());
-        }
-        match shebang_end {
-            Some(Some(end)) if start < end => {
-                return bad(format!(
-                    "lies before the end of the shebang line (offset {end})"
-                ));
-            }
-            Some(None) => return bad("lies on the shebang line".to_owned()),
-            _ => {}
-        }
-        if let Some(entry) = inventory
-            .comments
-            .iter()
-            .find(|entry| entry.start < start && start < entry.end)
-        {
-            return bad(format!(
-                "lies inside the comment at [{}, {})",
-                entry.start, entry.end
-            ));
-        }
-    }
-    Ok(())
-}
-
-/// Firewall check (b): no edit intersects a comment the current inventory
-/// classifies `functional`. A non-empty edit intersects a comment it
-/// overlaps; an insertion intersects a comment it lies strictly inside.
-/// A violation is [`Error::Firewall`] (the whole file is skipped).
-fn check_functional_intersections(edits: &[Edit], inventory: &Inventory) -> Result<(), Error> {
-    for edit in edits {
-        let start = edit.start;
-        let end = edit.start.saturating_add(edit.length);
-        let hit = inventory
-            .comments
-            .iter()
-            .filter(|entry| entry.classification == Classification::Functional)
-            .find(|entry| {
-                if edit.length == 0 {
-                    entry.start < start && start < entry.end
-                } else {
-                    start < entry.end && entry.start < end
-                }
-            });
-        if let Some(entry) = hit {
-            let tags: Vec<&str> = entry.tags.iter().map(String::as_str).collect();
-            return Err(Error::Firewall(format!(
-                "the edit at [{start}, {end}) intersects the functional comment {} at [{}, {}) (tags: {})",
-                entry.id,
-                entry.start,
-                entry.end,
-                tags.join(", ")
-            )));
-        }
-    }
-    Ok(())
-}
 
 /// Phase B for one verified file: re-checks that the target is still the
 /// regular file whose bytes Phase A verified, then writes it atomically
@@ -1012,6 +856,7 @@ const ORDERED_STATUSES: [ApplyStatus; 9] = [
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::apply::edits::apply_edits;
 
     fn roundtrip(original: &str, edited: &str) -> Option<Edit> {
         let edit = spanning_edit(original, edited);

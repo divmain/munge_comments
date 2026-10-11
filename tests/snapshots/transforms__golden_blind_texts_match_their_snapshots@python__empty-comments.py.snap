@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/empty-comments.py
+---
+"import os\n\n#⟦C1⟧\nROOT = os.getcwd()\n#⟦C2⟧\nNAME = \"demo\"  #⟦C3⟧\n\n\ndef join(part):\n    #⟦C4⟧\n    return os.path.join(ROOT, part)\n"

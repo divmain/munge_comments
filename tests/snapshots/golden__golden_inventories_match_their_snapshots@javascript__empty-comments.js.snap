@@ -1,0 +1,141 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/javascript/empty-comments.js
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 2,
+      "line": 1,
+      "column": 1,
+      "text": "//",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "a",
+        "snippet": "const a = 1;\nconst b = 2;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 3,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 2
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 16,
+      "end": 21,
+      "line": 3,
+      "column": 1,
+      "text": "/* */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "b",
+        "snippet": "const b = 2;\nconst c = a + b;"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 15,
+      "nextCodeStart": 22,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 16,
+          "end": 21
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 52,
+      "end": 54,
+      "line": 5,
+      "column": 18,
+      "text": "//",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "lexical_declaration",
+        "name": "c",
+        "snippet": "const c = a + b;\nmodule.exports = { c };"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 51,
+      "nextCodeStart": 65,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 52,
+          "end": 54
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 55,
+      "end": 64,
+      "line": 6,
+      "column": 1,
+      "text": "// ------",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "module.exports = { c };"
+      },
+      "anchorExported": true,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 51,
+      "nextCodeStart": 65,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 55,
+          "end": 64
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 4.5,
+    "languageHasLineComments": true
+  }
+}

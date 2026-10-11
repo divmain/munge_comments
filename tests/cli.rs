@@ -158,11 +158,28 @@ async fn out_of_range_concurrency_is_rejected() {
 }
 
 #[tokio::test]
-async fn plan_reaches_the_stub_handler_and_exits_zero() {
+async fn an_online_plan_without_an_api_key_or_base_url_is_a_usage_error() {
     let (code, out, err) = run_args(&["plan"]).await;
-    assert_eq!(code, 0);
+    assert_eq!(code, 1, "stderr: {err}");
     assert_eq!(out, "");
-    assert!(err.contains("plan: not implemented"));
+    assert!(err.contains("no API key"), "stderr: {err}");
+}
+
+#[tokio::test]
+async fn an_offline_plan_of_an_empty_cwd_writes_its_outputs_there_and_exits_zero() {
+    let dir = common::tempdir();
+    let (out, err) = (SharedBuf::new(), SharedBuf::new());
+    let io = Io::new(
+        Box::new(out.clone()),
+        Box::new(err.clone()),
+        dir.path().to_path_buf(),
+        HashMap::new(),
+    );
+    let code = run(["munge-comments", "plan", "--offline"], io).await;
+    assert_eq!(code, 0, "stderr: {}", err.contents());
+    assert_eq!(out.contents(), "");
+    assert!(dir.path().join("munge-comments-plan.json").is_file());
+    assert!(dir.path().join("munge-comments-plan-report.md").is_file());
 }
 
 #[tokio::test]
@@ -395,8 +412,8 @@ async fn cooperative_cancel_is_armed_for_plan_only() {
     // plan: armed.
     let harness = TestIo::new(HashMap::new());
     let cooperative = Arc::clone(&harness.io.cooperative_cancel);
-    let (code, _, _) = harness.run(&["plan"]).await;
-    assert_eq!(code, 0);
+    let (code, _, err) = harness.run(&["plan", "--offline"]).await;
+    assert_eq!(code, 0, "stderr: {}", err.contents());
     assert!(
         cooperative.load(Ordering::Relaxed),
         "run must arm cooperative cancellation for plan",
@@ -589,8 +606,10 @@ async fn builders_attach_llm_client_and_cancel_token() {
         "with_cancel injects the given token",
     );
     let cooperative = Arc::clone(&io.cooperative_cancel);
+    // The injected client stands in for a key, and the injected (already
+    // cancelled) token interrupts the run: exit 130.
     let code = run(["munge-comments", "plan"], io).await;
-    assert_eq!(code, 0);
+    assert_eq!(code, 130);
     assert!(cooperative.load(Ordering::Relaxed));
 }
 

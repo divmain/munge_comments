@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/javascript/empty-comments.js
+---
+"//⟦C1⟧\nconst a = 1;\n/*⟦C2⟧*/\nconst b = 2;\nconst c = a + b; //⟦C3⟧\n//⟦C4⟧\nmodule.exports = { c };\n"

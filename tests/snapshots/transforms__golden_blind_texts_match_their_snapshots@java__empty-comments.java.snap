@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/java/empty-comments.java
+---
+"public class Counter {\n    private int count;\n\n    public void increment() {\n        //⟦C1⟧\n        count++;\n        /*⟦C2⟧*/\n        if (count < 0) {\n            count = 0; //⟦C3⟧\n        }\n        //⟦C4⟧\n    }\n}\n"

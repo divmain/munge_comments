@@ -30,6 +30,7 @@ use tokio_util::sync::CancellationToken;
 use crate::apply::run::{ApplyDeps, ApplyHooks, ApplyRequest, run_apply};
 use crate::artifact::read::read_artifact;
 use crate::config::{DEFAULT_BASE_URL, ResolvedPlan, resolve_plan};
+use crate::engine::plan::{PlanDeps, PlanHooks, PlanRequest, run_plan};
 use crate::errors::Error;
 use crate::llm::client::{LlmClient, OpenAiCompatClient, OpenAiCompatConfig, ProxyMode};
 use crate::log::WriterLog;
@@ -56,7 +57,7 @@ pub struct Io {
     pub env: HashMap<String, String>,
     /// The LLM client, when one has been constructed.
     pub llm: Option<Arc<dyn LlmClient>>,
-    /// Cancellation token, passed to `plan` by later phases.
+    /// Cancellation token, passed to `plan` (the signal watcher cancels it).
     pub cancel: CancellationToken,
     /// Whether the running command is cooperatively cancellable (`plan`);
     /// set by [`run`] just before dispatching `plan`. The binary's signal
@@ -84,7 +85,8 @@ impl Io {
         }
     }
 
-    /// Builder: attach an LLM client (used by later phases and by tests).
+    /// Builder: attach an LLM client (`plan` uses it instead of building one;
+    /// tests inject a fake).
     pub fn with_llm(mut self, llm: Arc<dyn LlmClient>) -> Io {
         self.llm = Some(llm);
         self
@@ -364,20 +366,13 @@ fn report_parse_error(err: &clap::error::Error, io: &mut Io) -> u8 {
 }
 
 /// Dispatches a parsed command.
-///
-/// `apply` and `report` are fully wired. The `plan` handler is still a
-/// wired stub: it validates its inputs for real (config resolution), then
-/// reports `not implemented` on the injected stderr and returns 0. A later
-/// phase replaces its body with the real pipeline.
 async fn dispatch(command: Command, io: &mut Io) -> Result<u8, Error> {
     match command {
         Command::Plan(args) => {
             // `plan` alone is cooperatively interruptible; the signal
             // watcher reads this flag on the first signal.
             io.cooperative_cancel.store(true, Ordering::Relaxed);
-            let _resolved = resolve_plan(&args, &io.env)?;
-            let _ = writeln!(io.stderr, "plan: not implemented");
-            Ok(0)
+            run_plan_command(&args, io).await
         }
         Command::Apply(args) => run_apply_command(args, io),
         Command::Report(args) => run_report(&args, io),
@@ -394,6 +389,51 @@ async fn dispatch(command: Command, io: &mut Io) -> Result<u8, Error> {
 #[allow(clippy::panic)]
 fn canary_panic() -> ! {
     panic!("__panic canary invoked");
+}
+
+/// The stderr note of an interrupted `plan` run.
+pub const INTERRUPTED_NOTE: &str = "interrupted — continue with --resume";
+
+/// `plan`: a thin wrapper over [`run_plan`]. Configuration is resolved
+/// against the injected environment, and `--out`/`--report` (defaults
+/// included) are joined onto the injected cwd, which `run_plan` also
+/// resolves the inputs against. The client is the injected [`Io::llm`] if
+/// set, else one built by [`build_llm_client`]; under `--offline` none is
+/// used. The run's exit code becomes the process exit code (130, after the
+/// interrupt note, when the run was cancelled); run-level failures surface
+/// as errors.
+async fn run_plan_command(args: &PlanArgs, io: &mut Io) -> Result<u8, Error> {
+    let resolved = resolve_plan(args, &io.env)?;
+    let llm = match &io.llm {
+        Some(llm) if !resolved.config.offline => Some(Arc::clone(llm)),
+        _ => build_llm_client(&resolved)?,
+    };
+    let request = PlanRequest {
+        out: io.cwd.join(&resolved.out),
+        report_path: Some(io.cwd.join(&resolved.report_path)),
+        resume: resolved.resume,
+        config: resolved.config,
+    };
+    let cancel = io.cancel.clone();
+    let cwd = io.cwd.clone();
+    let outcome = {
+        let log = WriterLog::new(&mut io.stderr);
+        run_plan(
+            request,
+            PlanDeps {
+                log: &log,
+                cwd: &cwd,
+                llm,
+                cancel,
+                hooks: PlanHooks::default(),
+            },
+        )
+        .await?
+    };
+    if outcome.aborted {
+        let _ = writeln!(io.stderr, "{INTERRUPTED_NOTE}");
+    }
+    Ok(outcome.exit_code)
 }
 
 /// `apply`: a thin wrapper over [`run_apply`]. The `[ARTIFACT]` argument

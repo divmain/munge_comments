@@ -380,6 +380,24 @@ fn the_writer_keeps_files_sorted_and_replaces_by_path() {
 }
 
 #[test]
+fn record_all_upserts_a_batch_with_one_write() {
+    let dir = tempdir();
+    let path = dir.path().join("plan.json");
+    let mut writer = ArtifactWriter::new(&path, header(), vec![skipped()], stub_summary).unwrap();
+    let mut retried = skipped();
+    retried.error = Some("replaced".to_owned());
+    writer
+        .record_all([math_plan(), retried.clone(), failed_io()])
+        .unwrap();
+    let on_disk = read_artifact(&path).unwrap().into_inner();
+    let paths: Vec<&str> = on_disk.files.iter().map(|f| f.path.as_str()).collect();
+    assert_eq!(paths, ["pkg/latin1.go", "src/locked.py", "src/math.ts"]);
+    assert_eq!(on_disk.files[0], retried);
+    assert_eq!(on_disk.summary.files_considered, 3);
+    assert_eq!(&on_disk, writer.artifact());
+}
+
+#[test]
 fn writer_errors_keep_their_own_variant() {
     let dir = tempdir();
     let err = ArtifactWriter::new(

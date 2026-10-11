@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/tsx/empty-comments.tsx
+---
+"//⟦C1⟧\nexport function Label(props: { text: string }) {\n  /*⟦C2⟧*/\n  const text = props.text.trim(); //⟦C3⟧\n  return <span>{text}</span>;\n}\n"

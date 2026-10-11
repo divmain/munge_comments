@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/go/empty-comments.go
+---
+"package demo\n\nfunc Sum(xs []int) int {\n\t//⟦C1⟧\n\ttotal := 0\n\t/*⟦C2⟧*/\n\tfor _, x := range xs {\n\t\ttotal += x //⟦C3⟧\n\t}\n\t//⟦C4⟧\n\treturn total\n}\n"

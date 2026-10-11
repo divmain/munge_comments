@@ -185,6 +185,19 @@ pub enum DecidedBy {
     Human,
 }
 
+impl DecidedBy {
+    /// The wire spelling (`"heuristic"`, `"judge"`, …).
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            DecidedBy::Heuristic => "heuristic",
+            DecidedBy::Judge => "judge",
+            DecidedBy::Protected => "protected",
+            DecidedBy::Engine => "engine",
+            DecidedBy::Human => "human",
+        }
+    }
+}
+
 /// A file's processing outcome.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -675,6 +688,19 @@ mod tests {
     fn difficulty_as_str_is_the_wire_name() {
         for difficulty in Difficulty::ALL {
             assert_eq!(difficulty.as_str(), wire(difficulty));
+        }
+    }
+
+    #[test]
+    fn decided_by_as_str_is_the_wire_name() {
+        for decided_by in [
+            DecidedBy::Heuristic,
+            DecidedBy::Judge,
+            DecidedBy::Protected,
+            DecidedBy::Engine,
+            DecidedBy::Human,
+        ] {
+            assert_eq!(decided_by.as_str(), wire(decided_by));
         }
     }
 

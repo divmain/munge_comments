@@ -1,0 +1,161 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/go/empty-comments.go
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 40,
+      "end": 42,
+      "line": 4,
+      "column": 2,
+      "text": "//",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "short_var_declaration",
+        "name": null,
+        "snippet": "\ttotal := 0\n\tfor _, x := range xs {"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 38,
+      "nextCodeStart": 44,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "Sum",
+        "start": 14,
+        "end": 131
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 40,
+          "end": 42
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "block",
+      "start": 56,
+      "end": 61,
+      "line": 6,
+      "column": 2,
+      "text": "/* */",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "for_statement",
+        "name": null,
+        "snippet": "\tfor _, x := range xs {\n\t\ttotal += x\n\t}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 54,
+      "nextCodeStart": 63,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "Sum",
+        "start": 14,
+        "end": 131
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 56,
+          "end": 61
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 99,
+      "end": 101,
+      "line": 8,
+      "column": 14,
+      "text": "//",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "assignment_statement",
+        "name": null,
+        "snippet": "\t\ttotal += x\n\t}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 98,
+      "nextCodeStart": 103,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "Sum",
+        "start": 14,
+        "end": 131
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 99,
+          "end": 101
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 106,
+      "end": 115,
+      "line": 10,
+      "column": 2,
+      "text": "// ------",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "return_statement",
+        "name": null,
+        "snippet": "\treturn total\n}"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 104,
+      "nextCodeStart": 117,
+      "enclosingTopLevel": {
+        "nodeKind": "function_declaration",
+        "name": "Sum",
+        "start": 14,
+        "end": 131
+      },
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 106,
+          "end": 115
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 3,
+    "block": 1,
+    "doc": 0,
+    "avgLength": 4.5,
+    "languageHasLineComments": true
+  }
+}

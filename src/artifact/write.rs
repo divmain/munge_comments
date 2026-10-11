@@ -96,6 +96,15 @@ impl ArtifactWriter {
         self.write()
     }
 
+    /// [`record`](Self::record) for a batch: every file is upserted, then
+    /// the artifact is rewritten once.
+    pub fn record_all(&mut self, files: impl IntoIterator<Item = FilePlan>) -> Result<(), Error> {
+        for file in files {
+            self.upsert(file);
+        }
+        self.write()
+    }
+
     /// Performs the final write and returns the artifact as written.
     pub fn finish(mut self) -> Result<PlanArtifact, Error> {
         self.write()?;

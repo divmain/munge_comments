@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/rust/empty-comments.rs
+---
+"pub fn sum(xs: &[i32]) -> i32 {\n    //⟦C1⟧\n    let mut total = 0;\n    /*⟦C2⟧*/\n    for x in xs {\n        total += x; //⟦C3⟧\n    }\n    //⟦C4⟧\n    total\n}\n"

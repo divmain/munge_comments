@@ -1062,4 +1062,35 @@ const EXPECTATIONS: &[Entry] = &[
             ("# Line 1 is blank, so the line-2 cookie counts.", P),
         ],
     ),
+    // Content-empty comments (decision-matrix row 3) in every tier-1
+    // language beside TypeScript, so offline mode's only edit — removing
+    // them — is planned, applied and verified in each grammar.
+    (
+        "javascript/empty-comments.js",
+        &[("//", P), ("/* */", P), ("//", P), ("// ------", P)],
+    ),
+    (
+        "tsx/empty-comments.tsx",
+        &[("//", P), ("/* */", P), ("//", P)],
+    ),
+    (
+        "python/empty-comments.py",
+        &[("#", P), ("# ------", P), ("#", P), ("#", P)],
+    ),
+    (
+        "go/empty-comments.go",
+        &[("//", P), ("/* */", P), ("//", P), ("// ------", P)],
+    ),
+    (
+        "java/empty-comments.java",
+        &[("//", P), ("/* */", P), ("//", P), ("// ------", P)],
+    ),
+    (
+        "cpp/empty-comments.cpp",
+        &[("//", P), ("/* */", P), ("//", P), ("//------", P)],
+    ),
+    (
+        "rust/empty-comments.rs",
+        &[("//", P), ("/* */", P), ("//", P), ("// ------", P)],
+    ),
 ];

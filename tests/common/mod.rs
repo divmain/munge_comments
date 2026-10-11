@@ -6,6 +6,9 @@
 
 #![allow(dead_code)]
 
+pub mod noisy_scenario;
+pub mod retention;
+
 use std::fs;
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};

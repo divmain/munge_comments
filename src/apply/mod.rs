@@ -6,5 +6,6 @@ pub mod diff;
 pub mod edits;
 pub mod render;
 pub mod run;
+pub mod stage;
 pub mod types;
 pub mod verify;
