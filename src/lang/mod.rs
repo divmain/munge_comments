@@ -4,7 +4,7 @@
 //! The registry (the single tree-sitter user in the crate) validates the
 //! adapters against the linked grammars at initialization and turns source
 //! text into [`PlainTree`](types::PlainTree) data via the re-exported
-//! [`parse`](registry::parse) entry point.
+//! [`parse`] entry point.
 
 pub mod adapter;
 pub mod adapters;

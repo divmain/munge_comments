@@ -15,7 +15,7 @@
 //! Two tree-sitter 0.27 realities shape the module:
 //!
 //! - [`Language::node_kind_for_id`] and [`Language::field_name_for_id`]
-//!   borrow their names from the language handle, and [`Node::kind`]
+//!   borrow their names from the language handle, and [`Node::kind`](tree_sitter::Node::kind)
 //!   borrows from the tree. Plain data carries `&'static str` kind and
 //!   field names, so each of the nine [`Language`] handles is `Box::leak`ed
 //!   once per process and the registry builds `&'static str` symbol tables

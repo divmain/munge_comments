@@ -15,7 +15,7 @@ pub trait Log: Send + Sync {
     fn warn(&self, message: &str);
 }
 
-/// A [`Log`] writing to any [`io::Write`] sink behind a mutex.
+/// A [`Log`] writing to any [`io::Write`](std::io::Write) sink behind a mutex.
 ///
 /// Warnings are prefixed with `warning: ` so they stand out in the stream.
 /// Write errors are ignored (a broken progress sink must never fail a run),

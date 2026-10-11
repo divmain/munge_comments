@@ -2,9 +2,10 @@
 //! plan artifact.
 //!
 //! [`PlanConfig`] is part of the artifact schema and is therefore always
-//! compiled. [`resolve_plan`] and [`ResolvedPlan`] take clap-derived argument
+//! compiled. `resolve_plan` and `ResolvedPlan` take clap-derived argument
 //! types and live behind the `cli` feature, so the `--no-default-features`
-//! library build never sees them.
+//! library build never sees them (hence plain code spans, not intra-doc
+//! links, which would dangle in that build).
 //!
 //! Resolution precedence is flags over environment over defaults, evaluated
 //! against an explicitly passed environment map (tests never touch process
@@ -132,16 +133,12 @@ mod env_names {
 
 /// Resolves `plan` arguments against an explicit environment map.
 ///
-/// Precedence: flags beat environment ([`OPENAI_API_KEY`], [`OPENAI_BASE_URL`],
-/// [`MUNGE_COMMENTS_MODEL`]), environment beats defaults. `base_url` in the
+/// Precedence: flags beat environment (`OPENAI_API_KEY`, `OPENAI_BASE_URL`,
+/// `MUNGE_COMMENTS_MODEL`), environment beats defaults. `base_url` in the
 /// snapshot is the flag value if set, else the environment value, else
 /// `None`. Empty positional paths default to `["."]`; empty `--include`
 /// defaults to the built-in extension set (`include: None`). Never touches
 /// the filesystem.
-///
-/// [`OPENAI_API_KEY`]: env_names::API_KEY
-/// [`OPENAI_BASE_URL`]: env_names::BASE_URL
-/// [`MUNGE_COMMENTS_MODEL`]: env_names::MODEL
 #[cfg(feature = "cli")]
 pub fn resolve_plan(
     args: &crate::cli::PlanArgs,

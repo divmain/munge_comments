@@ -143,13 +143,17 @@ fn parse_similarity_threshold(value: &str) -> Result<f64, String> {
 
 /// The `munge-comments` command line.
 ///
-/// The version string is `munge-comments <CARGO_PKG_VERSION>`, so it cannot
-/// drift from `Cargo.toml`.
+/// The version string is `munge-comments <CARGO_PKG_VERSION>` and the help
+/// description is `CARGO_PKG_DESCRIPTION`, so neither can drift from
+/// `Cargo.toml`. Both `about` and `long_about` are set explicitly so this
+/// doc comment stays rustdoc-only and never leaks into `--help`.
 #[derive(Parser, Debug)]
 #[command(
     name = "munge-comments",
     bin_name = "munge-comments",
     version,
+    about,
+    long_about = None,
     term_width = 100,
     color = ColorChoice::Never,
 )]
@@ -176,7 +180,7 @@ pub enum Command {
     Panic,
 }
 
-/// `--mode` values (the clap-side mirror of [`Mode`]; kept out of
+/// `--mode` values (the clap-side mirror of [`Mode`](crate::config::Mode); kept out of
 /// `config.rs` so the always-compiled config module never sees clap types).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
 pub enum ModeArg {
@@ -202,6 +206,9 @@ pub struct PlanArgs {
     pub model: Option<String>,
 
     /// OpenAI-compatible endpoint (env: OPENAI_BASE_URL; default: https://api.openai.com/v1)
+    // clap renders this doc comment verbatim as `--help` text, where
+    // rustdoc's `<…>` autolink syntax would show up as literal brackets.
+    #[allow(rustdoc::bare_urls)]
     #[arg(long, value_name = "URL")]
     pub base_url: Option<String>,
 

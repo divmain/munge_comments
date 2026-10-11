@@ -419,17 +419,19 @@ mod tests {
     use crate::lang::adapters::adapter_for;
     use crate::lang::ids::LanguageId;
 
+    /// A file name for the languages these tests exercise. Deliberately
+    /// not exhaustive over `LanguageId`: adding a language must not
+    /// require touching the engine, its tests included.
     fn file_name(language: LanguageId) -> &'static str {
         match language {
             LanguageId::Javascript => "a.js",
             LanguageId::Typescript => "a.ts",
-            LanguageId::Tsx => "a.tsx",
             LanguageId::Python => "a.py",
-            LanguageId::Go => "a.go",
             LanguageId::Java => "A.java",
             LanguageId::C => "a.c",
             LanguageId::Cpp => "a.cpp",
             LanguageId::Rust => "a.rs",
+            other => panic!("no test file name for {other:?}"),
         }
     }
 

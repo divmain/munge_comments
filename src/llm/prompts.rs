@@ -66,21 +66,6 @@ pub struct JudgePromptInput<'a> {
     pub packets: &'a [Packet],
 }
 
-/// The human name of a language, for the model-facing role line.
-fn display_name(language: LanguageId) -> &'static str {
-    match language {
-        LanguageId::Typescript => "TypeScript",
-        LanguageId::Tsx => "TypeScript (TSX)",
-        LanguageId::Javascript => "JavaScript",
-        LanguageId::Python => "Python",
-        LanguageId::Go => "Go",
-        LanguageId::Java => "Java",
-        LanguageId::C => "C",
-        LanguageId::Cpp => "C++",
-        LanguageId::Rust => "Rust",
-    }
-}
-
 /// `text` in a markdown code fence tagged `info`. The fence is one backtick
 /// longer than the longest backtick run in `text` (and at least three), so
 /// no content can close it early.
@@ -177,7 +162,7 @@ fn writing_rules(language: LanguageId) -> String {
          `*/`, a leading `*`) on any line. Separate lines with \\n.\n\
          - Never write or modify a directive (lint or type-checker suppressions, build tags, \
          pragmas): directives are code, not prose.",
-        display_name(language),
+        language.display_name(),
     )
 }
 
@@ -239,7 +224,7 @@ pub fn build_regeneration_messages(input: &RegenPromptInput<'_>) -> Vec<Message>
 }
 
 fn redact_messages(input: &RegenPromptInput<'_>) -> Vec<Message> {
-    let name = display_name(input.language);
+    let name = input.language.display_name();
     let role = format!(
         "You are an expert {name} engineer. In the {name} source file below, explanatory \
          comments have been replaced by placeholders. Without seeing the originals, write the \
@@ -293,7 +278,7 @@ speaks for itself. Still give your best comment; it may be empty only when you a
 }
 
 fn remove_messages(input: &RegenPromptInput<'_>) -> Vec<Message> {
-    let name = display_name(input.language);
+    let name = input.language.display_name();
     let role = format!(
         "You are an expert {name} engineer. The explanatory comments of the {name} source file \
          below have been removed. Write the comments a careful maintainer would put back, citing \
@@ -348,7 +333,7 @@ fn remove_messages(input: &RegenPromptInput<'_>) -> Vec<Message> {
 /// definitions (verbatim), the decision matrix as guidance, and the rails
 /// the engine enforces anyway.
 fn judge_instructions(language: LanguageId) -> String {
-    let name = display_name(language);
+    let name = language.display_name();
     format!(
         "You are an expert {name} reviewer, acting as the judge of a {name} file's comments. \
          Each packet holds one comment: the code it annotates, the original comment, and a \

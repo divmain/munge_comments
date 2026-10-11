@@ -115,6 +115,21 @@ async fn help_goes_to_stdout_and_exits_zero() {
 }
 
 #[tokio::test]
+async fn top_level_help_describes_the_tool_not_the_cli_struct() {
+    let (_, out, _) = run_args(&["--help"]).await;
+    let first_line = out.lines().next().unwrap_or_default();
+    assert_eq!(
+        first_line,
+        env!("CARGO_PKG_DESCRIPTION"),
+        "the help description comes from Cargo.toml:\n{out}",
+    );
+    assert!(
+        !out.contains("CARGO_PKG_VERSION") && !out.contains("command line"),
+        "the `Cli` struct's rustdoc must not leak into --help:\n{out}",
+    );
+}
+
+#[tokio::test]
 async fn bare_invocation_shows_help_on_stderr_and_exits_one() {
     let (code, out, err) = run_args(&[]).await;
     assert_eq!(code, 1);

@@ -64,6 +64,22 @@ impl LanguageId {
         }
     }
 
+    /// The human name of this language, as the prompts present it to the
+    /// model (e.g. `"C++"`, `"TypeScript (TSX)"`).
+    pub const fn display_name(self) -> &'static str {
+        match self {
+            LanguageId::Typescript => "TypeScript",
+            LanguageId::Tsx => "TypeScript (TSX)",
+            LanguageId::Javascript => "JavaScript",
+            LanguageId::Python => "Python",
+            LanguageId::Go => "Go",
+            LanguageId::Java => "Java",
+            LanguageId::C => "C",
+            LanguageId::Cpp => "C++",
+            LanguageId::Rust => "Rust",
+        }
+    }
+
     /// This language's position in [`ALL`](LanguageId::ALL). Also the index
     /// into per-language slot arrays (compiled patterns); a unit test pins
     /// the two to each other.

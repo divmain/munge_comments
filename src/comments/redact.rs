@@ -7,8 +7,7 @@
 //! `jsx-expression` comments — stays byte-for-byte verbatim.
 //!
 //! **Remove mode** ([`remove_comments`]) deletes every target comment with
-//! the shared removal/line-hygiene engine
-//! ([`compute_removal_edits`](super::hygiene::compute_removal_edits)), so
+//! the shared removal/line-hygiene engine ([`compute_removal_edits`]), so
 //! the clean text is byte-identical to what an apply removing exactly the
 //! targets would write. A segment map ([`Segment`], [`map_clean_offset`])
 //! translates clean-text offsets back to original offsets.

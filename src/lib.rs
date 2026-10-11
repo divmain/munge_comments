@@ -60,3 +60,10 @@ pub use report::stats::{compute_summary, convergence_pct};
 /// `PlanDeps::cancel`'s type, re-exported so consumers need no direct
 /// `tokio-util` dependency.
 pub use tokio_util::sync::CancellationToken;
+
+/// Compiles the README's Rust code blocks as doctests (only under
+/// `cargo test`'s doctest pass), so the documented library example cannot
+/// drift from the API.
+#[cfg(doctest)]
+#[doc = include_str!("../README.md")]
+pub struct ReadmeDoctests;
