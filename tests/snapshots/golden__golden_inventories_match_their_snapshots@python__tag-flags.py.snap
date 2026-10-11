@@ -1,0 +1,179 @@
+---
+source: tests/golden.rs
+expression: "inventory(path, &text, language)"
+input_file: tests/fixtures/golden/python/tag-flags.py
+---
+{
+  "comments": [
+    {
+      "id": "C1",
+      "kind": "line",
+      "start": 0,
+      "end": 9,
+      "line": 1,
+      "column": 1,
+      "text": "# TODO: x",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "total = 0"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": null,
+      "nextCodeStart": 10,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [
+        "todo"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 0,
+          "end": 9
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C2",
+      "kind": "line",
+      "start": 21,
+      "end": 66,
+      "line": 4,
+      "column": 1,
+      "text": "# FIXME and HACK: retries are not capped yet.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "retries = 3"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 19,
+      "nextCodeStart": 67,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [
+        "fixme",
+        "hack"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 21,
+          "end": 66
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C3",
+      "kind": "line",
+      "start": 80,
+      "end": 125,
+      "line": 7,
+      "column": 1,
+      "text": "# Notes on NOTEWORTHY things are not flagged.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "notes = []"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 78,
+      "nextCodeStart": 126,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 80,
+          "end": 125
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C4",
+      "kind": "line",
+      "start": 138,
+      "end": 179,
+      "line": 10,
+      "column": 1,
+      "text": "# todo in lowercase is not a flag either.",
+      "position": "leading",
+      "anchor": {
+        "nodeKind": "assignment",
+        "name": null,
+        "snippet": "pending = []\ncounter = 0"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 136,
+      "nextCodeStart": 180,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 138,
+          "end": 179
+        }
+      ],
+      "editable": true
+    },
+    {
+      "id": "C5",
+      "kind": "line",
+      "start": 207,
+      "end": 212,
+      "line": 13,
+      "column": 14,
+      "text": "# XXX",
+      "position": "trailing",
+      "anchor": {
+        "nodeKind": "expression_statement",
+        "name": null,
+        "snippet": "counter = 0"
+      },
+      "anchorExported": false,
+      "jsxContainerSole": false,
+      "prevCodeEnd": 205,
+      "nextCodeStart": 213,
+      "enclosingTopLevel": null,
+      "classification": "prose",
+      "tags": [
+        "xxx"
+      ],
+      "directiveScope": null,
+      "directiveLineWindow": null,
+      "members": [
+        {
+          "start": 207,
+          "end": 212
+        }
+      ],
+      "editable": true
+    }
+  ],
+  "hasShebang": false,
+  "styleStats": {
+    "line": 5,
+    "block": 0,
+    "doc": 0,
+    "avgLength": 29.0,
+    "languageHasLineComments": true
+  }
+}

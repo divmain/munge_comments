@@ -406,8 +406,9 @@ fn judge_instructions(language: LanguageId) -> String {
     )
 }
 
-/// One packet as a prompt section.
-fn render_packet(packet: &Packet, language: LanguageId) -> String {
+/// One packet as a prompt section, exactly as [`build_judge_messages`]
+/// renders it (the judge's batcher sizes packets by this text).
+pub fn render_packet(packet: &Packet, language: LanguageId) -> String {
     let allowed: Vec<&str> = packet.allowed.iter().map(|d| d.as_str()).collect();
     let mut out = format!(
         "### {}\nAllowed decisions: {}\n",

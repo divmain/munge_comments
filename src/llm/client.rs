@@ -133,6 +133,29 @@ pub struct ChatRequest {
     pub meta: LlmMeta,
 }
 
+/// The sampling temperature of every engine request.
+pub const DEFAULT_TEMPERATURE: f64 = 0.2;
+
+/// The output token cap of every engine request.
+pub const DEFAULT_MAX_COMPLETION_TOKENS: u32 = 16_384;
+
+impl ChatRequest {
+    /// An engine request for `model` with the default sampling parameters
+    /// ([`DEFAULT_TEMPERATURE`], [`DEFAULT_MAX_COMPLETION_TOKENS`]) and a
+    /// null `response_format`, which the typed-call layer
+    /// ([`complete_typed`](crate::llm::call::complete_typed)) fills in.
+    pub fn new(model: impl Into<String>, messages: Vec<Message>, meta: LlmMeta) -> ChatRequest {
+        ChatRequest {
+            model: model.into(),
+            messages,
+            response_format: serde_json::Value::Null,
+            temperature: Some(DEFAULT_TEMPERATURE),
+            max_completion_tokens: DEFAULT_MAX_COMPLETION_TOKENS,
+            meta,
+        }
+    }
+}
+
 /// The first choice of a completion.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct RawResponse {
@@ -168,7 +191,9 @@ pub struct LlmMeta {
     pub path: String,
     /// The file's language.
     pub language: LanguageId,
-    /// Index of the chunk within the file (0 for an unchunked file).
+    /// Index of the chunk within the file (0 for an unchunked file); for
+    /// a judge call, the index of its batch within the file (the halves of
+    /// a truncated batch keep their batch's index).
     pub chunk_index: usize,
     /// Redact mode: the requested placeholder ids; judge: the packet ids.
     pub ids: Vec<String>,

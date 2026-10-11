@@ -1,0 +1,6 @@
+---
+source: tests/transforms.rs
+expression: output.blind_text
+input_file: tests/fixtures/golden/python/tag-flags.py
+---
+"#⟦C1⟧\ntotal = 0\n\n#⟦C2⟧\nretries = 3\n\n#⟦C3⟧\nnotes = []\n\n#⟦C4⟧\npending = []\n\ncounter = 0  #⟦C5⟧\n"

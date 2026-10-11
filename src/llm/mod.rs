@@ -22,8 +22,9 @@ pub use call::{
 };
 pub use chunk::{Chunk, ChunkText, build_chunk_texts, chunk_file};
 pub use client::{
-    CallKind, ChatRequest, LlmClient, LlmMeta, Message, MetaItem, OpenAiCompatClient,
-    OpenAiCompatConfig, ProxyMode, RawResponse, RetryPolicy, Role,
+    CallKind, ChatRequest, DEFAULT_MAX_COMPLETION_TOKENS, DEFAULT_TEMPERATURE, LlmClient, LlmMeta,
+    Message, MetaItem, OpenAiCompatClient, OpenAiCompatConfig, ProxyMode, RawResponse, RetryPolicy,
+    Role,
 };
 pub use fake::{
     CallRecord, ExtraRegeneration, FailureInjection, FakeLlm, InjectedFailure, JudgeScript, OnCall,
@@ -31,7 +32,7 @@ pub use fake::{
 };
 pub use prompts::{
     JudgePromptInput, RegenPromptInput, build_judge_messages, build_regeneration_messages,
-    render_outline, render_style_stats,
+    render_outline, render_packet, render_style_stats,
 };
 pub use schemas::{
     CitedPosition, JudgeItem, JudgeResponse, RegeneratedComment, RegenerationResponse,

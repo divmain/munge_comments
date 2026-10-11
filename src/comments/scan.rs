@@ -302,7 +302,7 @@ fn collect_comments<'tree>(
 
 /// A node-level shebang: the dedicated `hash_bang_line`/`shebang` nodes at
 /// byte 0.
-fn is_shebang_node(node: &PlainNode) -> bool {
+pub(crate) fn is_shebang_node(node: &PlainNode) -> bool {
     node.start == 0 && matches!(node.kind, "hash_bang_line" | "shebang")
 }
 

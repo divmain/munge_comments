@@ -195,6 +195,10 @@ pub const TAGS: &[&str] = &[
     "xxx",
 ];
 
+/// The tags the tag-flag rule stores (each `TAG_FLAGS` word, lowercased):
+/// the vocabulary decision-matrix row 2 keys on.
+pub const TAG_FLAG_TAGS: [&str; 6] = ["todo", "fixme", "hack", "warning", "xxx", "note"];
+
 /// Tag flags, matched word-boundary and case-sensitively on the uppercase
 /// token (`NOTE` matches, `Notes` does not); stored lowercase.
 static TAG_FLAGS: LazyLock<Result<Regex, regex::Error>> =
@@ -802,7 +806,7 @@ fn mark_cgo_preamble(
 }
 
 /// The start offsets whose doc comment cgo reads as the preamble.
-fn cgo_doc_targets(root: &PlainNode, text: &str) -> Vec<usize> {
+pub(crate) fn cgo_doc_targets(root: &PlainNode, text: &str) -> Vec<usize> {
     let is_c = |spec: &PlainNode| {
         first_child_with_field(spec, "path")
             .is_some_and(|path| &text[path.start..path.end] == "\"C\"")
@@ -1236,6 +1240,23 @@ mod tests {
         assert_eq!(tags(find(&comments, "NOTE: y")), ["note"]);
         assert_eq!(tags(find(&comments, "XXX")), ["warning", "xxx"]);
         assert!(tags(find(&comments, "todo lowercase")).is_empty());
+    }
+
+    #[test]
+    fn tag_flag_tags_are_exactly_what_the_rule_stores() {
+        let regex = static_regex(&TAG_FLAGS).expect("the tag-flag regex compiles");
+        let alternatives = regex
+            .as_str()
+            .trim_start_matches(r"\b(")
+            .trim_end_matches(r")\b");
+        let stored: Vec<String> = alternatives
+            .split('|')
+            .map(str::to_ascii_lowercase)
+            .collect();
+        assert_eq!(stored, TAG_FLAG_TAGS);
+        for tag in TAG_FLAG_TAGS {
+            assert!(TAGS.contains(&tag), "{tag} is missing from TAGS");
+        }
     }
 
     // ---- Doc policies. ------------------------------------------------------

@@ -701,6 +701,16 @@ const EXPECTATIONS: &[Entry] = &[
         ],
     ),
     (
+        "python/tag-flags.py",
+        &[
+            ("# TODO: x", P),
+            ("# FIXME and HACK: retries are not capped yet.", P),
+            ("# Notes on NOTEWORTHY things are not flagged.", P),
+            ("# todo in lowercase is not a flag either.", P),
+            ("# XXX", P),
+        ],
+    ),
+    (
         "python/noqa.py",
         &[
             ("# noqa: F401", F),

@@ -147,6 +147,19 @@ fn scanned_shape(raw: &str, kind: CommentKind, adapter: &LanguageAdapter) -> Opt
     })
 }
 
+/// The kind of slot a scanned comment's replacement text is written into:
+/// the shape [`slot_for`] derives from its raw text (a Rust `///` doc
+/// comment is a line slot, a JSDoc `/** */` a doc slot). Plan time
+/// validates a judge's `finalComment` against exactly this kind, so it
+/// agrees with apply. `None` when `raw` is not a comment of the language.
+pub fn scanned_slot_kind(
+    raw: &str,
+    kind: CommentKind,
+    adapter: &LanguageAdapter,
+) -> Option<SlotKind> {
+    scanned_shape(raw, kind, adapter).map(|shape| shape.kind)
+}
+
 /// The shape of a NEW record: the plain line prefix for `line`, the block
 /// opener for `block`. `None` for `doc` (NEW records are never doc) or a
 /// kind the language lacks.

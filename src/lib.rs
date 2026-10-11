@@ -26,6 +26,7 @@ pub mod artifact;
 pub mod comments;
 pub mod config;
 pub mod discover;
+pub mod engine;
 pub mod errors;
 pub mod lang;
 pub mod llm;
@@ -45,6 +46,7 @@ pub use artifact::types::{
 };
 pub use comments::inventory::{FileRef, Inventory, InventoryComment, inventory_file};
 pub use config::{Mode, PlanConfig};
+pub use engine::{DraftRecord, Route, build_draft_records, finalize_record, route, similarity};
 pub use errors::{Error, LlmErrorReason};
 pub use lang::{extensions::language_for, ids::LanguageId};
 pub use llm::client::{LlmClient, OpenAiCompatClient, OpenAiCompatConfig, ProxyMode, RetryPolicy};
