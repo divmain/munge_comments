@@ -37,7 +37,7 @@ answers it with an experiment instead:
    rationale, plus any context the model says it was missing.
 4. **Judge** each original against its regeneration and decide: remove it,
    keep the original, keep the regeneration, or write a hybrid.
-5. Before anything is written, a **semantic verifier** machine-checks that
+5. Before anything is written, a **semantic verifier** checks that
    the edit changed only comment text.
 
 If the model can reconstruct a comment's content from the code alone, the
@@ -75,8 +75,9 @@ loading and nothing to install besides the executable.
 ## Install
 
 ```console
-$ cargo install --locked --path .              # from a checkout
-$ cargo install --locked --git <repo-url>      # straight from the repository
+$ cargo install --locked --path .
+$ # or straight from the repo
+$ cargo install --locked --git https://github.com/divmain/munge_comments
 ```
 
 Requirements:
